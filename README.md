@@ -1,4 +1,5 @@
-# Coarse Grain Scripts v1.0.0
+# Coarse Grain Scripts v0.9.0
+###### Programmed by Forrest Bicker
 
 ## Script A - Coarse Grainer
 
@@ -20,15 +21,15 @@ Converts an atomistic simulation to a coarse grained one using SDK coarse graini
 }
 ```
 
-    + _NAME_: The three-letter IUPAC abbreviation for the amino acid
-        + **WARNING**: The input topology and trajectory _must_ specify the NAME of each atom using the three-letter IUPAC NAME of its containing amino acid which matches how amino acids are named in `mapping_dict`. This is especially important to take note of when adding a mapping to the `mapping_dict`, as the three-letter IUPAC NAME you input must correspond to atom names in the topology and trajectory. Additionally, all NAMEs must be exactly three letters long or errors may occur.
-    + _component_atoms_: A list of all atoms which compose a given bead.
-        + **WARNING**: List contents will be directly passed to MDAnalysis to select the individual atoms, and as such must be in a format MDAnalysis can understand which matches the topology and trajectory contents. To ensure proper functionality, check how atoms are named in the source topology and trajectory if unsure.
-        + **WARNING**: Be sure to pay attention of changes in atomic structure at the amino acid termini, as neglecting to do so will lead to incorrect bead placement.
-        + **NOTE**: All entries in the  _component_atoms_ are selected with OR logic, meaning every atom list in _component_atoms_ does not necessarily have to appear in every residue. This means it is theoretically possible to accommodate for ambiguous amino acids such as GLX under this framework.
-        + **NOTE**: The _NAME_ in `mapping_dict` represents both L-Chiral and D-Chiral amino acids.
-    + _segment ID_: A one-character identification for each segment
-        + **NOTE**: Will be used to name atoms in the outgoing topology and trajectory.
+   + _NAME_: The three-letter IUPAC abbreviation for the amino acid
+       + **WARNING**: The input topology and trajectory _must_ specify the NAME of each atom using the three-letter IUPAC NAME of its containing amino acid which matches how amino acids are named in `mapping_dict`. This is especially important to take note of when adding a mapping to the `mapping_dict`, as the three-letter IUPAC NAME you input must correspond to atom names in the topology and trajectory. Additionally, all NAMEs must be exactly three letters long or errors may occur.
+   + _component_atoms_: A list of all atoms which compose a given bead.
+       + **WARNING**: List contents will be directly passed to MDAnalysis to select the individual atoms, and as such must be in a format MDAnalysis can understand which matches the topology and trajectory contents. To ensure proper functionality, check how atoms are named in the source topology and trajectory if unsure.
+       + **WARNING**: Be sure to pay attention of changes in atomic structure at the amino acid termini, as neglecting to do so will lead to incorrect bead placement.
+       + **NOTE**: All entries in the  _component_atoms_ are selected with OR logic, meaning every atom list in _component_atoms_ does not necessarily have to appear in every residue. This means it is theoretically possible to accommodate for ambiguous amino acids such as GLX under this framework.
+       + **NOTE**: The _NAME_ in `mapping_dict` represents both L-Chiral and D-Chiral amino acids.
+   + _segment ID_: A one-character identification for each segment
+       + **NOTE**: Will be used to name atoms in the outgoing topology and trajectory.
 
 e.g.
 
@@ -79,11 +80,11 @@ Measures all bond lengths, angle measures, and dihedral angles between coarse gr
 },
 ```
 
-    + _NAME_: Three-letter IUPAC abbreviation identifying the amino acid.
+   + _NAME_: Three-letter IUPAC abbreviation identifying the amino acid.
         + **NOTE**: Unlike in script A's `mapping_dict`, the _NAME_ in `amino_acid_molds` requires chirality specification: If the amino acid is D-chiral, the three-character IUPAC code must be prefixed with the letter `D`. (L-chirality is implicit in a pure three-character IUPAC code)
         + **NOTE**: The _NAME_ in `amino_acid_molds` actually supports multiple, space-delimited amino acid NAMEs, allowing you to notate and measure connections between different kinds of amino acids.
 
-    + _bond_list_/_angle_list_/_dihedral_list_: A list of lists (either pairs, triplets, or quadruplets) of beads which define a bond/angle/dihedral. Beads are referenced in accordance to how their NAME was defined in script A: following the format **amino acid** + **segment ID** + **residue ID** (See Section A5.1.).
+   + _bond_list_/_angle_list_/_dihedral_list_: A list of lists (either pairs, triplets, or quadruplets) of beads which define a bond/angle/dihedral. Beads are referenced in accordance to how their NAME was defined in script A: following the format **amino acid** + **segment ID** + **residue ID** (See Section A5.1.).
         + As an example, to measure the bond between the backbone bead, backbone bead and 1st segment bead of Lysine residue number 1, the bond list would be `['KB1', 'K11']`, where each item in the list denotes a simulated bead.
         + For convenience, rather than _only_ measuring the Lysine backbone-segment1 bond in residue 1, `['KB1', 'K11']` will measure the backbone-segment1 bond across _all_ Lysine residues. It does this using the roots of each bead NAME pattern (in this case, `'KB', 'K1'`) as a mold, to which incrementing resid values are successively appended. This means you will only have to specify a handful of _bond_list_/_angle_list_/_dihedral_list_ indicating general **patterns** which will then be applied across the entire simulation, rather than explicitly specifying every bond, angle, and dihedral connection.
         + **NOTE**: You are safely able to provide patterns that span across multiple residues, for example, there is full support for measuring the `['EB1', 'EB2', 'E12']` angle in a poly-E chain.
@@ -113,8 +114,10 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 
 ###### **C3. Input Parameters**
 + `view_range`: Defines the range of measurement values surrounding the global minima to display and fit a curve to. The value of this number in the units of the measurement in question (Armstrongs/degrees) will determine range of the displayed data  Additionally, there are two special values which `view_range` can be set to for useful effects: -1 to view _all_ data points, and 0 to display one x-axis standard deviation of data points.
++ `step`: Defines the size of each bin of measurement values to be plotted. Should generally be somewhere between 0.001 and 0.1, although I have unfortunatley been unable to find an efficent way of prograing this, so the value will need to be manually optimized depending on the `value_file`. To do this, run the program with a random value and repeatedly adjust it until a distinct curve starts to appear. Be careful not to make the value too small, or the graph will take a long time to render and look very strange when it does.
 
 ###### **C4. Output**
++ **Scatterplot**: A scatterplot containg all the bins within the `view_range` of the global minima, where the x-axis is the average measurement value of the contents of a bin, and the y-axis is its Boltzmann inversion.
 
 ## Dependencies
 + `MatPlotLib`
@@ -125,6 +128,4 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + `commands`*
     + mini-library of three general-use commands implemented in these scripts
 
-\* Indicates a custom-made pseudo-package which is
-
-###### **C4. Output**
+\* Indicates a custom-made pseudo-package of own my creation
