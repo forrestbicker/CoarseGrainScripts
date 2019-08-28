@@ -19,7 +19,6 @@ from commands import progress
 # ================ Input Files ================  #
 topology = '/Users/forrestbicker/Documents/Code/csi/phu-stuff/vmd/proteins/alanin.pdb'
 trajectory = '/Users/forrestbicker/Documents/Code/csi/phu-stuff/vmd/proteins/alanin.dcd'
-simulation_name = 'alaninSIM'
 
 
 # ================= User Input ================= #
@@ -137,6 +136,7 @@ print('Universe Generated!')
 
 print('Genarating Coarse Gained Molecules...')
 
+file_name = os.path.splitext(os.path.basename(topology))[0]
 number_of_frames = len(u.trajectory)
 progress(0)
 for frame in u.trajectory:  # loops tru each frame
@@ -171,9 +171,9 @@ print('Writing Output Files...')
 
 cd('CoarseGrain')
 fools = mda.AtomGroup(dummies)
-fools.write('{}_CoarseGrain.pdb'.format(simulation_name))
+fools.write('{}_CoarseGrain.pdb'.format(file_name))
 print('Topology written!')
-with mda.Writer('{}_CoarseGrain.dcd'.format(simulation_name), fools.n_atoms) as w:
+with mda.Writer('{}_CoarseGrain.dcd'.format(file_name), fools.n_atoms) as w:
     for frame in u.trajectory:
         w.write(fools)
 print('Trajectory written!\nTask Complete')

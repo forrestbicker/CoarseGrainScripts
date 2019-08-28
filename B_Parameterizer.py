@@ -20,12 +20,12 @@ from commands import colorify
 
 
 # ================ Input Files ================  #
-topology = '/Users/forrestbicker/Documents/Code/csi/phu-stuff/test-cg/test1-CG.psf'
-trajectory = '/Users/forrestbicker/Documents/Code/csi/phu-stuff/test-cg/test1-CG.dcd'
+topology = '/Users/forrestbicker/Desktop/test-cg/test1-CG.psf'
+trajectory = '/Users/forrestbicker/Desktop/test-cg/test1-CG.dcd'
 
-max_frame = 100
+max_frame = 10000
 stride = 1
-block_count = 10
+block_count = 8
 
 
 # ============= Pattern Generation ============= #
@@ -155,6 +155,7 @@ for resname_key, resname_dict in amino_acid_molds.items():
 master_container_dict = {}
 s_time = time.time()
 output_dict_list = measure_all_connections(u, block_count, max_frame, stride)
+output_dict_list = filter(None,output_dict_list)
 exec_time = time.time() - s_time
 
 
@@ -174,7 +175,10 @@ print('\nExporting {} measurement datasets to file...'.format(len(master_contain
 for container in master_container_dict.values():  # loops thru each measurement
     filename = f'{container.name}.dat'
     with open(filename, 'w') as instance_output:
-        str_values = [str(value) for value in container.values]
+        if container.type == 0:
+            str_values = [str(value) for value in container.values]
+        else:
+            str_values = [str(value*3.14159/180) for value in container.values]
         instance_output.write('\n'.join(str_values))
 
 

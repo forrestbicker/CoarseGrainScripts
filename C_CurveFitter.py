@@ -19,11 +19,11 @@ from commands import cd
 
 
 # ================= Input File ================= #
-value_file = '/Users/forrestbicker/Documents/desktop/Archive/CG-SCRIPT 3/NEW_laa_ga_g1_ang.dat'
+value_file = '/Users/forrestbicker/Documents/Code/Python/CompletedProjects/CoarseGrainScrips/outputs/measurement_data/K25_K15_KB5_KB6.dat'
 
 
 # ============= Specifications ============== #
-view_range = 0  # -1 for full view; 0 for stdev; an integer for a specific value
+view_range = 0  # negative integer for a specific number of standard deviations; 0 for full view; positve integer for a specific value
 step = 0.01  # step needs manual adjustment (See README section C2. for help)
 
 
@@ -45,20 +45,19 @@ def func_to_xy(x,y,func,*argv):
 file_name = os.path.splitext(os.path.basename(value_file))[0]
 with open(value_file,'r') as file:
     dataset = file.read()
-    values = [float(value)*3.14159/180 for value in dataset.split('\n')]
+    values = [float(value) for value in dataset.split('\n')]
 
 
 # === Calculating bin information === #
-if view_range == -1:
-    view_range = len(values)
+if view_range <= -1:
+    view_range = abs(view_range)*np.std(values)
 elif view_range == 0:
-    view_range = np.std(values)
+    view_range = len(values)
 
-bin_width = np.deg2rad(step)
 max_bin = max(values) + step
 min_bin = min(values) - step
 
-histogram = boandi.Histogram(file_name,'Angle',values,bin_width)  # initiates histogram object
+histogram = boandi.Histogram(file_name,'Angle',values,step)  # initiates histogram object
 for value in values:
     histogram.add_instance(value)  # places each value into its appropriate bin
 histogram.clear_empty_bins()

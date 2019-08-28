@@ -54,7 +54,7 @@ class Histogram:  # a Histogram containing many bin objects
 
 
     def get_biggest(self,num):
-        return([bin for bin in sorted(self,key=lambda bin: bin.count,reverse=True)][:num])
+        return([bin for bin in sorted(self,key=lambda bin: bin.boltz(),reverse=False)][:num])
 
 
     def __iter__(self):
@@ -95,7 +95,7 @@ class Bin:  # a bin containing many boandi objects
     def boltz(self):
         kB = 1.38e-23*.1*6.022e23/418.4
         T = 298
-        x = self.floor
+        x = abs(self.floor)
         Px = self.count/self.p_histogram.count
         return(-kB*T*log(Px/sin(x)))
 
@@ -116,7 +116,7 @@ class BoAnDi:  # a single instance of an bond/angle/dihedral
 class Container:  # A glorified list to be converted to a histogram
     def __init__(self,name):
         self.name = name
-        # self.type = type
+        self.type = name.count('_') - 1
         self.values = []
 
     def add_values(self,value_list):
