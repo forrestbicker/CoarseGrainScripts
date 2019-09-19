@@ -14,3 +14,8 @@ Initial Stable Public Beta release
 
 ###### Boandi
 + Corrected Container().get_biggest() to accurately return the global minima, rather than the biggest bin
+
+## v0.9.2
+###### A
++ Fixed crash that caused the script to crash if the input simulation `type` data did not match `name` data
++ Also significantly decreases runtime for script A

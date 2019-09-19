@@ -17,8 +17,9 @@ from commands import progress
 
 
 # ================ Input Files ================  #
-topology = '/Users/forrestbicker/Documents/Code/csi/phu-stuff/vmd/proteins/alanin.pdb'
-trajectory = '/Users/forrestbicker/Documents/Code/csi/phu-stuff/vmd/proteins/alanin.dcd'
+topology = '/Users/forrestbicker/Desktop/alanin.pdb'
+trajectory = '/Users/forrestbicker/Desktop/alanin.dcd'
+simulation_name = 'alaninSIM'
 
 
 # ================= User Input ================= #
@@ -136,32 +137,47 @@ print('Universe Generated!')
 
 print('Genarating Coarse Gained Molecules...')
 
-file_name = os.path.splitext(os.path.basename(topology))[0]
 number_of_frames = len(u.trajectory)
+
+dummies = []
+residue_atoms = []
+for resname in residue_list:  # loops tru each residue to be coarse grained
+    # extracts the residue name in amino_acid_dict format
+    resname_root = resname[-3:]
+    resname_sel = f'resname {resname}'
+    # selects all resname-specific atoms
+    resname_atoms = u.atoms.select_atoms(resname_sel)
+    # identifys all resname-specific residues
+    resids = resname_atoms.residues.resids
+    for resid in resids:  # loops thu each matching residue id
+        try:
+            segments = amino_acid_dict[resname_root].keys()
+        except KeyError:
+            print('{} was not found in amino_acid_dict. Please add its parameters to the dictionary. (See README section A3. for help)'.format(
+                resname_root))
+            raise
+        for segment in segments:  # loops thru each segment of each residue
+            name_params = ' '.join(amino_acid_dict[resname_root][segment])
+            params = 'resname {} and resid {} and (name {})'.format(
+                resname, resid, name_params)
+            # selects all atoms in a given residue segment
+            atms = u.atoms.select_atoms(params)
+            dummy = atms[0]
+            # positions a dummy atom at the center of mass
+            dummy.position = atms.center_of_mass()
+            # names dummy atom in propper format
+            dummy.name = '{}{}{}'.format(
+                abrev_dict[resname[-3:]], segment[0], resid)
+
+            dummies.append(dummy)
+            residue_atoms.append(atms)
+
 progress(0)
 for frame in u.trajectory:  # loops tru each frame
     f = frame.frame
-    dummies = []
-    for resname in residue_list:  # loops tru each residue to be coarse grained
-        resname_root = resname[-3:]  # extracts the residue name in amino_acid_dict format
-        resname_sel = f'resname {resname}'
-        resname_atoms = u.atoms.select_atoms(resname_sel)  # selects all resname-specific atoms
-        resids = resname_atoms.residues.resids  # identifys all resname-specific residues
-        for resid in resids:  # loops thu each matching residue id
-            try:
-                segments = amino_acid_dict[resname_root].keys()
-            except KeyError:
-                print('{} was not found in amino_acid_dict. Please add its parameters to the dictionary. (See README section A3. for help)'.format(resname_root))
-                raise
-            for segment in segments:  # loops thru each segment of each residue
-                name_params = ' '.join(amino_acid_dict[resname_root][segment])
-                params = 'resname {} and resid {} and (type {})'.format(resname, resid, name_params)
-                atms = u.atoms.select_atoms(params)  # selects all atoms in a given residue segment
-                dummy = atms[0]
-                dummy.position = atms.center_of_mass()  # positions a dummy atom at the center of mass
-                dummy.name = '{}{}{}'.format(abrev_dict[resname[-3:]], segment[0], resid)  # names dummy atom in propper format
-                dummies.append(dummy)
-    progress(f/number_of_frames)
+    for i, dummy in enumerate(dummies):
+        dummy.position = residue_atoms[i].center_of_mass()
+    progress(f / number_of_frames)
 progress(1)
 print('\nGenerated All Coarse Grained Molecules!')
 
@@ -171,9 +187,9 @@ print('Writing Output Files...')
 
 cd('CoarseGrain')
 fools = mda.AtomGroup(dummies)
-fools.write('{}_CoarseGrain.pdb'.format(file_name))
+fools.write('{}_CoarseGrain.pdb'.format(simulation_name))
 print('Topology written!')
-with mda.Writer('{}_CoarseGrain.dcd'.format(file_name), fools.n_atoms) as w:
+with mda.Writer('{}_CoarseGrain.dcd'.format(simulation_name), fools.n_atoms) as w:
     for frame in u.trajectory:
         w.write(fools)
 print('Trajectory written!\nTask Complete')

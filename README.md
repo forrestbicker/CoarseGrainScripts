@@ -1,4 +1,4 @@
-# Coarse Grain Scripts v0.9.1
+# Coarse Grain Scripts v0.9.2
 ###### Programmed by Forrest Bicker
 
 ## Script A - Coarse Grainer
