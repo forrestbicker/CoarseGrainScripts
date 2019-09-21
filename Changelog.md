@@ -33,6 +33,6 @@ Initial Stable Public Beta release
 
 + Reduced script computations to run in ~1/3rd the time
 
-### C
+### Boandi
 
-+ Fixed crash that prevented the boltzmann inversion of bond measurements from being calculated
++ Fixed crash that prevented the boltzmann inversion of bond measurements from being calculated correctly
