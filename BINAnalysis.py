@@ -17,9 +17,9 @@ from numpy import sin
 
 # ================= Histogram =================  #
 class Histogram:  # a Histogram containing many bin objects
-    def __init__(self,name,type,values,bin_width):
+    def __init__(self, name, mes_type, values, bin_width):
         self.name = name
-        self.type = type
+        self.mes_type = mes_type
         self.bins = []
         self.count = 0
         self.counter = -1
@@ -29,10 +29,11 @@ class Histogram:  # a Histogram containing many bin objects
         self.bin_max = max(values) + self.bin_width
 
         # generates bin edges and creates respective empty bin objects
-        self.edges = [edge for edge in np.arange(self.bin_min,self.bin_max,self.bin_width)]
-        for i,floor in enumerate(self.edges[:-1]):
-            ceil = self.edges[i+1]
-            self.bins.append(Bin(self,floor,ceil))
+        self.edges = [edge for edge in np.arange(
+            self.bin_min, self.bin_max, self.bin_width)]
+        for i, floor in enumerate(self.edges[:-1]):
+            ceil = self.edges[i + 1]
+            self.bins.append(Bin(self, floor, ceil))
             self.count += 1
 
         for value in values:
@@ -40,9 +41,9 @@ class Histogram:  # a Histogram containing many bin objects
 
 
     # creates a BoAnDi instance and places it in its appropriate bin
-    def add_instance(self,value):
+    def add_instance(self, value):
         displacement = value - self.bin_min
-        ix = int(displacement/self.bin_width)
+        ix = int(displacement / self.bin_width)
         bin = self.bins[ix]
         bin.add_instance(value)
 
@@ -53,8 +54,8 @@ class Histogram:  # a Histogram containing many bin objects
         self.count = len(self.bins)
 
 
-    def get_biggest(self,num):
-        return([bin for bin in sorted(self,key=lambda bin: bin.boltz(),reverse=False)][:num])
+    def get_biggest(self, num):
+        return([bin for bin in sorted(self, key=lambda bin: bin.boltz(), reverse=False)][:num])
 
 
     def __iter__(self):
@@ -74,38 +75,41 @@ class Histogram:  # a Histogram containing many bin objects
 
 # ==================== Bin ====================  #
 class Bin:  # a bin containing many boandi objects
-    def __init__(self,p_histogram,floor,ceil):
+    def __init__(self, p_histogram, floor, ceil):
         self.floor = floor
         self.ceil = ceil
         self.contents = []
         self.count = 0
         self.p_histogram = p_histogram
-        self.type = p_histogram.type
+        self.mes_type = p_histogram.mes_type
 
 
     def __int__(self):
         return(self.count)
 
 
-    def add_instance(self,value):
+    def add_instance(self, value):
         self.count += 1
-        self.contents.append(BoAnDi(self,value))
+        self.contents.append(BoAnDi(self, value))
 
 
     def boltz(self):
-        kB = 1.38e-23*.1*6.022e23/418.4
+        kB = 1.38e-23 * .1 * 6.022e23 / 418.4
         T = 298
         x = abs(self.floor)
-        Px = self.count/self.p_histogram.count
-        return(-kB*T*log(Px/sin(x)))
+        Px = self.count / self.p_histogram.count
+        if self.mes_type == '0':
+            return(-kB * T * log(Px / 4 * 3.141592653 * x ** 2))
+        else:
+            return(-kB * T * log(Px / sin(x)))
 
 
 # ================= BoAnDi ================= #
 class BoAnDi:  # a single instance of an bond/angle/dihedral
-    def __init__(self,p_bin,value):
+    def __init__(self, p_bin, value):
         self.value = value
         self.p_bin = p_bin
-        self.type = p_bin.type
+        self.mes_type = p_bin.mes_type
 
 
     def __float__(self):
@@ -114,11 +118,11 @@ class BoAnDi:  # a single instance of an bond/angle/dihedral
 
 # ================= Container =================  #
 class Container:  # A glorified list to be converted to a histogram
-    def __init__(self,name):
+    def __init__(self, name):
         self.name = name
-        self.type = name.count('_') - 1
+        self.mes_type = name.count('_') - 1
         self.values = []
 
-    def add_values(self,value_list):
+    def add_values(self, value_list):
         for value in value_list:
             self.values.append(value)

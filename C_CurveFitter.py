@@ -19,7 +19,7 @@ from commands import cd
 
 
 # ================= Input File ================= #
-value_file = '/Users/forrestbicker/Documents/Code/Python/CompletedProjects/CoarseGrainScrips/outputs/measurement_data/K25_K15_KB5_KB6.dat'
+value_file = '/Users/forrestbicker/Documents/Code/Python/CompletedProjects/CoarseGrainScrips/outputs/measurement_data/EB2_EB3.dat'
 
 
 # ============= Specifications ============== #
@@ -28,36 +28,39 @@ step = 0.01  # step needs manual adjustment (See README section C2. for help)
 
 
 # ============= Fitting Functions ============== #
-def f(x,k,x0,c):
-    return(k*(x-x0)**2+c)
+def f(x, k, x0, c):
+    return(k * (x - x0)**2 + c)
 
 
-def func_to_xy(x,y,func,*argv):
+def func_to_xy(x, y, func, *argv):
     res = 2**8  # resolution of curve
     xrange = max(x) - min(x)
 
-    x = np.array([min(x) + xrange*(i/res) for i in range(res) if f(min(x) + xrange*(i/res),*argv) <= max(y)])
-    y = [f(x,*argv) for x in x]
-    return([x,y])
+    x = np.array([min(x) + xrange * (i / res) for i in range(res)
+                  if f(min(x) + xrange * (i / res), *argv) <= max(y)])
+    y = [f(x, *argv) for x in x]
+    return([x, y])
 
 
 # ================= Execution ================== #
 file_name = os.path.splitext(os.path.basename(value_file))[0]
-with open(value_file,'r') as file:
+with open(value_file, 'r') as file:
     dataset = file.read()
-    values = [float(value) for value in dataset.split('\n')]
-
+    dataset_list = dataset.split('\n')
+    mes_type = dataset_list.pop(0)[-1]
+    values = [float(value) for value in dataset_list]
 
 # === Calculating bin information === #
 if view_range <= -1:
-    view_range = abs(view_range)*np.std(values)
+    view_range = abs(view_range) * np.std(values)
 elif view_range == 0:
     view_range = len(values)
 
 max_bin = max(values) + step
 min_bin = min(values) - step
 
-histogram = boandi.Histogram(file_name,'Angle',values,step)  # initiates histogram object
+# initiates histogram object
+histogram = boandi.Histogram(file_name, mes_type, values, step)
 for value in values:
     histogram.add_instance(value)  # places each value into its appropriate bin
 histogram.clear_empty_bins()
@@ -66,27 +69,28 @@ histogram.clear_empty_bins()
 # === Plotting points === #
 x2 = [bin.floor for bin in histogram.get_biggest(1)]
 y2 = [bin.boltz() for bin in histogram.get_biggest(1)]
-plt.scatter(x2,y2,s=0.5,c='#eb5600')  # plots biggest bin in red
+plt.scatter(x2, y2, s=0.5, c='#eb5600')  # plots biggest bin in red
 
-lo_cut = histogram.get_biggest(1)[0].floor-(view_range/2)
-up_cut = histogram.get_biggest(1)[0].floor+(view_range/2)
+lo_cut = histogram.get_biggest(1)[0].floor - (view_range / 2)
+up_cut = histogram.get_biggest(1)[0].floor + (view_range / 2)
 x = [bin.floor for bin in histogram if lo_cut <= bin.floor <= up_cut]
 y = [bin.boltz() for bin in histogram if lo_cut <= bin.floor <= up_cut]
-plt.scatter(x,y,s=0.5)  # plots points within view_range of biggest bin
+plt.scatter(x, y, s=0.5)  # plots points within view_range of biggest bin
 
 
 # === Fitting curve === #
-k,x0,c = curve_fit(f,x,y,maxfev=1000000,p0=[10,5,5])[0]
-x,y = func_to_xy(x,y,f,k,x0,c)
-plt.plot(x,y,color='#1f3e78',linestyle='-')
+k, x0, c = curve_fit(f, x, y, maxfev=1000000, p0=[10, 5, 5])[0]
+x, y = func_to_xy(x, y, f, k, x0, c)
+plt.plot(x, y, color='#1f3e78', linestyle='-')
 
 
 # === Adusting display settings === #
 cd('fit')
 fmt = '{} {}\nBin: {:.2f} - {:.2f}\n{:.3f}(x-{:.3f})+{:.3f}'
-plt.suptitle(fmt.format(histogram.type,histogram.name,min_bin,max_bin,k,x0,c),fontname='Courier New')
-plt.ylabel('Boltzmann Inversion',fontname='Times')
-plt.xlabel(histogram.type + ' Measurment',fontname='Times')
+plt.suptitle(fmt.format(histogram.mes_type, histogram.name,
+                        min_bin, max_bin, k, x0, c), fontname='Courier New')
+plt.ylabel('Boltzmann Inversion', fontname='Times')
+plt.xlabel(histogram.mes_type + ' Measurment', fontname='Times')
 plt.savefig('hist_{}.png'.format(histogram.name))
 plt.show()
 
