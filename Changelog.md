@@ -18,7 +18,7 @@ Initial Stable Public Beta release
 
 ### Boandi
 
-+ Corrected Container().get_biggest() to accurately return the global minima, rather than the biggest bin
++ Corrected 'boandi.Container().get_biggest()' to accurately return the global minima, rather than the biggest bin
 
 ## v0.9.2
 
