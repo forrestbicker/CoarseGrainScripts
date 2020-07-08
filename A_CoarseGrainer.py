@@ -95,11 +95,12 @@ print('\nGenerated All Coarse Grained Molecules!')
 # =================== Output =================== #
 print('Writing Output Files...')
 
-cd('CoarseGrain')
-fools = mda.AtomGroup(dummies)
-fools.write('{}_CoarseGrain.pdb'.format(simulation_name))
+fools = mda.AtomGroup([elements[0] for elements in bead_data])
+
+fools.write(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.pdb')
 print('Topology written!')
-with mda.Writer('{}_CoarseGrain.dcd'.format(simulation_name), fools.n_atoms) as w:
+
+with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.n_atoms) as w:
     for frame in u.trajectory:
         w.write(fools)
 print('Trajectory written!\nTask Complete')
