@@ -18,9 +18,9 @@ from commands import progress
 from json import load
 
 # ================ Input Files ================  #
-topology = '/Users/forrestbicker/Desktop/alanin.pdb'
-trajectory = '/Users/forrestbicker/Desktop/alanin.dcd'
-simulation_name = 'alaninSIM'
+topology = 'inputs/alanin.pdb'
+trajectory = 'inputs/alanin.dcd'
+simulation_name = 'alanin'
 
 
 # ================= User Input ================= #
