@@ -12,7 +12,7 @@ Converts an atomistic simulation to a coarse grained one using SDK coarse graini
 
 ###### **A3. Input Parameters**
 + `residue_list`: List of three-letter amino acid abbreviations. The coarse grained file will only contain beads from amino acids included in this list.
-+ `mapping_dict`: Dictionary containing Coarse Grain mappings which dictate the atoms that each coarse grained bead encapsulates. This version includes mappings for all 20 natural amino acids, however if you wish to coarse grain a molecule whose mapping is not contained in `mapping_dict`, you will have to add its mapping to the dictionary. If you so desire to use a mapping not included in the `mapping_dict`, you will need to add it yourself. This can be done by appending a new dictionary to `mapping_dict` in the following format:
++ `mapping_dict`: Dictionary containing Coarse Grain mappings which dictate the atoms that each coarse grained bead contains. This version includes mappings for all 20 natural amino acids, however if you wish to coarse grain a molecule whose mapping is not contained in `mapping_dict`, you will have to add its mapping to the dictionary. If you so desire to use a mapping not included in the `mapping_dict`, you will need to add it yourself. This can be done by appending a new dictionary to `mapping_dict.json` in the following format:
 
 ```
 'NAME': {
