@@ -129,8 +129,4 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + `SciPy`
 + `MDAnalysis`
 + `Boandi`*
-    + Histogram, bin, and measurement assistance package
-+ `commands`*
-    + mini-library of three general-use commands implemented in these scripts
-
-\* Indicates a custom-made pseudo-package of own my creation
+    + Specially developed histogram, bin, and measurement assistance package
