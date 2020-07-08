@@ -49,8 +49,7 @@ print('Genarating Coarse Gained Molecules...')
 
 number_of_frames = len(u.trajectory)
 
-dummies = []
-residue_atoms = []
+bead_data = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
     # extracts the residue name in amino_acid_dict format
     resname_root = resname[-3:]
@@ -77,14 +76,13 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
             dummy.name = '{}{}{}'.format(
                 abrev_dict[resname[-3:]], segment[0], resid)
 
-            dummies.append(dummy)
-            residue_atoms.append(atms)
+            bead_data.append((dummy, atms))
 
 progress(0)
 for frame in u.trajectory:  # loops tru each frame
     f = frame.frame
-    for i, dummy in enumerate(dummies):
-        dummy.position = residue_atoms[i].center_of_mass()
+    for dummy, atms in bead_data:
+        dummy.position = atms.center_of_mass()
     progress(f / number_of_frames)
 progress(1)
 print('\nGenerated All Coarse Grained Molecules!')
