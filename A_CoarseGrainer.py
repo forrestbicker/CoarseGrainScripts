@@ -79,11 +79,12 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
 
             bead_data.append((dummy, atms))
 
-progress(0)
 
 fools = mda.AtomGroup([pair[0] for pair in bead_data])
 
 print('Writing Output Files...')
+
+progress(0)
 with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.n_atoms) as w:
     for frame in u.trajectory:  # loops tru each frame
         f = frame.frame
@@ -95,7 +96,7 @@ with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.
         w.write(fools)
         progress(f / number_of_frames)
 progress(1)
-print('Generated All Coarse Grained Molecules!')
+print('\nGenerated All Coarse Grained Molecules!')
 print('Trajectory written!')
 
 fools.write(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.pdb')
