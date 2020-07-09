@@ -17,6 +17,7 @@ from commands import progress
 
 from json import load
 
+
 # ================ Input Files ================  #
 topology = 'inputs/alanin.pdb'
 trajectory = 'inputs/alanin.dcd'
@@ -71,7 +72,7 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
             atms = u.atoms.select_atoms(params)
             dummy = atms[0]
             # positions a dummy atom at the center of mass
-            dummy.position = atms.center_of_mass()
+            dummy.position =  atms.center_of_mass()
             # names dummy atom in propper format
             dummy.name = '{}{}{}'.format(
                 abrev_dict[resname[-3:]], segment[0], resid)
@@ -79,11 +80,16 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
             bead_data.append((dummy, atms))
 
 progress(0)
-for frame in u.trajectory:  # loops tru each frame
-    f = frame.frame
-    for dummy, atms in bead_data:
-        dummy.position = atms.center_of_mass()
-    progress(f / number_of_frames)
+
+fools = mda.AtomGroup([pair[0] for pair in bead_data])
+
+with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.n_atoms) as w:
+    for frame in u.trajectory:  # loops tru each frame
+        f = frame.frame
+        for dummy, atms in bead_data:
+            dummy.position = atms.center_of_mass()
+        w.write(fools)
+        progress(f / number_of_frames)
 progress(1)
 print('\nGenerated All Coarse Grained Molecules!')
 
@@ -91,12 +97,10 @@ print('\nGenerated All Coarse Grained Molecules!')
 # =================== Output =================== #
 print('Writing Output Files...')
 
-fools = mda.AtomGroup([elements[0] for elements in bead_data])
 
 fools.write(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.pdb')
 print('Topology written!')
 
-with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.n_atoms) as w:
-    for frame in u.trajectory:
-        w.write(fools)
+    # for frame in u.trajectory:
+        
 print('Trajectory written!\nTask Complete')
