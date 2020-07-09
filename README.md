@@ -1,5 +1,6 @@
 # Coarse Grain Scripts v0.9.2
 ###### Programmed by Forrest Bicker
+###### College Of Staten Island - Loverde Labratory
 
 ## Script A - Coarse Grainer
 
@@ -130,3 +131,8 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + `MDAnalysis`
 + `Boandi`*
     + Specially developed histogram, bin, and measurement assistance package
+
+## Thanks
++ Dr. Loverde
++ Phu Tang
++ William Hu
