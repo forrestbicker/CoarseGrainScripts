@@ -23,10 +23,8 @@ topology = 'inputs/alanin.pdb'
 trajectory = 'inputs/alanin.dcd'
 simulation_name = 'alanin'
 
-
 # ================= User Input ================= #
 residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
-
 
 # ============== Misc Initiation ==============  #
 with open('mapping_dict.json', "r") as f:
@@ -72,7 +70,7 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
             atms = u.atoms.select_atoms(params)
             dummy = atms[0]
             # positions a dummy atom at the center of mass
-            dummy.position =  atms.center_of_mass()
+            dummy.position = atms.center_of_mass()
             # names dummy atom in propper format
             dummy.name = '{}{}{}'.format(
                 abrev_dict[resname[-3:]], segment[0], resid)
@@ -88,11 +86,11 @@ progress(0)
 with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.n_atoms) as w:
     for frame in u.trajectory:  # loops tru each frame
         f = frame.frame
-        
+
         # positions a dummy atoms at cluster center of mass
         for dummy, atms in bead_data:
             dummy.position = atms.center_of_mass()
-            
+
         w.write(fools)
         progress(f / number_of_frames)
 progress(1)
@@ -100,7 +98,6 @@ print('\nGenerated All Coarse Grained Molecules!')
 print('Trajectory written!')
 
 fools.write(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.pdb')
-
-print('Topology written!')        
+print('Topology written!')
 
 print('Task complete!')
