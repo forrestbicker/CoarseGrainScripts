@@ -20,12 +20,12 @@ from commands import colorify
 
 
 # ================ Input Files ================  #
-topology = '/Users/forrestbicker/Desktop/test1-CG.psf'
-trajectory = '/Users/forrestbicker/Desktop/test1-CG.dcd'
+topology = 'outputs/CoarseGrain/alanin_CoarseGrain.pdb'
+trajectory = 'outputs/CoarseGrain/alanin_CoarseGrain.dcd'
 
 max_frame = 10000
 stride = 1
-block_count = 8
+block_count = 4
 
 
 # ============= Pattern Generation ============= #
@@ -86,8 +86,7 @@ def get_containers(arglist):
     # retrives block information from argument list
     start, stop, step, block_id = arglist
 
-    fmt = 'Initiating Block {} for frames {} through {} with stride {}'
-    print(fmt.format(block_id, start, stop, step))
+    print(f'Initiating Block {block_id} for frames {start} through {stop} with stride {step}')
 
 
     atms_dict = {}
@@ -153,11 +152,10 @@ print('Universe Generated!\nBegining Measurments:')
 for resname_key, resname_dict in amino_acid_molds.items():
     try:
         for mes_type, connection_map in resname_dict.items():
-            fmt = '- Measuring {} {} {}s in {} residues over {} frames'
             mes_count = len(connection_map)
             res_count = len(u.atoms.select_atoms(f'resname {resname_key}').residues)
             frame_count = len(u.trajectory[:max_frame]) + 1
-            print(fmt.format(mes_count, resname_key, mes_type, res_count, frame_count))
+            print(f'- Measuring {mes_count} {resname_key} {mes_type}s in {res_count} residues over {frame_count} frames')
     except IndexError:
         pass
 
