@@ -91,7 +91,7 @@ plt.suptitle(fmt.format(histogram.mes_type, histogram.name,
                         min_bin, max_bin, k, x0, c), fontname='Courier New')
 plt.ylabel('Boltzmann Inversion', fontname='Times')
 plt.xlabel(histogram.mes_type + ' Measurment', fontname='Times')
-plt.savefig('hist_{}.png'.format(histogram.name))
+plt.savefig(f'hist_{histogram.name}.png')
 plt.show()
 
 
