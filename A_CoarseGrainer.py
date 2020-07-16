@@ -48,6 +48,10 @@ print('Genarating Coarse Gained Molecules...')
 
 number_of_frames = len(u.trajectory)
 
+
+# O(fr)
+# f = number of frames
+# r = number of residue segments
 bead_data = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
     # extracts the residue name in amino_acid_dict format
