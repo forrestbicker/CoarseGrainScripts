@@ -51,44 +51,6 @@ amino_acid_molds = {
 # ========= Multiprocessing Functions =========  #
 # master multiprocessing function
 def measure_all_connections(u, block_count, max_frame, stride):
-    if block_count > 1:
-        num_frames = len(u.trajectory[:max_frame])
-        # determines size of each block
-        block_size = int(np.ceil(num_frames / float(block_count)))
-
-        # starting frame for each block
-        starts = [n * block_size for n in range(block_count)]
-        # ending frame for each block
-        stops = [(n + 1) * block_size for n in range(block_count)]
-        # stride length for each block (constant)
-        strides = [stride for n in range(block_count)]
-        block_id = [n for n in range(block_count)]  # numeric ID for each block
-
-        # zips block information into one iterable
-        arg_iter = zip(starts, stops, strides, block_id)
-
-        with multiprocessing.Pool() as pool:  # pools blocks and runs in parallel
-            # calls get_containers(params) for each block in arg_iter
-            output_dict_list = pool.map(get_containers, arg_iter)
-
-    elif block_count == 1:
-        output_dict_list = get_containers([0, max_frame, stride, 0])
-
-    else:
-        raise ValueError(
-            f'block_count must be greater than or equal to 1, but is {block_count}')
-
-    return(output_dict_list)  # returns output from every block
-
-
-# ============ Measurment Functions ============ #
-def get_containers(arglist):
-    # retrives block information from argument list
-    start, stop, step, block_id = arglist
-
-    print(f'Initiating Block {block_id} for frames {start} through {stop} with stride {step}')
-
-
     atms_dict = {}
     for resname_key, resname_dict in amino_acid_molds.items():  # three nested loops to acsess the beads
         for mes_type, component_list in resname_dict.items():
@@ -101,6 +63,45 @@ def get_containers(arglist):
                     mes_name = '_'.join(params[5:].split())
                     atms = u.atoms.select_atoms(params)
                     atms_dict[mes_name] = atms
+
+
+    if block_count > 1:
+        num_frames = len(u.trajectory[:max_frame])
+        # determines size of each block
+        block_size = int(np.ceil(num_frames / float(block_count)))
+
+        # starting frame for each block
+        starts = [n * block_size for n in range(block_count)]
+        # ending frame for each block
+        stops = [(n + 1) * block_size for n in range(block_count)]
+        # stride length for each block (constant)
+        strides = [stride for n in range(block_count)]
+        block_id = [n for n in range(block_count)]  # numeric ID for each block
+        atms_dicts = [atms_dict for n in range(block_count)]
+
+        # zips block information into one iterable
+        arg_iter = zip(starts, stops, strides, block_id, atms_dicts)
+
+        with multiprocessing.Pool() as pool:  # pools blocks and runs in parallel
+            # calls get_containers(params) for each block in arg_iter
+            output_dict_list = pool.map(get_containers, arg_iter)
+
+    elif block_count == 1:
+        output_dict_list = get_containers([0, max_frame, stride, 0, atms_dict])
+
+    else:
+        raise ValueError(
+            f'block_count must be greater than or equal to 1, but is {block_count}')
+
+    return(output_dict_list)  # returns output from every block
+
+
+# ============ Measurment Functions ============ #
+def get_containers(arglist):
+    # retrives block information from argument list
+    start, stop, step, block_id, atms_dict = arglist
+
+    print(f'Initiating Block {block_id} for frames {start} through {stop} with stride {step}')
 
     value_dict = {}
     for frame in u.trajectory:
