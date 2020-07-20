@@ -15,7 +15,6 @@ from scipy.optimize import curve_fit
 import os
 
 import BINAnalysis as boandi
-from commands import cd
 
 
 # ================= Input File ================= #
@@ -85,13 +84,12 @@ plt.plot(x, y, color='#1f3e78', linestyle='-')
 
 
 # === Adusting display settings === #
-cd('fit')
 fmt = '{} {}\nBin: {:.2f} - {:.2f}\n{:.3f}(x-{:.3f})+{:.3f}'
 plt.suptitle(fmt.format(histogram.mes_type, histogram.name,
                         min_bin, max_bin, k, x0, c), fontname='Courier New')
 plt.ylabel('Boltzmann Inversion', fontname='Times')
 plt.xlabel(histogram.mes_type + ' Measurment', fontname='Times')
-plt.savefig(f'hist_{histogram.name}.png')
+plt.savefig(f'fit/hist_{histogram.name}.png')
 plt.show()
 
 

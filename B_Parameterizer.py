@@ -6,6 +6,7 @@
 # August 2019
 #
 
+# O()
 
 # ================ Dependencies ================ #
 import numpy as np
@@ -15,7 +16,6 @@ import time
 import MDAnalysis as mda
 import BINAnalysis as boandi
 
-from commands import cd
 from commands import colorify
 
 
@@ -179,12 +179,11 @@ for output_dict in output_dict_list:  # combines each block's output
 
 
 # ========= Measruement Data Generation ========== #
-cd('measurement_data')
 print('\nExporting {} measurement datasets to file...'.format(
     len(master_container_dict)))
 for container in master_container_dict.values():  # loops thru each measurement
-    filename = f'{container.name}.dat'
-    with open(filename, 'w') as instance_output:  # writes measurment list data to file
+    filename = f'measurement_data/{container.name}.dat'
+    with open(filename, 'w+') as instance_output:  # writes measurment list data to file
         # writes integer denoting mes_type to file
         instance_output.write(f'mes_type: {container.mes_type}\n')
         if container.mes_type == 0:

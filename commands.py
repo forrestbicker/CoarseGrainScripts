@@ -3,15 +3,15 @@ import os
 
 
 # ===================== cd ===================== #
-def cd(dir):  # cleanly changed cwd
-    native = os.path.dirname(os.path.abspath(__file__))
-    path = os.path.join(native,'outputs',dir)
-    try:  # makes output folder
-        os.mkdir(path)
-    except FileExistsError:
-        pass
-    finally:  # sets cwd to output folder
-        os.chdir(path)
+# def cd(dir):  # cleanly changed cwd
+#     native = os.path.dirname(os.path.abspath(__file__))
+#     path = os.path.join(native,'outputs',dir)
+#     try:  # makes output folder
+#         os.mkdir(path)
+#     except FileExistsError:
+#         pass
+#     finally:  # sets cwd to output folder
+#         os.chdir(path)
 
 
 # ================== colorify ================== #
