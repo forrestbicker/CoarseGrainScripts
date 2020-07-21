@@ -29,7 +29,7 @@ block_count = 4
 
 
 # ============= Pattern Generation ============= #
-amino_acid_molds = {
+amino_acid_molds = { # TODO: autodetect number and pattern of segments given a name using config
     'LYS': {  # 3 segments
         'Bond': [['K21', 'K11'], ['K11', 'KB1'], ['KB1', 'KB2']],
         'Angle': [['K21', 'K11', 'KB1'], ['K11', 'KB1', 'KB2'], ['KB1', 'KB2', 'K12']],
@@ -104,7 +104,7 @@ def get_containers(arglist):
     print(f'Initiating Block {block_id} for frames {start} through {stop} with stride {step}')
 
     value_dict = {}
-    for frame in u.trajectory:
+    for frame in u.trajectory: # TODO: get traj splicing to work 
         f = frame.frame
         if start <= f < stop:  # alterantive to slicing trajectory, because slicing breaks MDAnalysis in strange ways
             if f % step == 0:
@@ -119,7 +119,7 @@ def get_containers(arglist):
 
 
 def gen_params(name_list, mes_type, sel_resids, resid):
-    mes_type_list = ['Bond', 'Angle', 'Dihedral']
+    mes_type_list = ['Bond', 'Angle', 'Dihedral'] # TODO: create enum for mestypes
     params = 'name'
     for name in name_list:
         i = int(name[2:])
