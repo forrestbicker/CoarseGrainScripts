@@ -18,7 +18,7 @@ import BINAnalysis as boandi
 
 
 # ================= Input File ================= #
-value_file = '/Users/forrestbicker/Documents/Code/Python/CompletedProjects/CoarseGrainScrips/outputs/measurement_data/EB2_EB3.dat'
+value_file = 'outputs/measurement_data/EB2_EB3.dat'
 
 
 # ============= Specifications ============== #

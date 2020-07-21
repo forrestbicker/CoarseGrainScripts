@@ -21,9 +21,10 @@ from commands import colorify
 
 # ================ Input Files ================  #
 topology = 'outputs/CoarseGrain/alanin_CoarseGrain.pdb'
-trajectory = 'outputs/CoarseGrain/alanin_CoarseGrain.dcd'
+trajectory = 'outputs/CoarseGrain/alanin_CoarseGrain.dcd.dcd'
+# '/Users/forrestbicker/Documents/Code/Python/csi_projects/protines/twoBlobs-CG.pdb'
 
-max_frame = 10000
+max_frame = 1000
 stride = 1
 block_count = 4
 
