@@ -131,8 +131,9 @@ def get_containers(arglist):
                         if value != None:
                             value_dict.setdefault(mes_name, []).append(value)  # safe append to dict
         elif f >= stop:
-            print(colorify('32', f'Block {block_id} completed!'))
-            return(value_dict)
+            break
+    print(colorify('32', f'Block {block_id} completed!'))
+    return(value_dict)
 
 def isvalid(start_resid, max_resid, mes_type):
     end_resid = start_resid - 1 + mes_type.value
