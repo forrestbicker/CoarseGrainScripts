@@ -36,19 +36,19 @@ residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
 
 amino_acid_blueprint = { # TODO: autodetect number and pattern of segments given a name using config
     3: {  # 3 segments
-        MesType.BOND: [['21', '11'], ['11', 'B1'], ['B1', 'B2']],
-        MesType.ANGLE: [['21', '11', 'B1'], ['11', 'B1', 'B2'], ['B1', 'B2', '12']],
-        MesType.DIHEDRAL: [['21', '11', 'B1', 'B2'], ['K11', 'B1', 'B2', '12'], ['B1', 'B2', '12', '22']]
+        MesType.BOND: [['20', '10'], ['10', 'B0'], ['B0', 'B1']],
+        MesType.ANGLE: [['20', '10', 'B0'], ['10', 'B0', 'B1'], ['B0', 'B1', '11']],
+        MesType.DIHEDRAL: [['20', '10', 'B0', 'B1'], ['K10', 'B0', 'B1', '11'], ['B0', 'B1', '11', '21']]
     },
     2: {  # 2 segments
-        MesType.BOND: [['11', 'B1'], ['B1', 'B2']],
-        MesType.ANGLE: [['11', 'B1', 'B2'], ['B1', 'B2', '12']],
-        MesType.DIHEDRAL: [['11', 'B1', 'B2', '12']]
+        MesType.BOND: [['10', 'B0'], ['B0', 'B1']],
+        MesType.ANGLE: [['10', 'B0', 'B1'], ['B0', 'B1', '11']],
+        MesType.DIHEDRAL: [['10', 'B0', 'B1', '11']]
     },
     1: {  # 1 segment
-        MesType.BOND: [['B1', 'B2']],
-        MesType.ANGLE: [['B1', 'B2', 'B3']],
-        MesType.DIHEDRAL: [['B1', 'B2', 'B3', 'B4']]
+        MesType.BOND: [['B0', 'B1']],
+        MesType.ANGLE: [['B0', 'B1', 'B2']],
+        MesType.DIHEDRAL: [['B0', 'B1', 'B2', 'B3']]
     }
 }
 
