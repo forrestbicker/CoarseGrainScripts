@@ -1,5 +1,5 @@
 # ================ Dependencies ================ #
-import os
+from enum import Enum
 
 
 # ===================== cd ===================== #
@@ -15,11 +15,12 @@ import os
 
 
 # ================== colorify ================== #
-def colorify(code,str):
+def colorify(code, str):
     return(f'\033[{code}m{str}\033[0m')
 
 
 # ================== progress ================== #
 def progress(float, width=25):  # renders ACSII progress bar from precent completeion
-    percent = int(float*100)
-    print('\r[{:{}}] {}%'.format('#'*(width*percent//100), width, percent), end='', flush=True)
+    percent = int(float * 100)
+    print('\r[{:{}}] {}%'.format('#' * (width * percent // 100), width, percent), end='', flush=True)
+

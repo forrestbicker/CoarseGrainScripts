@@ -16,7 +16,7 @@ import time
 import MDAnalysis as mda
 import BINAnalysis as boandi
 
-from commands import colorify
+from util import colorify
 
 
 # ================ Input Files ================  #

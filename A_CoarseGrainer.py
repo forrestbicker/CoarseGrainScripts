@@ -12,7 +12,7 @@ from collections import defaultdict
 import os
 
 import MDAnalysis as mda
-from commands import progress
+from util import progress
 
 from json import load
 
