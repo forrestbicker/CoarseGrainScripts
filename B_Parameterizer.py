@@ -70,12 +70,15 @@ def measure_all_connections(u, block_count, max_frame, stride):
             sel_resids = sel.residues.resids
             max_resid = max(sel_resids)
             for resid in sel_resids:  # loops thru each resid
-                for name_list in component_list:
+                for name_list in component_list: # generating info for specific measurement
                     # generates selection paramets
-                    params = gen_params(abrev_dict[resname_key], name_list, mes_type, max_resid, resid)
-                    mes_name = '_'.join(params[5:].split())
-                    atms = u.atoms.select_atoms(params)
-                    atms_dict[mes_name] = atms
+                    last_name = name_list[-1]
+                    last_resid = int(last_name[1:])
+                    if isvalid(last_resid, max_resid, mes_type):
+                        params = gen_params(abrev_dict[resname_key], name_list, mes_type, max_resid, resid)
+                        mes_name = '_'.join(params[5:].split())
+                        atms = u.atoms.select_atoms(params)
+                            atms_dict[mes_name] = atms
 
 
     if block_count > 1:
@@ -141,10 +144,7 @@ def gen_params(resname_key, name_list, mes_type, max_resid, resid):
         name = resname_key + name
         start_resid = int(name[2:])
         # ensures the function only works on mes_types that actually exist
-        if isvalid(start_resid, max_resid, mes_type):
-            name = name[:2] + str(resid + start_resid)
-        else:
-            pass  # ignores non-existent measurements
+        name = name[:2] + str(resid + start_resid)
         params += (f' {name}')
     return(params)
 
