@@ -195,7 +195,7 @@ for output_dict in output_dict_list:  # combines each block's output
 print('\nExporting {} measurement datasets to file...'.format(
     len(master_container_dict)))
 for container in master_container_dict.values():  # loops thru each measurement
-    filename = f'measurement_data/{container.name}.dat'
+    filename = f'outputs/measurement_data/{container.name}.dat'
     with open(filename, 'w+') as instance_output:  # writes measurment list data to file
         # writes integer denoting mes_type to file
         instance_output.write(f'mes_type: {container.mes_type}\n')
