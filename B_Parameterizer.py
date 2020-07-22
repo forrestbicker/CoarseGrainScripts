@@ -68,10 +68,11 @@ def measure_all_connections(u, block_count, max_frame, stride):
         for mes_type, component_list in resname_dict.items():
             sel = u.atoms.select_atoms(f'resname {resname_key}')
             sel_resids = sel.residues.resids
+            max_resid = max(sel_resids)
             for resid in sel_resids:  # loops thru each resid
                 for name_list in component_list:
                     # generates selection paramets
-                    params = gen_params(abrev_dict[resname_key], name_list, mes_type, sel_resids, resid)
+                    params = gen_params(abrev_dict[resname_key], name_list, mes_type, max_resid, resid)
                     mes_name = '_'.join(params[5:].split())
                     atms = u.atoms.select_atoms(params)
                     atms_dict[mes_name] = atms
@@ -130,9 +131,11 @@ def get_containers(arglist):
             print(colorify('32', f'Block {block_id} completed!'))
             return(value_dict)
 
+def isvalid(start_resid, max_resid, mes_type):
+    end_resid = start_resid - 1 + mes_type.value
+    return end_resid <= max_resid
 
-def gen_params(resname_key, name_list, mes_type, sel_resids, resid):
-    mes_type_list = ['Bond', 'Angle', 'Dihedral'] # TODO: create enum for mestypes
+def gen_params(resname_key, name_list, mes_type, max_resid, resid):
     params = 'name'
     for name in name_list:
         name = resname_key + name
