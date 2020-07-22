@@ -30,37 +30,46 @@ block_count = 4
 
 
 # ============= Pattern Generation ============= #
-amino_acid_molds = { # TODO: autodetect number and pattern of segments given a name using config
-    'LYS': {  # 3 segments
-        'Bond': [['K21', 'K11'], ['K11', 'KB1'], ['KB1', 'KB2']],
-        'Angle': [['K21', 'K11', 'KB1'], ['K11', 'KB1', 'KB2'], ['KB1', 'KB2', 'K12']],
-        'Dihedral': [['K21', 'K11', 'KB1', 'KB2'], ['K11', 'KB1', 'KB2', 'K12'], ['KB1', 'KB2', 'K12', 'K22']]
+residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
+
+amino_acid_blueprint = { # TODO: autodetect number and pattern of segments given a name using config
+    3: {  # 3 segments
+        'Bond': [['21', '11'], ['11', 'B1'], ['B1', 'B2']],
+        'Angle': [['21', '11', 'B1'], ['11', 'B1', 'B2'], ['B1', 'B2', '12']],
+        'Dihedral': [['21', '11', 'B1', 'B2'], ['K11', 'B1', 'B2', '12'], ['B1', 'B2', '12', '22']]
     },
-    'GLU DGLU': {  # 2 segments
-        'Bond': [['E11', 'EB1'], ['EB1', 'EB2']],
-        'Angle': [['E11', 'EB1', 'EB2'], ['EB1', 'EB2', 'E12']],
-        'Dihedral': [['E11', 'EB1', 'EB2', 'E12']]
+    2: {  # 2 segments
+        'Bond': [['11', 'B1'], ['B1', 'B2']],
+        'Angle': [['11', 'B1', 'B2'], ['B1', 'B2', '12']],
+        'Dihedral': [['11', 'B1', 'B2', '12']]
     },
-    # 'ALA': {  # 1 segment
-    #     'Bond': [['AB1', 'AB2']],
-    #     'Angle': [['AB1', 'AB2', 'AB3']],
-    #     'Dihedral': [['AB1', 'AB2', 'AB3', 'AB4']]
-    # }
+    1: {  # 1 segment
+        'Bond': [['B1', 'B2']],
+        'Angle': [['B1', 'B2', 'B3']],
+        'Dihedral': [['B1', 'B2', 'B3', 'B4']]
+    }
 }
 
+with open('mapping_dict.json', "r") as f:
+    mapping_dict = load(f)
+
+with open('abrev_dict.json', "r") as f:
+    abrev_dict = load(f)
 
 # ========= Multiprocessing Functions =========  #
 # master multiprocessing function
 def measure_all_connections(u, block_count, max_frame, stride):
     atms_dict = {}
-    for resname_key, resname_dict in amino_acid_molds.items():  # three nested loops to acsess the beads
+    for resname_key in residue_list:  # three nested loops to acsess the beads
+        component_count = len(mapping_dict[resname_key].keys())
+        resname_dict = amino_acid_blueprint[component_count]
         for mes_type, component_list in resname_dict.items():
             sel = u.atoms.select_atoms(f'resname {resname_key}')
             sel_resids = sel.residues.resids
-            for i, resid in enumerate(sel_resids):  # loops thru each resid
-                for j, name_list in enumerate(component_list):
+            for resid in sel_resids:  # loops thru each resid
+                for name_list in component_list:
                     # generates selection paramets
-                    params = gen_params(name_list, mes_type, sel_resids, resid)
+                    params = gen_params(abrev_dict[resname_key], name_list, mes_type, sel_resids, resid)
                     mes_name = '_'.join(params[5:].split())
                     atms = u.atoms.select_atoms(params)
                     atms_dict[mes_name] = atms
@@ -119,10 +128,11 @@ def get_containers(arglist):
             return(value_dict)
 
 
-def gen_params(name_list, mes_type, sel_resids, resid):
+def gen_params(resname_key, name_list, mes_type, sel_resids, resid):
     mes_type_list = ['Bond', 'Angle', 'Dihedral'] # TODO: create enum for mestypes
     params = 'name'
     for name in name_list:
+        name = resname_key + name
         i = int(name[2:])
         # ensures the function only works on mes_types that actually exist
         bool_list = [mes_type == item and resid + i < max(sel_resids) for item in enumerate(mes_type_list)]
@@ -151,7 +161,9 @@ print('Universe Generated!\nBegining Measurments:')
 
 
 # logging information to screen
-for resname_key, resname_dict in amino_acid_molds.items():
+for resname_key in residue_list:  # three nested loops to acsess the beads
+    component_count = len(mapping_dict[resname_key].keys())
+    resname_dict = amino_acid_blueprint[component_count]
     try:
         for mes_type, connection_map in resname_dict.items():
             mes_count = len(connection_map)
