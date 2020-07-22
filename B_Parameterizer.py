@@ -204,7 +204,7 @@ for container in master_container_dict.values():  # loops thru each measurement
     with open(filename, 'w+') as instance_output:  # writes measurment list data to file
         # writes integer denoting mes_type to file
         instance_output.write(f'mes_type: {container.mes_type}\n')
-        if container.mes_type == 0:
+        if container.mes_type == MesType.BOND:
             str_values = [str(value) for value in container.values]
         else:
             str_values = [str(value * 3.14159 / 180) for value in container.values]
