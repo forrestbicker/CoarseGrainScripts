@@ -36,19 +36,19 @@ residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
 
 amino_acid_blueprint = { # TODO: autodetect number and pattern of segments given a name using config
     3: {  # 3 segments
-        'Bond': [['21', '11'], ['11', 'B1'], ['B1', 'B2']],
-        'Angle': [['21', '11', 'B1'], ['11', 'B1', 'B2'], ['B1', 'B2', '12']],
-        'Dihedral': [['21', '11', 'B1', 'B2'], ['K11', 'B1', 'B2', '12'], ['B1', 'B2', '12', '22']]
+        MesType.BOND: [['21', '11'], ['11', 'B1'], ['B1', 'B2']],
+        MesType.ANGLE: [['21', '11', 'B1'], ['11', 'B1', 'B2'], ['B1', 'B2', '12']],
+        MesType.DIHEDRAL: [['21', '11', 'B1', 'B2'], ['K11', 'B1', 'B2', '12'], ['B1', 'B2', '12', '22']]
     },
     2: {  # 2 segments
-        'Bond': [['11', 'B1'], ['B1', 'B2']],
-        'Angle': [['11', 'B1', 'B2'], ['B1', 'B2', '12']],
-        'Dihedral': [['11', 'B1', 'B2', '12']]
+        MesType.BOND: [['11', 'B1'], ['B1', 'B2']],
+        MesType.ANGLE: [['11', 'B1', 'B2'], ['B1', 'B2', '12']],
+        MesType.DIHEDRAL: [['11', 'B1', 'B2', '12']]
     },
     1: {  # 1 segment
-        'Bond': [['B1', 'B2']],
-        'Angle': [['B1', 'B2', 'B3']],
-        'Dihedral': [['B1', 'B2', 'B3', 'B4']]
+        MesType.BOND: [['B1', 'B2']],
+        MesType.ANGLE: [['B1', 'B2', 'B3']],
+        MesType.DIHEDRAL: [['B1', 'B2', 'B3', 'B4']]
     }
 }
 
@@ -136,11 +136,10 @@ def gen_params(resname_key, name_list, mes_type, sel_resids, resid):
     params = 'name'
     for name in name_list:
         name = resname_key + name
-        i = int(name[2:])
+        start_resid = int(name[2:])
         # ensures the function only works on mes_types that actually exist
-        bool_list = [mes_type == item and resid + i < max(sel_resids) for item in enumerate(mes_type_list)]
-        if bool_list:
-            name = name[:2] + str(resid + i)
+        if isvalid(start_resid, max_resid, mes_type):
+            name = name[:2] + str(resid + start_resid)
         else:
             pass  # ignores non-existent measurements
         params += (f' {name}')
