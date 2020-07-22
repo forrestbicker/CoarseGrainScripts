@@ -23,7 +23,7 @@ from util import MesType
 
 # ================ Input Files ================  #
 topology = 'outputs/CoarseGrain/alanin_CoarseGrain.pdb'
-trajectory = 'outputs/CoarseGrain/alanin_CoarseGrain.dcd.dcd'
+trajectory = 'outputs/CoarseGrain/alanin_CoarseGrain.dcd'
 # '/Users/forrestbicker/Documents/Code/Python/csi_projects/protines/twoBlobs-CG.pdb'
 
 max_frame = 1000
