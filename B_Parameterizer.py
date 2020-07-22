@@ -17,6 +17,8 @@ import MDAnalysis as mda
 import BINAnalysis as boandi
 
 from util import colorify
+from json import load
+from util import MesType
 
 
 # ================ Input Files ================  #
@@ -119,10 +121,11 @@ def get_containers(arglist):
         if start <= f < stop:  # alterantive to slicing trajectory, because slicing breaks MDAnalysis in strange ways
             if f % step == 0:
                 for mes_name, atms in atms_dict.items():
-                    mes_type = mes_name.count('_') - 1
-                    value = measure(mes_type, atms)
-                    if value is not None:  # ensures that measurment exists
-                        value_dict.setdefault(mes_name, []).append(value)  # safe append to dict
+                    mes_type = MesType(mes_name.count('_') + 1)
+                    if mes_type != MesType.NULL:  # ensures that measurment exists
+                        value = measure(mes_type, atms)
+                        if value != None:
+                            value_dict.setdefault(mes_name, []).append(value)  # safe append to dict
         elif f >= stop:
             print(colorify('32', f'Block {block_id} completed!'))
             return(value_dict)
@@ -145,12 +148,12 @@ def gen_params(resname_key, name_list, mes_type, sel_resids, resid):
 
 
 def measure(mes_type, atms):
-    if mes_type + 2 == len(atms):
-        if mes_type == 0:  # bond
+    if mes_type == len(atms):
+        if mes_type == MesType.BOND:  # bond
             return(atms.bond.length())
-        elif mes_type == 1:  # angle
+        elif mes_type == MesType.ANGLE:  # angle
             return(atms.angle.angle())
-        elif mes_type == 2:  # dihedral
+        elif mes_type == MesType.DIHEDRAL:  # dihedral
             return(atms.dihedral.value())
 
 

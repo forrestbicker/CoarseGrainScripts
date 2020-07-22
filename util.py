@@ -24,3 +24,8 @@ def progress(float, width=25):  # renders ACSII progress bar from precent comple
     percent = int(float * 100)
     print('\r[{:{}}] {}%'.format('#' * (width * percent // 100), width, percent), end='', flush=True)
 
+class MesType(Enum):
+    NULL = 0
+    BOND = 2
+    ANGLE = 3
+    DIHEDRAL = 4
