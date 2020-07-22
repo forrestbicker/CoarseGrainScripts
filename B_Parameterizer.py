@@ -150,7 +150,7 @@ def gen_params(resname_key, name_list, mes_type, max_resid, resid):
 
 
 def measure(mes_type, atms):
-    if mes_type == len(atms):
+    if mes_type.value == len(atms):
         if mes_type == MesType.BOND:  # bond
             return(atms.bond.length())
         elif mes_type == MesType.ANGLE:  # angle
@@ -174,7 +174,7 @@ for resname_key in residue_list:  # three nested loops to acsess the beads
             mes_count = len(connection_map)
             res_count = len(u.atoms.select_atoms(f'resname {resname_key}').residues)
             frame_count = len(u.trajectory[:max_frame]) + 1
-            print(f'- Measuring {mes_count} {resname_key} {mes_type}s in {res_count} residues over {frame_count} frames')
+            print(f'- Measuring {mes_count} {resname_key} {mes_type.name}s in {res_count} residues over {frame_count} frames')
     except IndexError:
         pass
 
