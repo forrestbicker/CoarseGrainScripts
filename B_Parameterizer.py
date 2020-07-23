@@ -197,10 +197,10 @@ for output_dict in output_dict_list:
 print('\nExporting {} measurement datasets to file...'.format(
     len(master_container_dict)))
 for container in master_container_dict.values():  # loops thru each measurement
-    filename = f'outputs/measurement_data/{container.name}.dat'
+    filename = f'outputs/measurement_data/{container.mes_name}.dat'
     with open(filename, 'w+') as instance_output:  # writes measurment list data to file
         # writes integer denoting mes_type to file
-        instance_output.write(f'mes_type: {container.mes_type}\n')
+        instance_output.write(f'mes_type: {container.mes_type.name}\n')
         if container.mes_type == MesType.BOND:
             str_values = [str(value) for value in container.values]
         else:
