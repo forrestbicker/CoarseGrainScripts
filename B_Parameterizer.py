@@ -28,13 +28,13 @@ trajectory = 'outputs/CoarseGrain/alanin_CoarseGrain.dcd'
 
 max_frame = 1000
 stride = 1
-block_count = 4
+block_count = 3
 
 
 # ============= Pattern Generation ============= #
 residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
 
-amino_acid_blueprint = { # TODO: autodetect number and pattern of segments given a name using config
+amino_acid_blueprint = {  # TODO: autodetect number and pattern of segments given a name using config
     3: {  # 3 segments
         MesType.BOND: [['20', '10'], ['10', 'B0'], ['B0', 'B1']],
         MesType.ANGLE: [['20', '10', 'B0'], ['10', 'B0', 'B1'], ['B0', 'B1', '11']],
@@ -70,7 +70,7 @@ def measure_all_connections(u, block_count, max_frame, stride):
             sel_resids = sel.residues.resids
             max_resid = max(sel_resids)
             for resid in sel_resids:  # loops thru each resid
-                for name_list in component_list: # generating info for specific measurement
+                for name_list in component_list:  # generating info for specific measurement
                     # generates selection paramets
                     last_name = name_list[-1]
                     last_resid = resid + int(last_name[1:])
@@ -121,7 +121,7 @@ def get_containers(arglist):
     print(f'Initiating Block {block_id} for frames {start} through {stop} with stride {step}')
 
     value_dict = {}
-    for frame in u.trajectory: # TODO: get traj splicing to work 
+    for frame in u.trajectory:  # TODO: get traj splicing to work
         f = frame.frame
         if start <= f < stop:  # alterantive to slicing trajectory, because slicing breaks MDAnalysis in strange ways
             if f % step == 0:
@@ -181,7 +181,6 @@ for resname_key in residue_list:  # three nested loops to acsess the beads
         pass
 
 
-master_container_dict = {}
 s_time = time.time()
 output_dict_list = measure_all_connections(u, block_count, max_frame, stride)
 exec_time = time.time() - s_time
