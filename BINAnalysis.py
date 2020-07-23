@@ -118,9 +118,9 @@ class BoAnDi:  # a single instance of an bond/angle/dihedral
 
 # ================= Container =================  #
 class Container:  # A glorified list to be converted to a histogram
-    def __init__(self, name):
-        self.name = name
-        self.mes_type = name.count('_') - 1
+    def __init__(self, mes_name, mes_type):
+        self.mes_name = mes_name    
+        self.mes_type = mes_type
         self.values = []
 
     def add_values(self, value_list):

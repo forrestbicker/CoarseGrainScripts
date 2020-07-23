@@ -129,7 +129,9 @@ def get_containers(arglist):
                     if mes_type != MesType.NULL:  # ensures that measurment exists
                         value = measure(mes_type, atms)
                         if value != None:
-                            value_dict.setdefault(mes_name, []).append(value)  # safe append to dict
+                            if mes_name not in value_dict.keys():
+                                value_dict[mes_name] = boandi.Container(mes_name, mes_type)
+                            value_dict[mes_name].add_values([value])
         elif f >= stop:
             break
     print(colorify('32', f'Block {block_id} completed!'))
@@ -186,16 +188,12 @@ master_container_dict = {}
 s_time = time.time()
 output_dict_list = measure_all_connections(u, block_count, max_frame, stride)
 exec_time = time.time() - s_time
+master_container_dict = output_dict_list.pop()
 
-
-for output_dict in output_dict_list:  # combines each block's output
-    for mes_name, values in output_dict.items():
-
-        if mes_name not in master_container_dict.keys():  # ensures container exists in dict
-            master_container_dict[mes_name] = boandi.Container(mes_name)
-
-        container = master_container_dict[mes_name]
-        container.add_values(values)  # combining outputs
+# TODO: it is more efficent to split MEASURMEENTS across processors, not FRAMES
+for output_dict in output_dict_list:
+    for container in output_dict.values():
+        master_container_dict[container.mes_name].add_values(container.values)  # combining outputs
 
 
 # ========= Measruement Data Generation ========== #
