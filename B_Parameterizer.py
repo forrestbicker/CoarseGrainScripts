@@ -185,7 +185,6 @@ for resname_key in residue_list:  # three nested loops to acsess the beads
 master_container_dict = {}
 s_time = time.time()
 output_dict_list = measure_all_connections(u, block_count, max_frame, stride)
-output_dict_list = filter(None, output_dict_list)
 exec_time = time.time() - s_time
 
 
