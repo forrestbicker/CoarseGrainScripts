@@ -73,11 +73,12 @@ def measure_all_connections(u, block_count, max_frame, stride):
                 for name_list in component_list: # generating info for specific measurement
                     # generates selection paramets
                     last_name = name_list[-1]
-                    last_resid = int(last_name[1:])
-                    if isvalid(last_resid, max_resid, mes_type):
+                    last_resid = resid + int(last_name[1:])
+                    if last_resid <= max_resid:
                         params = gen_params(abrev_dict[resname_key], name_list, mes_type, max_resid, resid)
                         mes_name = '_'.join(params[5:].split())
                         atms = u.atoms.select_atoms(params)
+                        if mes_type.value == len(atms):  # ensures measurement is valid
                             atms_dict[mes_name] = atms
 
 
@@ -136,10 +137,6 @@ def get_containers(arglist):
             break
     print(colorify('32', f'Block {block_id} completed!'))
     return(value_dict)
-
-def isvalid(start_resid, max_resid, mes_type):
-    end_resid = start_resid - 1 + mes_type.value
-    return end_resid <= max_resid
 
 def gen_params(resname_key, name_list, mes_type, max_resid, resid):
     params = 'name'
