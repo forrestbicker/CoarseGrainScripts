@@ -158,6 +158,8 @@ def measure(mes_type, atms):
             return(atms.angle.angle())
         elif mes_type == MesType.DIHEDRAL:  # dihedral
             return(atms.dihedral.value())
+    else:
+        raise Exception(f'{len(atms)} is an invalid number of atoms for measurement type {mes_type.name}')
 
 
 # ============= Object Measurment =============  #
