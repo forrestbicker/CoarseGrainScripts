@@ -186,7 +186,7 @@ output_dict_list = measure_all_connections(u, block_count, max_frame, stride)
 exec_time = time.time() - s_time
 master_container_dict = output_dict_list.pop()
 
-# TODO: it is more efficent to split MEASURMEENTS across processors, not FRAMES
+# NOTE: it is more efficent to split MEASURMEENTS across processors, not FRAMES
 for output_dict in output_dict_list:
     for container in output_dict.values():
         master_container_dict[container.mes_name].add_values(container.values)  # combining outputs
@@ -199,11 +199,12 @@ for container in master_container_dict.values():  # loops thru each measurement
     filename = f'outputs/measurement_data/{container.mes_name}.dat'
     with open(filename, 'w+') as instance_output:  # writes measurment list data to file
         # writes integer denoting mes_type to file
-        instance_output.write(f'mes_type: {container.mes_type.name}\n')
+        unit = "ångström" if container.mes_type.name == MesType.BOND else "radians"
+        instance_output.write(f'mes_type: {container.mes_type.name} unit: {unit}\n')
         if container.mes_type == MesType.BOND:
             str_values = [str(value) for value in container.values]
         else:
-            str_values = [str(value * 3.14159 / 180) for value in container.values]
+            str_values = [str(math.radians(value)) for value in container.values]
         instance_output.write('\n'.join(str_values))
 
 
