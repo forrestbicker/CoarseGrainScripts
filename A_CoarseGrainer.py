@@ -87,7 +87,7 @@ fools = mda.AtomGroup([pair[0] for pair in bead_data])
 print('Writing Output Files...')
 
 progress(0)
-with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.dcd', fools.n_atoms) as w:
+with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', fools.n_atoms) as w:
     for frame in u.trajectory:  # loops tru each frame
         f = frame.frame
 
@@ -101,7 +101,7 @@ progress(1)
 print('\nGenerated All Coarse Grained Molecules!')
 print('Trajectory written!')
 
-fools.write(f'outputs/CoarseGrain/{simulation_name}_CoarseGrain.pdb')
+fools.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb')
 print('Topology written!')
 
 print('Task complete!')
