@@ -59,8 +59,9 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
     # selects all resname-specific atoms
     resname_atoms = u.atoms.select_atoms(resname_sel)
     # identifys all resname-specific residues
-    resids = resname_atoms.residues.resids
-    for resid in resids:  # loops thu each matching residue id
+    residues = resname_atoms.residues
+    for residue in residues:  # loops thu each matching residue id
+        resid = residue.resid
         try:
             segments = mapping_dict[resname_root].keys()
         except KeyError:
@@ -68,9 +69,9 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
             raise
         for segment in segments:  # loops thru each segment of each residue
             name_params = ' '.join(mapping_dict[resname_root][segment])
-            params = f'resname {resname} and resid {resid} and (name {name_params})'
+            params = f'name {name_params}'
             # selects all atoms in a given residue segment
-            atms = u.atoms.select_atoms(params)
+            atms = residue.atoms.select_atoms(params)
             dummy = atms[0]
             # positions a dummy atom at the center of mass
             dummy.position = atms.center_of_mass()
