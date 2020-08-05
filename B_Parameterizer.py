@@ -199,7 +199,7 @@ for container in master_container_dict.values():  # loops thru each measurement
     filename = f'outputs/measurement_data/{container.mes_name}.dat'
     with open(filename, 'w+') as instance_output:  # writes measurment list data to file
         # writes integer denoting mes_type to file
-        unit = "ångström" if container.mes_type.name == MesType.BOND else "radians"
+        unit = "angstrom" if container.mes_type.name == MesType.BOND else "radians"
         instance_output.write(f'mes_type: {container.mes_type.name} unit: {unit}\n')
         instance_output.write('\n'.join(str_values))
 
