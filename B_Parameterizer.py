@@ -154,9 +154,9 @@ def measure(mes_type, atms):
         if mes_type == MesType.BOND:  # bond
             return(atms.bond.length())
         elif mes_type == MesType.ANGLE:  # angle
-            return(atms.angle.angle())
+            return(math.radians(atms.angle.angle()))
         elif mes_type == MesType.DIHEDRAL:  # dihedral
-            return(atms.dihedral.value())
+            return(math.radians(atms.dihedral.value()))
     else:
         raise Exception(f'{len(atms)} is an invalid number of atoms for measurement type {mes_type.name}')
 
@@ -201,10 +201,6 @@ for container in master_container_dict.values():  # loops thru each measurement
         # writes integer denoting mes_type to file
         unit = "ångström" if container.mes_type.name == MesType.BOND else "radians"
         instance_output.write(f'mes_type: {container.mes_type.name} unit: {unit}\n')
-        if container.mes_type == MesType.BOND:
-            str_values = [str(value) for value in container.values]
-        else:
-            str_values = [str(math.radians(value)) for value in container.values]
         instance_output.write('\n'.join(str_values))
 
 
