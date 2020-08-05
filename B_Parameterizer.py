@@ -201,7 +201,11 @@ for container in master_container_dict.values():  # loops thru each measurement
         # writes integer denoting mes_type to file
         unit = "angstrom" if container.mes_type.name == MesType.BOND else "radians"
         instance_output.write(f'mes_type: {container.mes_type.name} unit: {unit}\n')
-        instance_output.write('\n'.join(str_values))
+
+        value_str = ""
+        for value in container.values:
+            value_str += value + '\n'
+        instance_output.write(value_str)
 
 
 # ============ File Object Cleanup ============  #
