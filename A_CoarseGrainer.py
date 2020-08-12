@@ -61,25 +61,24 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
     # identifys all resname-specific residues
     residues = resname_atoms.residues
     for residue in residues:  # loops thu each matching residue id
-        resid = residue.resid
+        resid = residue.resid # store int id
         try:
             segments = mapping_dict[resname_root].keys()
+            for segment in segments:  # loops thru each segment of each residue
                 params = 'name' + ' '.join(mapping_dict[resname_root][segment])  # generates param
-        except KeyError:
-            print('{resname_root} was not found in amino_acid_dict. Please add its parameters to the dictionary. (See README section A3. for help)')
-            raise
-        for segment in segments:  # loops thru each segment of each residue
-            params = f'name {name_params}'
-            # selects all atoms in a given residue segment
-            atms = residue.atoms.select_atoms(params)
-            dummy = atms[0]
-            # positions a dummy atom at the center of mass
-            dummy.position = atms.center_of_mass()
-            # names dummy atom in propper format
-            dummy.name = '{}{}{}'.format(
-                abrev_dict[resname[-3:]], segment[0], resid)
+                # selects all atoms in a given residue segment
+                atms = residue.atoms.select_atoms(params)
+                dummy = atms[0]
+                # positions a dummy atom at the center of mass
+                dummy.position = atms.center_of_mass()
+                # names dummy atom in propper format
+                dummy.name = '{}{}{}'.format(
+                    abrev_dict[resname[-3:]], segment[0], resid)
 
-            bead_data.append((dummy, atms))
+                bead_data.append((dummy, atms))
+        except KeyError:
+            print('{resname_root} was not found in amino_acid_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
+
 
 
 fools = mda.AtomGroup([pair[0] for pair in bead_data])
