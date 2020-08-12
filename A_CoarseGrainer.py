@@ -64,11 +64,11 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
         resid = residue.resid
         try:
             segments = mapping_dict[resname_root].keys()
+                params = 'name' + ' '.join(mapping_dict[resname_root][segment])  # generates param
         except KeyError:
             print('{resname_root} was not found in amino_acid_dict. Please add its parameters to the dictionary. (See README section A3. for help)')
             raise
         for segment in segments:  # loops thru each segment of each residue
-            name_params = ' '.join(mapping_dict[resname_root][segment])
             params = f'name {name_params}'
             # selects all atoms in a given residue segment
             atms = residue.atoms.select_atoms(params)
