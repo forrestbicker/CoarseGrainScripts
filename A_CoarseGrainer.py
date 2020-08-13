@@ -54,15 +54,11 @@ number_of_frames = len(u.trajectory)
 bead_data = []
 cg_beads = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
-    # extracts the residue name in amino_acid_dict format
-    resname_root = resname[-3:]
-    resname_sel = f'resname {resname}'
-    # selects all resname-specific atoms
-    resname_atoms = u.atoms.select_atoms(resname_sel)
-    # identifys all resname-specific residues
-    residues = resname_atoms.residues
+    resname_root = resname[-3:]  # extracts the residue name in amino_acid_dict format
+    resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
+    residues = resname_atoms.residues  # identifys all resname-specific residues
     for residue in residues:  # loops thu each matching residue id
-        resid = residue.resid # store int id
+        resid = residue.resid  # store int id
         try:
             segments = mapping_dict[resname_root].keys()
             for segment in segments:  # loops thru each segment of each residue
@@ -70,11 +66,8 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
                 # selects all atoms in a given residue segment
                 atms = residue.atoms.select_atoms(params)
                 dummy = atms[0]
-                # positions a dummy atom at the center of mass
-                dummy.position = atms.center_of_mass()
                 # names dummy atom in propper format
-                dummy.name = '{}{}{}'.format(
-                    abrev_dict[resname[-3:]], segment[0], resid)
+                dummy.name = str(abrev_dict[resname[-3:]]) + str(segment[0]) + str(resid)
 
                 bead_data.append((dummy, atms))
                 cg_beads.append(dummy)
