@@ -52,6 +52,7 @@ number_of_frames = len(u.trajectory)
 
 
 bead_data = []
+cg_beads = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
     # extracts the residue name in amino_acid_dict format
     resname_root = resname[-3:]
@@ -76,12 +77,13 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
                     abrev_dict[resname[-3:]], segment[0], resid)
 
                 bead_data.append((dummy, atms))
+                cg_beads.append(dummy)
         except KeyError:
             print('{resname_root} was not found in amino_acid_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
 
 
 
-fools = mda.AtomGroup([pair[0] for pair in bead_data])
+cg_beads = mda.AtomGroup(cg_beads)
 
 print('Writing Output Files...')
 
@@ -94,7 +96,7 @@ with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', fools.n_atoms) 
         for dummy, atms in bead_data:
             dummy.position = atms.center_of_mass()
 
-        w.write(fools)
+        w.write(cg_beads)
         progress(f / number_of_frames)
 progress(1)
 print('\nGenerated All Coarse Grained Molecules!')
