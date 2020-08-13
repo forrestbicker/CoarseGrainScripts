@@ -65,7 +65,7 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
         try:
             segments = mapping_dict[resname_root].keys()
             for segment in segments:  # loops thru each segment of each residue
-                params = 'name' + ' '.join(mapping_dict[resname_root][segment])  # generates param
+                params = 'name ' + ' '.join(mapping_dict[resname_root][segment])  # generates param
                 # selects all atoms in a given residue segment
                 atms = residue.atoms.select_atoms(params)
                 dummy = atms[0]
@@ -102,5 +102,6 @@ print('Trajectory written!')
 
 fools.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb')
 print('Topology written!')
+print(f' Reduced {len(u.atoms)} atoms to {len(fools)} beads!')
 
 print('Task complete!')
