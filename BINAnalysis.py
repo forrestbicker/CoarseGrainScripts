@@ -99,7 +99,7 @@ class Bin:  # a bin containing many boandi objects
         x = abs(self.floor)
         Px = self.count / self.p_histogram.count
         if self.mes_type == '0':
-            return(-kB * T * log(Px / (4 * 3.141592653 * x ** 2)))
+            return(-kB * T * log(Px / (4 * math.pi * x ** 2)))
         else:
             return(-kB * T * log(Px / sin(x)))
 

@@ -34,6 +34,7 @@ block_count = 3
 # ============= Pattern Generation ============= #
 residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
 
+# This is a dictionary of nested dictionaries containing specification of the structure of all desired measurements. A new mold will likely have to be added for each coarse grained simulation you wish to analyze, however, since the format acts as a mold rather an explicit mapping for each measurement, molds are highly reusable with little to no modification. Each new mold entry should be in the following format:
 amino_acid_blueprint = {  # TODO: autodetect number and pattern of segments given a name using config
     3: {  # 3 segments
         MesType.BOND: [['20', '10'], ['10', 'B0'], ['B0', 'B1']],

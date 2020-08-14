@@ -35,8 +35,7 @@ def func_to_xy(x, y, func, *argv):
     res = 2**8  # resolution of curve
     xrange = max(x) - min(x)
 
-    x = np.array([min(x) + xrange * (i / res) for i in range(res)
-                  if f(min(x) + xrange * (i / res), *argv) <= max(y)])
+    x = np.array([min(x) + xrange * (i / res) for i in range(res) if f(min(x) + xrange * (i / res), *argv) <= max(y)])
     y = [f(x, *argv) for x in x]
     return([x, y])
 

@@ -74,14 +74,12 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
         except KeyError:
             print('{resname_root} was not found in amino_acid_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
 
-
-
 cg_beads = mda.AtomGroup(cg_beads)
 
 print('Writing Output Files...')
 
 progress(0)
-with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', fools.n_atoms) as w:
+with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True) as w:
     for frame in u.trajectory:  # loops tru each frame
         f = frame.frame
 
