@@ -36,10 +36,15 @@ residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
 
 # This is a dictionary of nested dictionaries containing specification of the structure of all desired measurements. A new mold will likely have to be added for each coarse grained simulation you wish to analyze, however, since the format acts as a mold rather an explicit mapping for each measurement, molds are highly reusable with little to no modification. Each new mold entry should be in the following format:
 amino_acid_blueprint = {  # TODO: autodetect number and pattern of segments given a name using config
+    4: {  # 4 segments
+        MesType.BOND: [['30', '20'], ['20', '10'], ['10', 'B0'], ['B0', 'B1']],
+        MesType.ANGLE: [['30', '20', '10'], ['20', '10', 'B0'], ['10', 'B0', 'B1'], ['B0', 'B1', '11']],
+        MesType.DIHEDRAL: [['30', '20', '10', 'B0'], ['20', '10', 'B0', 'B1'], ['10', 'B0', 'B1', '11'], ['B0', 'B1', '11', '21']]
+    },
     3: {  # 3 segments
         MesType.BOND: [['20', '10'], ['10', 'B0'], ['B0', 'B1']],
         MesType.ANGLE: [['20', '10', 'B0'], ['10', 'B0', 'B1'], ['B0', 'B1', '11']],
-        MesType.DIHEDRAL: [['20', '10', 'B0', 'B1'], ['K10', 'B0', 'B1', '11'], ['B0', 'B1', '11', '21']]
+        MesType.DIHEDRAL: [['20', '10', 'B0', 'B1'], ['10', 'B0', 'B1', '11'], ['B0', 'B1', '11', '21']]
     },
     2: {  # 2 segments
         MesType.BOND: [['10', 'B0'], ['B0', 'B1']],
