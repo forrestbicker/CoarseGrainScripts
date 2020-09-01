@@ -20,5 +20,11 @@
     "THR": "T",
     "TRP": "W",
     "TYR": "Y",
-    "VAL": "V"
+    "VAL": "V",
+    "DA": "DA",
+    "DT": "DT",
+    "DG": "DG",
+    "DC": "DC",
+    "PHOSPHATE": "P",
+    "RIBOSE": "R"
 }
