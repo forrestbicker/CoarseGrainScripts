@@ -72,7 +72,7 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
                 bead_data.append((dummy, atms))
                 cg_beads.append(dummy)
         except KeyError:
-            print('{resname_root} was not found in amino_acid_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
+            print(f'{resname} was not found in abrev_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
 
 cg_beads = mda.AtomGroup(cg_beads)
 
