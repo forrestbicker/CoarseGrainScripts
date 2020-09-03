@@ -38,7 +38,10 @@ with open('abrev_dict.json', "r") as f:
 
 # ================= Execution =================  #
 print('Generating Universe...')
-u = mda.Universe(topology, trajectory)
+if trajectory != "":
+    u = mda.Universe(topology, trajectory)
+else:
+    u = mda.Universe(topology)
 print('Universe Generated!')
 
 print('Genarating Coarse Gained Molecules...')
