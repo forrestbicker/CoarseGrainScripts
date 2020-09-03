@@ -76,14 +76,25 @@ cg_beads = mda.AtomGroup(cg_beads)
 
 print('Writing Output Files...')
 
-progress(0)
-with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True) as w:
-    for frame in u.trajectory:  # loops tru each frame
-        f = frame.frame
+if trajectory != "":
+    progress(0)
+    with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True) as w:
+        for frame in u.trajectory:  # loops tru each frame
+            f = frame.frame
 
-        # positions a dummy atoms at cluster center of mass
-        for dummy, atms in bead_data:
-            dummy.position = atms.center_of_mass()
+            # positions a dummy atoms at cluster center of mass
+            for dummy, atms in bead_data:
+                dummy.position = atms.center_of_mass()
+
+            w.write(cg_beads)
+            progress(f / number_of_frames)
+    progress(1)
+
+    print('\nGenerated All Coarse Grained Molecules!')
+    print(f'Trajectory written to {simulation_name}_CG.dcd!')
+else:
+    for dummy, atms in bead_data:
+        dummy.position = atms.center_of_mass()
 
         w.write(cg_beads)
         progress(f / number_of_frames)
