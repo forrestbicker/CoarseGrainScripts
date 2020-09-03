@@ -32,13 +32,8 @@ residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
 with open('mapping_dict.json', "r") as f:
     mapping_dict = load(f)
 
-abrev_dict = {
-    'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'ASX': 'B',
-    'CYS': 'C', 'GLU': 'E', 'GLN': 'Q', 'GLX': 'Z', 'GLY': 'G',
-    'HIS': 'H', 'ILE': 'I', 'LEU': 'L', 'LYS': 'K', 'MET': 'M',
-    'PHE': 'F', 'PRO': 'P', 'SER': 'S', 'THR': 'T', 'TRP': 'W',
-    'TYR': 'Y', 'VAL': 'V',
-}
+with open('abrev_dict.json', "r") as f:
+    abrev_dict = load(f)
 
 
 # ================= Execution =================  #
