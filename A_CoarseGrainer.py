@@ -54,6 +54,10 @@ cg_beads = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
     resname_root = resname[-3:]  # extracts the residue name in amino_acid_dict format
     resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
+    if resname == "PHOSPHATE" or resname == "RIBOSE":
+        resname_atoms = u.atoms.select_atoms('resname DA DT DG DC DU')
+    else:
+        resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
     residues = resname_atoms.residues  # identifys all resname-specific residues
     for residue in residues:  # loops thu each matching residue id
         resid = residue.resid  # store int id
