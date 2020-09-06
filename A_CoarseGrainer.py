@@ -52,8 +52,6 @@ number_of_frames = len(u.trajectory)
 bead_data = []
 cg_beads = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
-    resname_root = resname[-3:]  # extracts the residue name in amino_acid_dict format
-    resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
     if resname == "PHOSPHATE" or resname == "RIBOSE":
         resname_atoms = u.atoms.select_atoms('resname DA DT DG DC DU')
     else:
@@ -62,14 +60,14 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
     for residue in residues:  # loops thu each matching residue id
         resid = residue.resid  # store int id
         try:
-            segments = mapping_dict[resname_root].keys()
+            segments = mapping_dict[resname].keys()
             for segment in segments:  # loops thru each segment of each residue
-                params = 'name ' + ' '.join(mapping_dict[resname_root][segment])  # generates param
+                params = 'name ' + ' '.join(mapping_dict[resname][segment])  # generates param
                 # selects all atoms in a given residue segment
                 atms = residue.atoms.select_atoms(params)
                 dummy = atms[0]
                 # names dummy atom in propper format
-                dummy.name = str(abrev_dict[resname[-3:]]) + str(segment[0]) + str(resid)
+                dummy.name = str(abrev_dict[resname]) + str(segment[0]) + "-" + str(resid)
 
                 bead_data.append((dummy, atms))
                 cg_beads.append(dummy)
