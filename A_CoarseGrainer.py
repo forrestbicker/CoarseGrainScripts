@@ -48,7 +48,6 @@ print('Genarating Coarse Gained Molecules...')
 
 number_of_frames = len(u.trajectory)
 
-
 bead_data = []
 cg_beads = []
 for resname in residue_list:  # loops tru each residue to be coarse grained
@@ -98,11 +97,7 @@ else:
     for dummy, atms in bead_data:
         dummy.position = atms.center_of_mass()
 
-        w.write(cg_beads)
-        progress(f / number_of_frames)
-progress(1)
-print('\nGenerated All Coarse Grained Molecules!')
-print(f'Trajectory written to {simulation_name}_CG.dcd!')
+u.delete_bonds(u.bonds[:])
 
 cg_beads.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb')
 print(f'Topology written to {simulation_name}_CG.pdb!')
