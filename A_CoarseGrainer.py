@@ -24,6 +24,7 @@ from json import load
 topology = 'inputs/alanin.pdb'
 trajectory = 'inputs/alanin.dcd'
 simulation_name = 'alanin'
+simulation_name = os.path.basename(topology).split(".")[0]
 
 # ================= User Input ================= #
 residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
