@@ -150,7 +150,7 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + `Boandi`*
     + Specially developed histogram, bin, and measurement assistance package
 
-## Thanks
-+ Dr. Loverde
+## Acknowledgements
++ Dr. Sharon Loverde
 + Phu Tang
 + William Hu
