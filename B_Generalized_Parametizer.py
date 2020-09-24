@@ -46,3 +46,20 @@ def measure(measurement):
     elif measurement.btype == 'dihedral':  # dihedral
         return(math.radians(measurement.value()))
 
+measurements = list(u.bonds) + list(u.angles) + list(u.dihedrals)
+measurement_dict = {}
+measurement_names = []
+
+for measurement in measurements:
+    name = gen_name(measurement)
+    measurement_dict[name] = []
+    measurement_names.append(name)
+
+if trajectory != "":
+    for t in u.trajectory[0:max_frame:stride]:
+        for i, measurement in enumerate(measurements):
+            measurement_dict[measurement_names[i]].append(measure(measurement))
+else:
+    for i, measurement in enumerate(measurements):
+        measurement_dict[measurement_names[i]].append(measure(measurement))
+
