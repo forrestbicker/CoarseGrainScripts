@@ -71,7 +71,8 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
                 atms = residue.atoms.select_atoms(params)
                 dummy = atms[0]
                 # names dummy atom in propper format
-                dummy.name = str(abrev_dict[resname]) + str(segment[0]) + "-" + str(resid)
+                dummy.name = str(abrev_dict[resname]) + str(segment[0]) + str(resid)
+                dummy.type = str(segment[0])
 
                 bead_data.append((dummy, atms))
                 cg_beads.append(dummy)
@@ -94,6 +95,8 @@ for dummy, atms in bead_data:
                         new_bonds.append([dummy.ix, atom.ix])
 for bond in u.bonds:
     u.delete_bonds([bond])
+
+u.add_TopologyAttr('bonds', new_bonds)
 
 print('Writing Output Files...')
 
