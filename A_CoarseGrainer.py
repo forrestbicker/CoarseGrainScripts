@@ -100,7 +100,7 @@ print('Writing Output Files...')
 if trajectory != "":
     number_of_frames = len(u.trajectory)
     progress(0)
-    with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True) as w:
+    with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True, bonds='all') as w:
         for frame in u.trajectory:  # loops tru each frame
             f = frame.frame
 
@@ -118,9 +118,10 @@ else:
     for dummy, atms in bead_data:
         dummy.position = atms.center_of_mass()
 
-u.delete_bonds(u.bonds[:])
+for dummy, atms in bead_data:
+        dummy.type = ''
 
-cg_beads.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb')
+cg_beads.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb', bonds='all')
 print(f'Topology written to {simulation_name}_CG.pdb!')
 print(f'Reduced {len(u.atoms)} atoms to {len(cg_beads)} beads!')
 
