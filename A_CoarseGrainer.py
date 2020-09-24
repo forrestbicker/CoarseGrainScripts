@@ -47,7 +47,6 @@ print('Universe Generated!')
 
 print('Genarating Coarse Gained Molecules...')
 
-number_of_frames = len(u.trajectory)
 print(u.bonds)
 print('Calculating Bond connections...')
 resnames = ' '.join(residue_list)
@@ -99,6 +98,7 @@ for bond in u.bonds:
 print('Writing Output Files...')
 
 if trajectory != "":
+    number_of_frames = len(u.trajectory)
     progress(0)
     with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True) as w:
         for frame in u.trajectory:  # loops tru each frame
