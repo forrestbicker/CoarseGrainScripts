@@ -93,6 +93,8 @@ for dummy, atms in bead_data:
                         new_bonds.append([dummy.ix, atom.type.ix]) # type is used to store the cluster dummy
                     except AttributeError: # raises if connected atom is annother dummy
                         new_bonds.append([dummy.ix, atom.ix])
+for bond in u.bonds:
+    u.delete_bonds([bond])
 print('Writing Output Files...')
 
 if trajectory != "":
