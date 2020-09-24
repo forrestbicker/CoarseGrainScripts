@@ -84,6 +84,7 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
 
 cg_beads = mda.AtomGroup(cg_beads)
 
+new_bonds = []
 for dummy, atms in bead_data:
     for bond in dummy.bonds:
         for atom in bond.atoms:
