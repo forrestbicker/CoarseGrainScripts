@@ -31,3 +31,18 @@ print('Begining Angle and Dihedral Calculation...')
 u.atoms.guess_bonds({'D': 1, 'RB': 1})
 
 print('Begining Measurements!')
+
+def gen_name(measurement):
+    mes_name = ''
+    for atom in list(measurement.atoms):
+        mes_name += atom.name + '-'
+    return(mes_name[:-1])
+
+def measure(measurement):
+    if measurement.btype == 'bond':  # bond
+        return(measurement.length())
+    elif measurement.btype == 'angle':  # angle
+        return(math.radians(measurement.angle()))
+    elif measurement.btype == 'dihedral':  # dihedral
+        return(math.radians(measurement.value()))
+
