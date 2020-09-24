@@ -63,3 +63,18 @@ else:
     for i, measurement in enumerate(measurements):
         measurement_dict[measurement_names[i]].append(measure(measurement))
 
+
+print('\nExporting {} measurement datasets to file...'.format(
+    len(measurement_names)))
+for i, name in enumerate(measurement_names):  # loops thru each measurement
+    filename = f'outputs/measurement_data/{simulation_name}/{name}.dat'
+    with open(filename, 'w+') as instance_output:  # writes measurment list data to file
+        # writes integer denoting mes_type to file
+        unit = "angstrom" if i < len(u.bonds) else "radians"
+        instance_output.write(f'mes_type: {"a"} unit: {unit}\n')
+
+        value_str = ""
+        for value in measurement_dict[name]:
+            value_str += str(value) + '\n'
+        instance_output.write(value_str)
+# print('Done!')
