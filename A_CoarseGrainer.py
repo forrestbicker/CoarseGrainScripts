@@ -48,6 +48,11 @@ print('Universe Generated!')
 print('Genarating Coarse Gained Molecules...')
 
 number_of_frames = len(u.trajectory)
+print(u.bonds)
+print('Calculating Bond connections...')
+resnames = ' '.join(residue_list)
+u.select_atoms(f'resname {resnames}').guess_bonds(vdwradii={'MN': 1})
+print(u.bonds)
 
 bead_data = []
 cg_beads = []
