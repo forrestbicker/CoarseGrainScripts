@@ -27,3 +27,7 @@ else:
     u = mda.Universe(topology)
 print('Universe Generated!')
 
+print('Begining Angle and Dihedral Calculation...')
+u.atoms.guess_bonds({'D': 1, 'RB': 1})
+
+print('Begining Measurements!')
