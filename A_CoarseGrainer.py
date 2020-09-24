@@ -76,11 +76,23 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
 
                 bead_data.append((dummy, atms))
                 cg_beads.append(dummy)
+
+                for atm in atms:
+                    atm.type = dummy
         except KeyError:
             print(f'{resname} was not found in abrev_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
 
 cg_beads = mda.AtomGroup(cg_beads)
 
+for dummy, atms in bead_data:
+    for bond in dummy.bonds:
+        for atom in bond.atoms:
+            if atom != dummy:
+                if atom not in atms:
+                    try:
+                        new_bonds.append([dummy.ix, atom.type.ix]) # type is used to store the cluster dummy
+                    except AttributeError: # raises if connected atom is annother dummy
+                        new_bonds.append([dummy.ix, atom.ix])
 print('Writing Output Files...')
 
 if trajectory != "":
