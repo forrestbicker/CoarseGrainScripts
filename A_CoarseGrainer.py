@@ -28,6 +28,7 @@ simulation_name = os.path.basename(topology).split(".")[0]
 
 # ================= User Input ================= #
 residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
+# residue_list = ['DA', 'DT', 'DG', 'DC', 'PHOSPHATE', 'RIBOSE']
 
 # ============== Misc Initiation ==============  #
 with open('mapping_dict.json', "r") as f:
