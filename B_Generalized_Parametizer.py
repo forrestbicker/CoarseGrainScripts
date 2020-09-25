@@ -1,4 +1,11 @@
 #! /Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+# ============================================== #
+# ====== B: Generalized Coarse Grain Parameterization ====== #
+# ============================================== #
+# Written by Forrest Bicker
+# September 2020
+#
+
 # ================ Dependencies ================ #
 import numpy as np
 import multiprocessing
