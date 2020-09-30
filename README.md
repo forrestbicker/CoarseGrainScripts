@@ -5,11 +5,11 @@
 ## Script A - Coarse Grainer
 
 ###### **A1. Description**
-Converts an atomistic simulation to a coarse grained one using SDK coarse graining mapping
+Converts an atomistic simulation to a coarse grained one using SDK coarse graining mapping. Pre-existing mappings exist for the fundamental amino acids plus nucleic acids and their backbone, however the mapping blueprint is designed to be highly customizable for indivudal expansion.
 
 ###### **A2. Input Files**
 + `topology`: Atomistic topology file
-+ `trajectory`: Atomistic trajectory file
++ `trajectory`: Atomistic trajectory file (if you wish to coarse-grain a static frame, use an empty string for trajectory)
 
 ###### **A3. Input Parameters**
 + `residue_list`: List of three-letter amino acid abbreviations. The coarse grained file will only contain beads from amino acids included in this list.
@@ -22,7 +22,7 @@ Converts an atomistic simulation to a coarse grained one using SDK coarse graini
 }
 ```
 
-   + _NAME_: The three-letter IUPAC abbreviation for the amino acid
+   + _NAME_: The three-letter IUPAC abbreviation for the amino acid; DA, DT, DG, DC, PHOSPHATE, RIBOSE for DNA components
        + **WARNING**: The input topology and trajectory _must_ specify the NAME of each atom using the three-letter IUPAC NAME of its containing amino acid which matches how amino acids are named in `mapping_dict`. This is especially important to take note of when adding a mapping to the `mapping_dict`, as the three-letter IUPAC NAME you input must correspond to atom names in the topology and trajectory. Additionally, all NAMEs must be exactly three letters long or errors may occur.
    + _component_atoms_: A list of all atoms which compose a given bead.
        + **WARNING**: List contents will be directly passed to MDAnalysis to select the individual atoms, and as such must be in a format MDAnalysis can understand which matches the topology and trajectory contents. To ensure proper functionality, check how atoms are named in the source topology and trajectory if unsure.
@@ -62,63 +62,12 @@ e.g.
 Measures all bond lengths, angle measures, and dihedral angles between coarse grain beads. Can be configured to run computations in parallel on multiple CPUs.
 
 ###### **B2. Input Files**
-+ `topology`: Coarse grained topology file (generated from script A)
-+ `trajectory`: Coarse grained trajectory file (generated from script A)
++ `topology`: Coarse grained topology file (MUST specify bond connections between CG beads, directly using output from script A recommended)
++ `trajectory`: Coarse grained trajectory file
 
 ###### **B3. Input Parameters**
-+ `block_count`: Determines the number of blocks which the computation will be broken into. A value of `1` will make the computation run on a single CPU. Any value greater than 1 will cause the computation to be spread across all available CPUs on the device, with each CPU computing one block at a time, and moving onto a new block if once it has completed the prior computation. Setting this value to the exact number of available CPUs will yield the best performance.
-
-+ `max_frame`: Determines the final frame of `trajectory` to be analyzed. A value of `-1` will analyze all frames.
-+ `stride`: Determines the stride to be used to analyze `trajectory`. A value of `1` will analyze all frames.
-
-+ `amino_acid_molds`: This is a dictionary that specifies the basic framework of possible measurements in an amino acid structure for coarse-grained amino acids consiting of 1, 2, or 3 beads. This dictionary may be expanded to accomodate for chained coarse grained molecules of even higher bead count if required situations. A new mold entry should be in the following format:
-
-```
-'LENGTH': {
-    'Bond': [bond_list],
-    'Angle': [angle_list],
-    'Dihedral': [dihedral_list]
-},
-```
-
-   + _LENGTH_: Number of beads in each unit of the chained molecule
-        + **NOTE**: The program will match the molecule names specified `residue_list` in accordance to the number of beads it counts corresponding to that name in `mapping_dict.json`. As such, the file will have to be updated if expansion of measurement capabilities is desired.
 
 
-   + _bond_list_/_angle_list_/_dihedral_list_: A list of lists (either pairs, triplets, or quadruplets) of generalized bead identities which define a bond/angle/dihedral. Beads are referenced in accordance to how their NAME was defined in script A: following the format **amino acid** + **segment ID** + **residue ID** (See Section A5.1.). The segment **amino acid** can be discarded as it is automatically determined as specified above from reading `mapping_dict.json`. As such, the generalized bead identities should simply be a statement of all adjacent **segment ID** + **residue ID**. However, since this is merely a blueprint only connections containing a minimum **residue ID** of 0 need be included, and from that all other possible connections can be automatically extrapolated.
-
-For more versatiliaty, consider using the backend system on which this setup relies. **Currently in development skip to B4**
-
-+ `amino_acid_molds`: This is a dictionary of nested dictionaries containing specification of the structure of all desired measurements. A new mold will likely have to be added for each coarse grained simulation you wish to analyze, however, since the format acts as a mold rather an explicit mapping for each measurement, molds are highly reusable with little to no modification. Each new mold entry should be in the following format:
-
-```
-'NAME': {
-    'Bond': [bond_list],
-    'Angle': [angle_list],
-    'Dihedral': [dihedral_list]
-},
-```
-
-   + _NAME_: Three-letter IUPAC abbreviation identifying the amino acid.
-        + **NOTE**: Unlike in script A's `mapping_dict`, the _NAME_ in `amino_acid_molds` requires chirality specification: If the amino acid is D-chiral, the three-character IUPAC code must be prefixed with the letter `D`. (L-chirality is implicit in a pure three-character IUPAC code)
-        + **NOTE**: The _NAME_ in `amino_acid_molds` actually supports multiple, space-delimited amino acid NAMEs, allowing you to notate and measure connections between different kinds of amino acids.
-
-   + _bond_list_/_angle_list_/_dihedral_list_: A list of lists (either pairs, triplets, or quadruplets) of beads which define a bond/angle/dihedral. Beads are referenced in accordance to how their NAME was defined in script A: following the format **amino acid** + **segment ID** + **residue ID** (See Section A5.1.).
-        + As an example, to measure the bond between the backbone bead, backbone bead and 1st segment bead of Lysine residue number 1, the bond list would be `['KB1', 'K11']`, where each item in the list denotes a simulated bead.
-        + For convenience, rather than _only_ measuring the Lysine backbone-segment1 bond in residue 1, `['KB1', 'K11']` will measure the backbone-segment1 bond across _all_ Lysine residues. It does this using the roots of each bead NAME pattern (in this case, `'KB', 'K1'`) as a mold, to which incrementing resid values are successively appended. This means you will only have to specify a handful of _bond_list_/_angle_list_/_dihedral_list_ indicating general **patterns** which will then be applied across the entire simulation, rather than explicitly specifying every bond, angle, and dihedral connection.
-        + **NOTE**: You are safely able to provide patterns that span across multiple residues, for example, there is full support for measuring the `['EB1', 'EB2', 'E12']` angle in a poly-E chain.
-            + **WARNING**: If you wish to measure inter-residue bonds/angles/dihedrals, the RESIDs of the topology and trajectory must be ordered in a consistent fashion. If not, the script may incorrectly map the
-        + **WARNING**: Cyclical chains of amino acids support has failed. Support will be re-implemented sometime in the future.
-
-e.g.
-
-```
-'GLU DGLU': {
-    'Bond': [['E11', 'EB1'], ['EB1', 'EB2']],
-    'Angle': [['E11', 'EB1', 'EB2'], ['EB1', 'EB2', 'E12']],
-    'Dihedral': [['E11', 'EB1', 'EB2', 'E12']]
-}
-```
 
 ###### **B4. Output**
 + **measurement data** files: Outputs a dat file containing the measured length/angle for all bonds/angles/dihedrals in `amino_acid_molds` across every observed frame. Each file is named by joining the names of its component beads.
@@ -147,10 +96,8 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + `MatPlotLib`
 + `SciPy`
 + `MDAnalysis`
-+ `Boandi`*
-    + Specially developed histogram, bin, and measurement assistance package
 
 ## Acknowledgements
-+ Dr. Sharon Loverde
++ Dr. Sharon Loverde, Lab advisor
 + Phu Tang
 + William Hu
