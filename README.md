@@ -5,7 +5,7 @@
 ## Script A - Coarse Grainer
 
 ###### **A1. Description**
-Converts an atomistic simulation to a coarse grained one using SDK coarse graining mapping. Pre-existing mappings exist for the fundamental amino acids plus nucleic acids and their backbone, however the mapping blueprint is designed to be highly customizable for indivudal expansion.
+Converts an atomistic simulation to a coarse grained one using SDK coarse graining mapping. Pre-existing mappings are provided for the fundamental amino acids and DNA, however the mapping blueprint is designed to be highly customizable for indivudal expansion.
 
 ###### **A2. Input Files**
 + `topology`: Atomistic topology file
@@ -13,7 +13,7 @@ Converts an atomistic simulation to a coarse grained one using SDK coarse graini
 
 ###### **A3. Input Parameters**
 + `residue_list`: List of three-letter amino acid abbreviations. The coarse grained file will only contain beads from amino acids included in this list.
-+ `mapping_dict`: Dictionary containing Coarse Grain mappings which dictate the atoms that each coarse grained bead contains. This version includes mappings for all 20 natural amino acids, however if you wish to coarse grain a molecule whose mapping is not contained in `mapping_dict`, you will have to add its mapping to the dictionary. If you so desire to use a mapping not included in the `mapping_dict`, you will need to add it yourself. This can be done by appending a new dictionary to `mapping_dict.json` in the following format:
++ `mapping_dict`: Dictionary containing Coarse Grain mappings which dictate the atoms that each coarse grained bead contains. This version includes mappings for all 20 natural amino acids, DNA nucleic acids, and DNA backbone components, however if you wish to coarse grain a molecule whose mapping is not contained in `mapping_dict`, you will have to add its mapping to the dictionary. If you so desire to use a mapping not included in the `mapping_dict`, you will need to add it yourself by following the format bellow. This can be done by appending a new dictionary to `mapping_dict.json` in the following format:
 
 ```
 'NAME': {
@@ -23,7 +23,7 @@ Converts an atomistic simulation to a coarse grained one using SDK coarse graini
 ```
 
    + _NAME_: The three-letter IUPAC abbreviation for the amino acid; DA, DT, DG, DC, PHOSPHATE, RIBOSE for DNA components
-       + **WARNING**: The input topology and trajectory _must_ specify the NAME of each atom using the three-letter IUPAC NAME of its containing amino acid which matches how amino acids are named in `mapping_dict`. This is especially important to take note of when adding a mapping to the `mapping_dict`, as the three-letter IUPAC NAME you input must correspond to atom names in the topology and trajectory. Additionally, all NAMEs must be exactly three letters long or errors may occur.
+       + **WARNING**: The input topology and trajectory _must_ specify the NAME of each atom using the three-letter IUPAC NAME of its containing amino acid which matches how amino acids are named in `mapping_dict`. This is especially important to take note of when adding a mapping to the `mapping_dict`, as the three-letter IUPAC NAME you input must correspond to atom names in the topology and trajectory.
    + _component_atoms_: A list of all atoms which compose a given bead.
        + **WARNING**: List contents will be directly passed to MDAnalysis to select the individual atoms, and as such must be in a format MDAnalysis can understand which matches the topology and trajectory contents. To ensure proper functionality, check how atoms are named in the source topology and trajectory if unsure.
        + **WARNING**: Be sure to pay attention of changes in atomic structure at the amino acid termini, as neglecting to do so will lead to incorrect bead placement.
