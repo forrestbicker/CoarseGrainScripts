@@ -98,6 +98,6 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + `MDAnalysis`
 
 ## Acknowledgements
-+ Dr. Sharon Loverde, Lab advisor
-+ Phu Tang
-+ William Hu
++ Dr. Sharon Loverde, Principal Investigator
++ Phu Tang, project mentor
++ William Hu, project tester
