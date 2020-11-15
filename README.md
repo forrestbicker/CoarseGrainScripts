@@ -5,7 +5,7 @@
 ## Script A - Coarse Grainer
 
 ###### **A1. Description**
-Converts an atomistic simulation to a coarse grained one using SDK coarse graining mapping. Pre-existing mappings are provided for the fundamental amino acids and DNA, however the mapping blueprint is designed to be highly customizable for indivudal expansion.
+Converts an atomistic simulation to a coarse grained one. Pre-existing SDK mappings are provided for the fundamental amino acids and DNA nucleic acids + backbone. However, the mapping blueprint is designed to be highly customizable for indivudal expansion meaning any simulation can be corase grained in accordance to user-specified input.
 
 ###### **A2. Input Files**
 + `topology`: Atomistic topology file
@@ -59,15 +59,13 @@ e.g.
 ## Script B - Parameterizer
 
 ###### **B1. Description**
-Measures all bond lengths, angle measures, and dihedral angles between coarse grain beads. Can be configured to run computations in parallel on multiple CPUs.
+Measures all bonds, angles, and dihedrals between coarse grain beads. Can be configured to run computations in parallel on multiple CPUs.
 
 ###### **B2. Input Files**
-+ `topology`: Coarse grained topology file (MUST specify bond connections between CG beads, directly using output from script A recommended)
++ `topology`: Coarse grained topology file (MUST specify bond connections between CG beads, this is automatically garunteed when directly using output from script A)
 + `trajectory`: Coarse grained trajectory file
 
 ###### **B3. Input Parameters**
-
-
 
 ###### **B4. Output**
 + **measurement data** files: Outputs a dat file containing the measured length/angle for all bonds/angles/dihedrals in `amino_acid_molds` across every observed frame. Each file is named by joining the names of its component beads.
