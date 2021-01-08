@@ -13,6 +13,7 @@
 # ================= Requiremet ================= #
 from collections import defaultdict
 import os
+import math
 
 import MDAnalysis as mda
 from util import progress
