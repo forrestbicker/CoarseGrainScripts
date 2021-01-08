@@ -11,9 +11,9 @@
 # r = number of residue segments
 
 # ================= Requiremet ================= #
-from collections import defaultdict
+# from collections import defaultdict
 import os
-import math
+# import math
 
 import MDAnalysis as mda
 from util import progress

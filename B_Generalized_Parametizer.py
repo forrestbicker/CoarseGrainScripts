@@ -8,15 +8,16 @@
 
 # ================ Dependencies ================ #
 import numpy as np
-import multiprocessing
-import time
+# import multiprocessing
+# import time
+import os
 
 import MDAnalysis as mda
-import BINAnalysis as boandi
+# import BINAnalysis as boandi
 
-from util import colorify
-from json import load
-from util import MesType
+# from util import colorify
+# from json import load
+# from util import MesType
 import math
 
 max_frame = 1000
