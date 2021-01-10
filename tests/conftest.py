@@ -1,9 +1,9 @@
 # import src.A_CoarseGrainer as appA
 # import pytest
 
-# @pytest.fixture
-# def app():
-#     yield appA
+@pytest.fixture
+def setup():
+    yield
 
 
 # @pytest.fixture
