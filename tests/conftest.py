@@ -1,5 +1,5 @@
 # import src.A_CoarseGrainer as appA
-# import pytest
+import pytest
 
 @pytest.fixture
 def setup():
