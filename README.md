@@ -4,7 +4,10 @@
 
 ###### Programmed by Forrest Bicker
 ###### College Of Staten Island - Loverde Labratory
-
+<p align="center">
+  <img src="https://github.com/forrestbicker/CoarseGrainScripts/blob/d30803f818a1d56d78ea24317423301c154cce7d/assets/beforeAndAfter.png" alt="CoarseGrainedComparison">
+</p>
+<h6 align="center">Coiled DNA before and after Coarse-Graining</h6>
 
 ## Script A - Coarse Grainer
 
