@@ -16,19 +16,19 @@ import os
 # import math
 
 import MDAnalysis as mda
-from util import progress
+from src.util import progress
 
 from json import load
 
 
 # ================ Input Files ================  #
-topology = 'inputs/alanin.pdb'
-trajectory = 'inputs/alanin.dcd'
-simulation_name = 'alanin'
+topology = '/Users/forrestbicker/Documents/GitHub/CoarseGrainScrips/inputs/alanin.pdb'
+trajectory = '/Users/forrestbicker/Documents/GitHub/CoarseGrainScrips/inputs/alanin.dcd'
 simulation_name = os.path.basename(topology).split(".")[0]
 
 # ================= User Input ================= #
-residue_list = ['ALA']  # list of ammino acids to be CoarseGrained
+# residue_list = ['GLY', 'DGLU', 'DLYS']  # list of ammino acids to be CoarseGrained
+residue_list = ['ALA']
 # residue_list = ['DA', 'DT', 'DG', 'DC', 'PHOSPHATE', 'RIBOSE']
 
 # ============== Misc Initiation ==============  #
@@ -87,6 +87,35 @@ for resname in residue_list:  # loops tru each residue to be coarse grained
 cg_beads = mda.AtomGroup(cg_beads)
 
 new_bonds = []
+# for residue in residue_list:
+#     for mapping in mapping_dict[residue]["Bonds"]:
+#         first_code = mapping[0]  # segment, resid offset, resname
+#         seccond_code = mapping[1] if isinstance(mapping[1], list) else [mapping[1], 0, residue]
+
+#         type_params = list(mapping_dict[residue]["Mapping"].keys())[first_code]
+
+#         first_atoms = cg_beads.select_atoms(f'resname {residue} and type {type_params}')
+#         for first_atom in first_atoms:
+#             type_params = list(mapping_dict[residue]["Mapping"].keys())[seccond_code[0]]  # segment
+#             seccond_atom_resid = int(first_atom.resid) + int(seccond_code[1])
+#             try:
+#                 seccond_atom = cg_beads.atoms.select_atoms(f'resname {seccond_code[2]} and type {type_params} and resid {seccond_atom_resid}')
+#             except IndexError:
+#                 pass
+
+#             if isinstance(seccond_atom, mda.core.groups.AtomGroup):
+#                 closest = seccond_atom[0]
+#                 closest_dist = mda.AtomGroup([first_atom, seccond_atom[0]]).bond.length()
+#                 for atom in seccond_atom:
+#                     dist = mda.AtomGroup([first_atom, atom]).bond.length()
+#                     if dist < closest_dist:
+#                         closest = atom
+#                         closest_dist = dist
+#                 seccond_atom = closest
+
+#             new_bonds.append([first_atom.index, seccond_atom.index])
+
+# new_bonds = []
 for dummy, atms in bead_data:
     for bond in dummy.bonds:
         for atom in bond.atoms:
@@ -96,6 +125,9 @@ for dummy, atms in bead_data:
                         new_bonds.append([dummy.ix, atom.type.ix]) # type is used to store the cluster dummy
                     except AttributeError: # raises if connected atom is annother dummy
                         new_bonds.append([dummy.ix, atom.ix])
+
+# #     # purge existing reminant bonds
+
 for bond in u.bonds:
     u.delete_bonds([bond])
 
@@ -127,6 +159,7 @@ else:
 for dummy, atms in bead_data:
         dummy.type = ''
 
+print(u.bonds)
 cg_beads.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb', bonds='all')
 print(f'Topology written to {simulation_name}_CG.pdb!')
 print(f'Reduced {len(u.atoms)} atoms to {len(cg_beads)} beads!')

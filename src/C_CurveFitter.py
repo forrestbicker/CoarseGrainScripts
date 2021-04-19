@@ -15,7 +15,7 @@ from scipy.optimize import curve_fit
 import os
 # import math
 
-import BINAnalysis as boandi
+import src.BINAnalysis as boandi
 
 
 # ================= Input File ================= #
