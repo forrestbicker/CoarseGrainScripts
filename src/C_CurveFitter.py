@@ -42,7 +42,7 @@ def func_to_xy(x, y, func, *argv):
 
 
 # ================= Execution ================== #
-def fit_curve(value_file):
+def fit_curve(value_file, view_range, step):
     file_name = os.path.splitext(os.path.basename(value_file))[0]
     with open(value_file, 'r') as file:
         dataset = file.read()
@@ -113,4 +113,4 @@ def fit_curve(value_file):
 
     print('Outputs Written!\nTask Complete!')
 
-fit_curve(value_file)
+fit_curve(value_file, view_range, step)
