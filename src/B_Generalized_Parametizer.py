@@ -23,38 +23,29 @@ import math
 max_frame = 1000
 stride = 1
 block_count = 3
-# ================ Input Files ================  #
-topology = '/Users/forrestbicker/Documents/GitHub/CoarseGrainScrips/outputs/CoarseGrain/1kx5_CG.pdb'
-trajectory = ''
 
-def parametize(topology, trajectory=None):
-    simulation_name = os.path.basename(topology).split(".")[0]
 
-    print('Generating Universe...')
-    if trajectory is None or '':
-        u = mda.Universe(topology) 
-    else:
-        u = mda.Universe(topology, trajectory)
-    print('Universe Generated!')
+def gen_name(measurement):
+    mes_name = ''
+    for atom in list(measurement.atoms):
+        mes_name += atom.name + '-'
+    return(mes_name[:-1])
+
+def measure(measurement):
+    if measurement.btype == 'bond':  # bond
+        return(measurement.length())
+    elif measurement.btype == 'angle':  # angle
+        return(math.radians(measurement.angle()))
+    elif measurement.btype == 'dihedral':  # dihedral
+        return(math.radians(measurement.value()))
+
+def parametize(u, simulation_name='simulation_name'):
+
 
     print('Begining Angle and Dihedral Calculation...')
     u.atoms.guess_bonds({'D': 1, 'RB': 1})
 
     print('Begining Measurements!')
-
-    def gen_name(measurement):
-        mes_name = ''
-        for atom in list(measurement.atoms):
-            mes_name += atom.name + '-'
-        return(mes_name[:-1])
-
-    def measure(measurement):
-        if measurement.btype == 'bond':  # bond
-            return(measurement.length())
-        elif measurement.btype == 'angle':  # angle
-            return(math.radians(measurement.angle()))
-        elif measurement.btype == 'dihedral':  # dihedral
-            return(math.radians(measurement.value()))
 
     measurements = list(u.bonds) + list(u.angles) + list(u.dihedrals)
     measurement_dict = {}
@@ -65,7 +56,8 @@ def parametize(topology, trajectory=None):
         measurement_dict[name] = []
         measurement_names.append(name)
 
-    if trajectory != "":
+    number_of_frames = len(u.trajectory)
+    if number_of_frames > 1:
         for t in u.trajectory[0:max_frame:stride]:
             for i, measurement in enumerate(measurements):
                 measurement_dict[measurement_names[i]].append(measure(measurement))
@@ -76,7 +68,13 @@ def parametize(topology, trajectory=None):
 
     print('\nExporting {} measurement datasets to file...'.format(
         len(measurement_names)))
+
+
+    if not os.path.isdir(f'outputs/measurement_data/{simulation_name}'):
+        os.mkdir(f'outputs/measurement_data/{simulation_name}')
+
     for i, name in enumerate(measurement_names):  # loops thru each measurement
+        
         filename = f'outputs/measurement_data/{simulation_name}/{name}.dat'
         with open(filename, 'w+') as instance_output:  # writes measurment list data to file
             # writes integer denoting mes_type to file
@@ -88,5 +86,4 @@ def parametize(topology, trajectory=None):
                 value_str += str(value) + '\n'
             instance_output.write(value_str)
     # print('Done!')
-
-parametize(topology, trajectory)
+    
