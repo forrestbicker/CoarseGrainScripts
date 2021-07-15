@@ -16,23 +16,13 @@ import os
 # import math
 
 import MDAnalysis as mda
-from util import progress
+from MDAnalysis.core.topologyattrs import Atomindices
+from util import generate_universe, get_file_name, progress
 
 from json import load
 
-
-# ================ Input Files ================  #
-topology = 'inputs/alanin.dcd'
-trajectory = 'inputs/alanin.pdb'
-
-# ================= User Input ================= #
-# residue_list = ['GLY', 'DGLU', 'DLYS']  # list of ammino acids to be CoarseGrained
-residue_list = ['ALA']
-# residue_list = ['DA', 'DT', 'DG', 'DC', 'PHOSPHATE', 'RIBOSE']
-
-def coarse_grain(residue_list, topology, trajectory=None):
+def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
     # ============== Misc Initiation ==============  #
-    simulation_name = os.path.basename(topology).split(".")[0]
 
     with open('src/mapping_dict.json', "r") as f:
         mapping_dict = load(f)
@@ -40,14 +30,11 @@ def coarse_grain(residue_list, topology, trajectory=None):
     with open('src/abrev_dict.json', "r") as f:
         abrev_dict = load(f)
 
+    u = universe
+
 
     # ================= Execution =================  #
-    print('Generating Universe...')
-    if trajectory is None or '':
-        u = mda.Universe(topology)
-    else:
-        u = mda.Universe(topology, trajectory)
-    print('Universe Generated!')
+    
 
     print('Genarating Coarse Gained Molecules...')
 
@@ -148,8 +135,8 @@ def coarse_grain(residue_list, topology, trajectory=None):
 
     print('Writing Output Files...')
 
-    if trajectory != "":
-        number_of_frames = len(u.trajectory)
+    number_of_frames = len(u.trajectory)
+    if number_of_frames > 1:
         progress(0)
         with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True, bonds='all') as w:
             for frame in u.trajectory:  # loops tru each frame
@@ -173,11 +160,13 @@ def coarse_grain(residue_list, topology, trajectory=None):
     #         dummy.type = ''
 
     print(u.bonds)
-    cg_beads.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb', bonds='all')
+
+    out_file = f'outputs/CoarseGrain/{simulation_name}_CG.pdb'
+    with open(out_file, 'w+') as _:
+        cg_beads.write(out_file, bonds='all')
     print(f'Topology written to {simulation_name}_CG.pdb!')
     print(f'Reduced {len(u.atoms)} atoms to {len(cg_beads)} beads!')
 
     print('Task complete!')
 
-
-coarse_grain(residue_list, topology, trajectory)
+    return u
