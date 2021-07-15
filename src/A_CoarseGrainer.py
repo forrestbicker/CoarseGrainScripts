@@ -59,6 +59,7 @@ def coarse_grain(residue_list, topology, trajectory=None):
 
     bead_data = []
     cg_beads = []
+    dummy_parents = {}
     for resname in residue_list:  # loops tru each residue to be coarse grained
         if resname == "PHOSPHATE" or resname == "RIBOSE":
             resname_atoms = u.atoms.select_atoms('resname DA DT DG DC DU')
@@ -82,7 +83,8 @@ def coarse_grain(residue_list, topology, trajectory=None):
                     cg_beads.append(dummy)
 
                     for atm in atms:
-                        atm.type = dummy
+                        dummy_parents[atm.ix] = dummy
+                    
             except KeyError:
                 print(f'{resname} was not found in abrev_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
 
@@ -124,8 +126,8 @@ def coarse_grain(residue_list, topology, trajectory=None):
                 if atom != dummy:
                     if atom not in atms:
                         try:
-                            new_bonds.append([dummy.ix, atom.type.ix]) # type is used to store the cluster dummy
-                        except AttributeError: # raises if connected atom is annother dummy
+                            new_bonds.append([dummy.ix, dummy_parents[atom.ix].ix]) # type is used to store the cluster dummy
+                        except KeyError: # raises if connected atom is annother dummy
                             new_bonds.append([dummy.ix, atom.ix])
 
     # #     # purge existing reminant bonds
@@ -158,8 +160,8 @@ def coarse_grain(residue_list, topology, trajectory=None):
         for dummy, atms in bead_data:
             dummy.position = atms.center_of_mass()
 
-    for dummy, atms in bead_data:
-            dummy.type = ''
+    # for dummy, atms in bead_data:
+    #         dummy.type = ''
 
     print(u.bonds)
     cg_beads.write(f'outputs/CoarseGrain/{simulation_name}_CG.pdb', bonds='all')
