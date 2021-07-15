@@ -54,7 +54,16 @@ def coarse_grain(residue_list, topology, trajectory=None):
     print(u.bonds)
     print('Calculating Bond connections...')
     resnames = ' '.join(residue_list)
-    u.select_atoms(f'resname {resnames}').guess_bonds(vdwradii={'MN': 1})
+    u.select_atoms(f'resname {resnames}').guess_bonds(vdwradii={
+        'MN': 1,
+        'CT3': 1.7,
+        'OC': 1.5,
+        'CT1': 1.7,
+        'HB1': 1,
+        'HA3': 1,
+        'CC': 1.7,
+        'NH1': 1.625,
+        })
     print(u.bonds)
 
     bead_data = []
