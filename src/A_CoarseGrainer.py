@@ -59,6 +59,12 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
             resname_atoms = u.atoms.select_atoms('resname DA DT DG DC DU')
         else:
             resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
+
+        if len(resname) == 4 and resname[0] == 'D': # for D-varants
+            resname_key = resname[1:]
+        else:
+            resname_key = resname
+
         residues = resname_atoms.residues  # identifys all resname-specific residues
         for residue in residues:  # loops thu each matching residue id
             resid = residue.resid  # store int id
