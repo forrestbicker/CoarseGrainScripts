@@ -44,4 +44,13 @@ def generate_universe(topology, trajectory=None):
     return u
 
 def get_file_name(file):
-    return path.basename(file).split(".")[0]
+    return path.basename(file).split(".")[0]    res = 2**6  # resolution of curve
+    xrange = max(x) - min(x)
+
+    x_out = np.array(
+        [min(x) + xrange * (i / res) for i in range(res) if func(min(x) + xrange * (i / res), *argv) <= max(y)]
+    )
+    y_out = [func(x, *argv) for x in x_out]
+    return([x_out, y_out])
+
+

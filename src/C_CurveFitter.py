@@ -16,6 +16,7 @@ import os
 # import math
 
 import BINAnalysis as boandi
+from util import func_to_xy
 
 
 # ================= Input File ================= #
@@ -32,13 +33,6 @@ def f(x, k, x0, c):
     return(k * (x - x0)**2 + c)
 
 
-def func_to_xy(x, y, func, *argv):
-    res = 2**8  # resolution of curve
-    xrange = max(x) - min(x)
-
-    x = np.array([min(x) + xrange * (i / res) for i in range(res) if f(min(x) + xrange * (i / res), *argv) <= max(y)])
-    y = [f(x, *argv) for x in x]
-    return([x, y])
 
 
 # ================= Execution ================== #
