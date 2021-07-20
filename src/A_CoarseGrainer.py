@@ -44,6 +44,11 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
     
     print('Calculating Bond connections...')
     resnames = ' '.join(residue_list)
+    original_bond_count = len(u.bonds)
+    u.select_atoms(f'resname {resnames}').guess_bonds(vdwradii=config.vdw_radi)
+
+    print(f'Original file contained {original_bond_count} bonds. {len(u.bonds) - original_bond_count} additional bonds infered.')
+
     print(f'Begining Coarse-Graining process...')
 
     bead_data = []
