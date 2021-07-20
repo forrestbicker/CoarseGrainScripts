@@ -69,26 +69,24 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
         for residue in residues:  # loops thu each matching residue id
             resid = residue.resid  # store int id
             try:
-                segments = mapping_dict[resname].keys()
+                segments = mapping_dict[resname_key].keys()
                 for segment in segments:  # loops thru each segment of each residue
-                    params = 'name ' + ' '.join(mapping_dict[resname][segment])  # generates param
+                    params = 'name ' + ' '.join(mapping_dict[resname_key][segment])  # generates param
                     # selects all atoms in a given residue segment
                     atms = residue.atoms.select_atoms(params)
                     dummy = atms[0]
                     # names dummy atom in propper format
-                    dummy.name = str(abrev_dict[resname]) + str(segment[0]) + str(resid)
+                    dummy.name = str(abrev_dict[resname_key]) + str(segment[0]) + str(resid)
                     dummy.type = str(segment[0])
 
-                    bead_data.append((dummy, atms))
+                    bead_data.append((dummy, atms)) 
                     cg_beads.append(dummy)
 
                     for atm in atms:
                         dummy_parents[atm.ix] = dummy
                     
             except KeyError:
-                print(f'{resname} was not found in abrev_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
-
-    cg_beads = mda.AtomGroup(cg_beads)
+                print(f'{resname_key} was not found in mapping/abrev_dict, skipping coarse grain. Please add its parameters to the dictionary. (See README section A3. for help)')
 
     new_bonds = []
     # for residue in residue_list:
@@ -134,6 +132,7 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
 
     for bond in u.bonds:
         u.delete_bonds([bond])
+    cg_beads = mda.AtomGroup(cg_beads)
 
     u.add_TopologyAttr('bonds', new_bonds)
 
