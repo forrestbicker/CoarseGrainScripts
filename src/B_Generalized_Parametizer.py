@@ -18,7 +18,10 @@ import MDAnalysis as mda
 # from util import colorify
 # from json import load
 # from util import MesType
+import config
 import math
+
+from util import progress
 
 max_frame = 1000
 stride = 1

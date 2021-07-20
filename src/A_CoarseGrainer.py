@@ -13,6 +13,11 @@
 # ================= Requiremet ================= #
 # from collections import defaultdict
 import os
+from MDAnalysis.core.groups import AtomGroup
+
+from MDAnalysis.core.universe import Universe
+from MDAnalysis.topology.guessers import guess_angles, guess_dihedrals
+import config
 # import math
 
 import MDAnalysis as mda
@@ -20,6 +25,8 @@ from MDAnalysis.core.topologyattrs import Atomindices
 from util import generate_universe, get_file_name, progress
 
 from json import load
+from MDAnalysis.coordinates.memory import MemoryReader
+from MDAnalysis.analysis.base import AnalysisFromFunction
 
 def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
     # ============== Misc Initiation ==============  #
