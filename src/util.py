@@ -2,7 +2,10 @@
 from enum import Enum
 from MDAnalysis import Universe
 from os import path
-    
+import numpy as np
+from scipy.optimize import curve_fit
+import plotly.graph_objects as go
+
 # ===================== cd ===================== #
 # def cd(dir):  # cleanly changed cwd
 #     native = os.path.dirname(os.path.abspath(__file__))
@@ -44,7 +47,7 @@ def generate_universe(topology, trajectory=None):
     return u
 
 def get_file_name(file):
-    return path.basename(file).split(".")[0]    res = 2**6  # resolution of curve
+    return path.basename(file).split(".")[0]
     xrange = max(x) - min(x)
 
     x_out = np.array(
