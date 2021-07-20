@@ -43,7 +43,7 @@ def parametize(u, simulation_name='simulation_name'):
 
 
     print('Begining Angle and Dihedral Calculation...')
-    u.atoms.guess_bonds({'D': 1, 'RB': 1})
+    # u.atoms.guess_bonds(vdwradii=config.vdw_radi)
 
     print('Begining Measurements!')
 
