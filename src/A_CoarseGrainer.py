@@ -134,15 +134,18 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
                         #     except ValueError:  # if the other atom is just an atom withouot a coarse grain bead parent, ignore it
                         #        pass
 
-    # #     # purge existing reminant bonds
 
-    for bond in u.bonds:
-        u.delete_bonds([bond])
     cg_beads = mda.AtomGroup(cg_beads)
 
-    u.add_TopologyAttr('bonds', new_bonds)
+    # TODO: EXPORT NEW_U INSTEAD OF OLD U
+    # TODO: EXPORT NEW_U TO HAVE APPROPRIATE FRAMES
+    # TODO: SHIFT THE DEFINITION OF CENTERS IN THE UNIVERSE EVEN IF NOT EXPORTING
+    # TODO: AUTOTUNE THE CURVE TO FIND THE RIGHT STEP
 
-    print('Writing Output Files...')
+    # #     # purge existing reminant bonds
+    # u.delete_bonds(u.bonds)
+    # u.delete_angles(u.angles)
+    # u.delete_dihedrals(u.dihedrals)
 
     progress(0)
     number_of_frames = len(u.trajectory)
@@ -155,6 +158,15 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
         progress(f / number_of_frames)
     progress(1)
     print()
+
+    print(f'Building new coarse-grained universe...')
+    coordinates = AnalysisFromFunction(lambda ag: ag.positions.copy(), cg_beads).run().results
+    new_u = mda.Merge(cg_beads)
+    new_u.load_new(coordinates, format=MemoryReader)
+    new_u.add_TopologyAttr('bonds', new_bonds)
+    new_u.add_TopologyAttr('angles', guess_angles(new_u.bonds))
+    new_u.add_TopologyAttr('dihedrals', guess_dihedrals(new_u.angles))
+    print(f'Built universe with {len(new_u.atoms)} coarse-grained beads, {len(new_u.bonds)} bonds, {len(new_u.angles)} angles, and {len(new_u.dihedrals)} dihedrals')
 
 
 
