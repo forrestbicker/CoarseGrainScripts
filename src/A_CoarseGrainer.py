@@ -144,31 +144,24 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
 
     print('Writing Output Files...')
 
+    progress(0)
     number_of_frames = len(u.trajectory)
-    if number_of_frames > 1:
-        progress(0)
-        with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', cg_beads.n_atoms, multiframe=True, bonds='all') as w:
-            for frame in u.trajectory:  # loops tru each frame
-                f = frame.frame
+    for frame in u.trajectory:  # loops tru each frame
+        f = frame.frame
 
-                # positions a dummy atoms at cluster center of mass
-                for dummy, atms in bead_data:
-                    dummy.position = atms.center_of_mass()
+        # positions a dummy atoms at cluster center of mass
+        for dummy, atms in bead_data:
+            dummy.position = AtomGroup(atms).center_of_mass()
+        progress(f / number_of_frames)
+    progress(1)
+    print()
 
-                w.write(cg_beads)
-                progress(f / number_of_frames)
-        progress(1)
+
 
         print('\nGenerated All Coarse Grained Molecules!')
         print(f'Trajectory written to {simulation_name}_CG.dcd!')
-    else:
-        for dummy, atms in bead_data:
-            dummy.position = atms.center_of_mass()
 
-    # for dummy, atms in bead_data:
-    #         dummy.type = ''
 
-    print(u.bonds)
 
     out_file = f'outputs/CoarseGrain/{simulation_name}_CG.pdb'
     with open(out_file, 'w+') as _:
