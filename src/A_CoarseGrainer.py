@@ -119,14 +119,20 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
 
     # new_bonds = []
     for dummy, atms in bead_data:
-        for bond in dummy.bonds:
-            for atom in bond.atoms:
-                if atom != dummy:
-                    if atom not in atms:
+        # connect all parents with connected children
+        for atom in atms:
+            for bond in atom.bonds:
+                for bonded_atom in bond.atoms:
+                    if bonded_atom not in atms: # make more efficent if atms were a set
+                        # by the end of all these loops and ifs, every bonded_atom that gets to this point is an atom connected to the edge of the cluster of atoms assigned to the coarse grain dummy bead in question
                         try:
-                            new_bonds.append([dummy.ix, dummy_parents[atom.ix].ix]) # type is used to store the cluster dummy
-                        except KeyError: # raises if connected atom is annother dummy
-                            new_bonds.append([dummy.ix, atom.ix])
+                            new_bonds.append([cg_beads.index(dummy), cg_beads.index(dummy_parents[bonded_atom.ix])]) # type is used to store the cluster dummy
+                        except KeyError: # raises if atom does not belong to a coarse grain bead
+                            pass
+                        #     try:
+                        #         new_bonds.append([cg_beads.index(dummy), cg_beads.index(bonded_atom)]) # adds the bond between the dummies
+                        #     except ValueError:  # if the other atom is just an atom withouot a coarse grain bead parent, ignore it
+                        #        pass
 
     # #     # purge existing reminant bonds
 
