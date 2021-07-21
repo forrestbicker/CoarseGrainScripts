@@ -20,3 +20,15 @@ from BINAnalysis import Histogram
 from util import MesType, generate_figure
 
 app = dash.Dash(__name__)
+
+def wrap(component):
+    return html.Div(
+        children=[
+            html.Div(
+                children=component,
+                className='card'
+            )
+        ],
+        className='wrapper'
+    )
+
