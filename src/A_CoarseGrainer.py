@@ -142,22 +142,22 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name', expo
     # TODO: SHIFT THE DEFINITION OF CENTERS IN THE UNIVERSE EVEN IF NOT EXPORTING
     # TODO: AUTOTUNE THE CURVE TO FIND THE RIGHT STEP
 
-    # #     # purge existing reminant bonds
-    # u.delete_bonds(u.bonds)
-    # u.delete_angles(u.angles)
-    # u.delete_dihedrals(u.dihedrals)
 
     progress(0)
     number_of_frames = len(u.trajectory)
     for frame in u.trajectory:  # loops tru each frame
         f = frame.frame
-
         # positions a dummy atoms at cluster center of mass
         for dummy, atms in bead_data:
             dummy.position = AtomGroup(atms).center_of_mass()
         progress(f / number_of_frames)
     progress(1)
     print()
+
+    # purge existing reminant bonds
+    u.delete_bonds(u.bonds)
+    u.delete_angles(u.angles)
+    u.delete_dihedrals(u.dihedrals)
 
     print(f'Building new coarse-grained universe...')
     coordinates = AnalysisFromFunction(lambda ag: ag.positions.copy(), cg_beads).run().results
