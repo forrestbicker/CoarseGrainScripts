@@ -169,18 +169,29 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
     print(f'Built universe with {len(new_u.atoms)} coarse-grained beads, {len(new_u.bonds)} bonds, {len(new_u.angles)} angles, and {len(new_u.dihedrals)} dihedrals')
 
 
+    if export:
+        print('Writing Output Files...')
 
-        print('\nGenerated All Coarse Grained Molecules!')
+        is_multiframe = number_of_frames > 1
+        with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', new_u.atoms.n_atoms, multiframe=is_multiframe, bonds='all') as w:
+            for frame in new_u.trajectory[1:]:  # loops tru each frame
+                w.write(new_u.atoms)
+
+
+        print('Generated All Coarse Grained Molecules!')
         print(f'Trajectory written to {simulation_name}_CG.dcd!')
 
 
+        # for dummy, atms in bead_data:
+        #         dummy.type = ''
 
-    out_file = f'outputs/CoarseGrain/{simulation_name}_CG.pdb'
-    with open(out_file, 'w+') as _:
-        cg_beads.write(out_file, bonds='all')
-    print(f'Topology written to {simulation_name}_CG.pdb!')
-    print(f'Reduced {len(u.atoms)} atoms to {len(cg_beads)} beads!')
+        out_file = f'outputs/CoarseGrain/{simulation_name}_CG.pdb'
+        with open(out_file, 'w+') as _:
+            new_u.atoms.write(out_file, bonds='all')
+        print(f'Topology written to {simulation_name}_CG.pdb!')
 
-    print('Task complete!')
+    print(f'Reduced {len(u.atoms)} atoms to {len(new_u.atoms)} beads!')
 
-    return u
+    print('Coarse Graining Task complete!')
+
+    return new_u
