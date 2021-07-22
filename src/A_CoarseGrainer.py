@@ -28,7 +28,7 @@ from json import load
 from MDAnalysis.coordinates.memory import MemoryReader
 from MDAnalysis.analysis.base import AnalysisFromFunction
 
-def coarse_grain(universe, residue_list, simulation_name='simulation_name'):
+def coarse_grain(universe, residue_list, simulation_name='simulation_name', export=False):
     # ============== Misc Initiation ==============  #
 
     with open('src/mapping_dict.json', "r") as f:
