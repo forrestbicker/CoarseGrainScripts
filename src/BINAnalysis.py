@@ -107,11 +107,20 @@ class Bin:  # a bin containing many boandi objects
         T = 298
         x = abs(self.floor)
         Px = self.count / self.p_histogram.count
-        if self.mes_type == '0':
+        if self.mes_type == MesType.BOND:
             return(-kB * T * log(Px / (4 * math.pi * x ** 2)))
+        elif self.mes_type == MesType.ANGLE:
+            sine = sin(x)
+            if sine < 0:
+                print('A negative sine value was encountered when calculating boltzmann inversion, taking absolute value')
+                sine = abs(sine)
+            return(-kB * T * log(Px / sine))
         else:
-            return(-kB * T * log(Px / sin(x)))
-
+            sine = sin(x)
+            if sine < 0:
+                print('A negative sine value was encountered when calculating boltzmann inversion, taking absolute value')
+                sine = abs(sine)
+            return(-kB * T * log(Px / sine))
 
 # ================= BoAnDi ================= #
 class BoAnDi:  # a single instance of an bond/angle/dihedral
