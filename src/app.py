@@ -37,6 +37,22 @@ potentials = {}
 
 def startup_manual_refining(measurement_dict, u):
 
+    measurement_blueprint = list(measurement_dict.keys())[0]
+    measurement_type = MesType(len(measurement_blueprint))
+    measurement_name = '-'.join(measurement_blueprint)
+
+    data = measurement_dict[measurement_blueprint]
+    aggregate_values = []
+    for entry in data.values():
+        aggregate_values += entry['values']
+    bin_size = 0.01
+    hist = Histogram(measurement_type, aggregate_values, bin_size, name=measurement_name)
+    hist.clear_empty_bins()
+
+    x_data = hist.get_floors()
+    y_data = hist.get_boltzes()
+
+    original_fig, k, x0, c = generate_figure(x_data, y_data, hist.name)
 
     app.layout = html.Div(
         children=[
@@ -61,6 +77,7 @@ def startup_manual_refining(measurement_dict, u):
                 html.H2(id='results'),
                 dcc.Graph(
                     id='fitting-graph',
+                    figure=original_fig,
                 ),
             ])
         ]
