@@ -154,6 +154,9 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name', expo
     progress(1)
     print()
 
+    for dummy, atms in bead_data:
+        dummy.mass = AtomGroup(atms).masses.sum()
+
     # purge existing reminant bonds
     u.delete_bonds(u.bonds)
     u.delete_angles(u.angles)
