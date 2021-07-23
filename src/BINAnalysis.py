@@ -11,14 +11,16 @@
 # ================ Requiremets ================  #
 import numpy as np
 from numpy import log
-from numpy import sin
+from numpy import sin, cos
 import math
+
+from util import MesType
 
 
 
 # ================= Histogram =================  #
 class Histogram:  # a Histogram containing many bin objects
-    def __init__(self, name, mes_type, values, bin_width):
+    def __init__(self, mes_type, values, bin_width, name='Unnamed'):
         self.name = name
         self.mes_type = mes_type
         self.bins = []
@@ -57,6 +59,12 @@ class Histogram:  # a Histogram containing many bin objects
 
     def get_biggest(self, num):
         return([bin for bin in sorted(self, key=lambda bin: bin.boltz(), reverse=False)][:num])
+
+    def get_floors(self):
+        return([bin.floor for bin in self.bins])
+
+    def get_boltzes(self):
+        return([bin.boltz() for bin in self.bins])
 
 
     def __iter__(self):
