@@ -29,10 +29,8 @@ block_count = 3
 
 
 def gen_name(measurement):
-    mes_name = ''
-    for atom in list(measurement.atoms):
-        mes_name += atom.name + '-'
-    return(mes_name[:-1])
+    names = [atom.name for atom in measurement.atoms]
+    return '-'.join(names)
 
 def measure(measurement):
     if measurement.btype == 'bond':  # bond
