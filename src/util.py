@@ -48,6 +48,8 @@ def generate_universe(topology, trajectory=None):
 
 def get_file_name(file):
     return path.basename(file).split(".")[0]
+def func_to_xy(x, y, func, *argv):
+    res = 2**6  # resolution of curve
     xrange = max(x) - min(x)
 
     x_out = np.array(
@@ -57,3 +59,23 @@ def get_file_name(file):
     return([x_out, y_out])
 
 
+# construct plotly scatter plot from histogram
+def generate_figure(x_data, y_data, name, vertex=(1, 1)):
+    def f(x, k, x0, c):
+        return k * (x - x0)**2 + c
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=x_data,
+            y=y_data,
+            name=name,
+            mode='markers'
+        )
+    )
+
+    k, x0, c = curve_fit(f, x_data, y_data, maxfev=100000, p0=[1, vertex[0], vertex[1]])[0]
+    x_curve, y_curve = func_to_xy(x_data, y_data, f, k, x0, c)
+    fig.add_trace(go.Scatter(x=x_curve, y=y_curve, mode='lines'))
+
+    return fig, k, x0, c
