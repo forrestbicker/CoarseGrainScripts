@@ -84,5 +84,62 @@ def startup_manual_refining(measurement_dict, u):
     )
 
 
+    @app.callback(
+        [
+            Output('fitting-graph', 'figure'),
+            Output('results', 'children'),
+            Output('page-number', 'children'),
+        ],
+        [
+            Input('bin-slider', 'value'),
+            Input('next-button', 'n_clicks'),
+            Input('back-button', 'n_clicks'),
+            Input('fitting-graph', 'selectedData'),
+        ],
+        prevent_initial_call=True,
+    )
+    def display_selected_data(bin_size, _, _2, selectedData):
+
+        global measurement_number
+
+        ctx = dash.callback_context
+        triggered_input = ctx.triggered[0]['prop_id'].split('.')[0]
+
+        if triggered_input == 'next-button':
+            if measurement_number < len(measurement_dict) - 1:
+                measurement_number += 1
+
+        if triggered_input == 'back-button':
+            if measurement_number > 0:
+                measurement_number -= 1
+
+        measurement_blueprint = list(measurement_dict.keys())[measurement_number]
+        measurement_type = MesType(len(measurement_blueprint))
+        measurement_name = '-'.join(measurement_blueprint)
+
+        #  when need to redraw data from the dictionary
+        if triggered_input in ['next-button', 'back-button', 'bin-slider'] or selectedData is None:
+            data = measurement_dict[measurement_blueprint]
+            aggregate_values = []
+            for entry in data.values():
+                aggregate_values += entry['values']
+
+            hist = Histogram(measurement_type, aggregate_values, bin_size, name=measurement_name)
+            hist.clear_empty_bins()
+            x_data = hist.get_floors()
+            y_data = hist.get_boltzes()
+            biggest_bin = hist.get_biggest(1)[0]
+            vertex = (biggest_bin.floor, biggest_bin.boltz())
+        # otherwise, draw data from the currently selected data
+        # TODO: nail down exactly how the selected_data variable works,
+        # will it default to all data or null?
+        # what format will it be in?
+        fig, k, x0, c = generate_figure(x_data, y_data, measurement_name, vertex=vertex)
+        equation = f'Current line of fit: y = {k: .3f}(x - {x0: .3f}) + {c: .3f}'
+        progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
+
+        potentials[measurement_blueprint] = (k, x0, c)
+
+        return fig, equation, progress_str
 
 
