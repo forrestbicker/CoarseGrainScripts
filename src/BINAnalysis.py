@@ -116,11 +116,7 @@ class Bin:  # a bin containing many boandi objects
                 sine = abs(sine)
             return(-kB * T * log(Px / sine))
         else:
-            sine = sin(x)
-            if sine < 0:
-                print('A negative sine value was encountered when calculating boltzmann inversion, taking absolute value')
-                sine = abs(sine)
-            return(-kB * T * log(Px / sine))
+            return(-kB * T * log(Px))
 
 # ================= BoAnDi ================= #
 class BoAnDi:  # a single instance of an bond/angle/dihedral
