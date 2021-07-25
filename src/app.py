@@ -134,6 +134,12 @@ def startup_manual_refining(measurement_dict, u):
         # TODO: nail down exactly how the selected_data variable works,
         # will it default to all data or null?
         # what format will it be in?
+        else:
+            x_data = [point['x'] for point in selectedData['points']]
+            y_data = [point['y'] for point in selectedData['points']]
+            biggest_bin_ix = y_data.index(min(y_data))
+            vertex = (x_data[biggest_bin_ix], y_data[biggest_bin_ix])
+
         fig, k, x0, c = generate_figure(x_data, y_data, measurement_name, vertex=vertex)
         equation = f'Current line of fit: y = {k: .3f}(x - {x0: .3f}) + {c: .3f}'
         progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
