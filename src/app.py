@@ -148,4 +148,21 @@ def startup_manual_refining(measurement_dict, u):
 
         return fig, equation, progress_str
 
+    @app.callback(
+        Output('export-download-1', 'data'),
+        Input('export-button-1', 'n_clicks'),
+        prevent_initial_call=True,
+    )
+    def download_1(_):
+        global potentials
+        
+        # convert potentials dictionary to space-separated string
+        output = ''
+        for mes_blueprint, potential_vals in potentials.items():
+            for mes_name in measurement_dict[mes_blueprint]:
+                atoms = str(mes_name.replace('-', ' '))
+                potentials_str = f'{measurement_type.name.lower()} {atoms} {potential_vals[0]} {potential_vals[1]}'
+                output += potentials_str + '\n'
+
+        return dict(content=output, filename="export.txt")
 
