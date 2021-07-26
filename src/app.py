@@ -177,9 +177,10 @@ def startup_manual_refining(measurement_dict, u):
         # convert potentials dictionary to space-separated string
         output = ''
         name_to_id = {}
-        for atom in u.atoms:
-            output += f'atom {atom.id} MC {atom.name} {atom.name} {atom.mass} 0 U\n'
-            name_to_id[atom.name] = str(atom.id)
+        for i, atom in enumerate(u.atoms):
+            output += f'atom {i} MC {atom.name} {atom.name} {atom.mass} 0 U\n'
+            name_to_id[atom.name] = i
+            # units should be charge with +/- 1 -> 1/sqrt(80)
 
         for mes_blueprint, potential_vals in potentials.items():
             for mes_name in measurement_dict[mes_blueprint]:
