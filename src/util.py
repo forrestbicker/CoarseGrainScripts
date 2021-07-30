@@ -48,8 +48,15 @@ def generate_universe(topology, trajectory=None):
 
 def get_file_name(file):
     return path.basename(file).split(".")[0]
+
+def dfs(atom, visited):
+    if not visited[atom.ix]:
+        dfs(atom, visited)
+        visited[atom.ix] = True
+
+
 def func_to_xy(x, y, func, *argv):
-    res = 2**6  # resolution of curve
+    res = 2**8  # resolution of curve
     xrange = max(x) - min(x)
 
     x_out = np.array(
@@ -79,3 +86,24 @@ def generate_figure(x_data, y_data, name, vertex=(1, 1)):
     fig.add_trace(go.Scatter(x=x_curve, y=y_curve, mode='lines'))
 
     return fig, k, x0, c
+
+def generate_figure_dihedral(x_data, y_data, name, vertex=(1, 1)):
+    def f(x, k, n, d):
+        x = np.rad2deg(x)
+        return k * (1 + np.cos(n * x - d))
+
+    fig = go.Figure()
+    fig.add_trace(
+        go.Scatter(
+            x=x_data,
+            y=y_data,
+            name=name,
+            mode='markers'
+        )
+    )
+
+    k, n, d = curve_fit(f, x_data, y_data, maxfev=100000)[0]
+    x_curve, y_curve = func_to_xy(x_data, y_data, f, k, n, d)
+    fig.add_trace(go.Scatter(x=x_curve, y=y_curve, mode='lines', line_shape='spline'))
+
+    return fig, k, n, d, 0
