@@ -17,7 +17,7 @@ import plotly.express as px
 import pandas as pd
 
 from BINAnalysis import Histogram
-from util import MesType, generate_figure
+from util import MesType, generate_figure, generate_figure_dihedral
 
 app = dash.Dash(__name__)
 
@@ -140,11 +140,17 @@ def startup_manual_refining(measurement_dict, u):
             biggest_bin_ix = y_data.index(min(y_data))
             vertex = (x_data[biggest_bin_ix], y_data[biggest_bin_ix])
 
-        fig, k, x0, c = generate_figure(x_data, y_data, measurement_name, vertex=vertex)
-        equation = f'Current line of fit: y = {k: .3f}(x - {x0: .3f}) + {c: .3f}'
-        progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
-
-        potentials[measurement_blueprint] = (k, x0, c)
+        if measurement_type != MesType.DIHEDRAL:
+            fig, k, x0, c = generate_figure(x_data, y_data, measurement_name, vertex=vertex)
+            equation = f'Current line of fit: y = {k: .3f}(x - {x0: .3f}) + {c: .3f}'
+            progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
+            potentials[measurement_blueprint] = (k, x0, c)
+        else:
+            fig, k, n, d, w = generate_figure_dihedral(x_data, y_data, measurement_name, vertex=vertex)
+            equation = f'Current line of fit: y = {k: .3f}(1 + cos({(n):.3f}*x-{(d):.3f})'
+            progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
+            potentials[measurement_blueprint] = (k, round(n), round(d), w)
+            
 
         return fig, equation, progress_str
 
