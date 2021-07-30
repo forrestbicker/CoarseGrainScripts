@@ -116,6 +116,7 @@ class Bin:  # a bin containing many boandi objects
                 sine = abs(sine)
             return(-kB * T * log(Px / sine))
         else:
+            # negative boltzman constant times temperature times log
             return(-kB * T * log(Px))
 
 # ================= BoAnDi ================= #
