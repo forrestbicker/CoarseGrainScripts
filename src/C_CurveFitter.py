@@ -12,6 +12,7 @@
 from matplotlib import pyplot as plt
 import numpy as np
 from scipy.optimize import curve_fit
+from scipy.interpolate import UnivariateSpline
 import os
 # import math
 
@@ -25,7 +26,7 @@ value_file = 'outputs/measurement_data/EB2_EB3.dat'
 
 # ============= Specifications ============== #
 view_range = 0  # negative integer for a specific number of standard deviations; 0 for full view; positve integer for a specific value
-step = 0.01  # step needs manual adjustment (See README section C2. for help)
+# step = 0.01  # step needs manual adjustment (See README section C2. for help)
 
 
 # ============= Fitting Functions ============== #
@@ -36,7 +37,13 @@ def f(x, k, x0, c):
 
 
 # ================= Execution ================== #
-def fit_curve(value_file, view_range, step):
+def spline_fit(values, mes_type, step, export=False, plot=True, view_range=0):
+    # file_name = os.path.splitext(os.path.basename(value_file))[0]
+    # with open(value_file, 'r') as file:
+    #     dataset = file.read()
+    #     dataset_list = dataset.split('\n')
+    #     mes_type = dataset_list.pop(0)[-1]
+    #     values = [float(value) for value in dataset_list]
 
     # === Calculating bin information === #
     if view_range <= -1:
@@ -52,22 +59,37 @@ def fit_curve(value_file, view_range, step):
     histogram.clear_empty_bins()
 
 
+    x = histogram.get_floors()
+    y = histogram.get_boltzes()
 
 
     # === Fitting curve === #
-    k, x0, c = curve_fit(f, x, y, maxfev=1000000, p0=[10, 5, 5])[0]
-    x, y = func_to_xy(x, y, f, k, x0, c)
-    plt.plot(x, y, color='#1f3e78', linestyle='-')
+    spl = UnivariateSpline(x, y)
+    xs = np.linspace(min(x), max(x), 1000)
+    # k, x0, c = curve_fit(f, x, y, maxfev=1000000, p0=[10, 5, 5])[0]
 
 
-    # === Adusting display settings === #
-    fmt = '{} {}\nBin: {:.2f} - {:.2f}\n{:.3f}(x-{:.3f})+{:.3f}'
-    plt.suptitle(fmt.format(histogram.mes_type, histogram.name,
-                            min_bin, max_bin, k, x0, c), fontname='Courier New')
-    plt.ylabel('Boltzmann Inversion', fontname='Times')
-    plt.xlabel(histogram.mes_type + ' Measurment', fontname='Times')
-    plt.savefig(f'fit/hist_{histogram.name}.png')
-    plt.show()
+    if plot:
+        lo_cut = histogram.get_biggest(1)[0].floor - (view_range / 2)
+        up_cut = histogram.get_biggest(1)[0].floor + (view_range / 2)
+        x = [bin.floor for bin in histogram if lo_cut <= bin.floor <= up_cut]
+        y = [bin.boltz() for bin in histogram if lo_cut <= bin.floor <= up_cut]
+        # === Plotting points === #
+        x2 = [bin.floor for bin in histogram.get_biggest(1)]
+        y2 = [bin.boltz() for bin in histogram.get_biggest(1)]
+        plt.scatter(x2, y2, s=0.5, c='#eb5600')  # plots biggest bin in red
+        plt.scatter(x, y, s=0.5)  # plots points within view_range of biggest bin
+        plt.plot(xs, spl(xs), 'g', lw=3)
+
+
+        # === Adusting display settings === #
+        fmt = '{} {}\nBin: {:.2f} - {:.2f}\n{:.3f}(x-{:.3f})+{:.3f}'
+        # plt.suptitle(fmt.format(histogram.mes_type, histogram.name,
+                                # min_bin, max_bin, k, x0, c), fontname='Courier New')
+        plt.ylabel('Boltzmann Inversion')
+        plt.xlabel(histogram.mes_type.name.title() + ' Measurment')
+        plt.savefig(f'outputs/fit/hist_{histogram.name}.png')
+        plt.show()
 
 
     # === Histogram Data Writing === #
@@ -88,5 +110,4 @@ def fit_curve(value_file, view_range, step):
 
 
     print('Outputs Written!\nTask Complete!')
-
-fit_curve(value_file, view_range, step)
+    return spl
