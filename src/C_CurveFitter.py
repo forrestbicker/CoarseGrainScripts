@@ -37,12 +37,6 @@ def f(x, k, x0, c):
 
 # ================= Execution ================== #
 def fit_curve(value_file, view_range, step):
-    file_name = os.path.splitext(os.path.basename(value_file))[0]
-    with open(value_file, 'r') as file:
-        dataset = file.read()
-        dataset_list = dataset.split('\n')
-        mes_type = dataset_list.pop(0)[-1]
-        values = [float(value) for value in dataset_list]
 
     # === Calculating bin information === #
     if view_range <= -1:
@@ -50,26 +44,14 @@ def fit_curve(value_file, view_range, step):
     elif view_range == 0:
         view_range = len(values)
 
-    max_bin = max(values) + step
-    min_bin = min(values) - step
 
     # initiates histogram object
-    histogram = boandi.Histogram(file_name, mes_type, values, step)
-    for value in values:
-        histogram.add_instance(value)  # places each value into its appropriate bin
+    histogram = boandi.Histogram(mes_type, values, step)
+    # for value in values:
+    #     histogram.add_instance(value)  # places each value into its appropriate bin
     histogram.clear_empty_bins()
 
 
-    # === Plotting points === #
-    x2 = [bin.floor for bin in histogram.get_biggest(1)]
-    y2 = [bin.boltz() for bin in histogram.get_biggest(1)]
-    plt.scatter(x2, y2, s=0.5, c='#eb5600')  # plots biggest bin in red
-
-    lo_cut = histogram.get_biggest(1)[0].floor - (view_range / 2)
-    up_cut = histogram.get_biggest(1)[0].floor + (view_range / 2)
-    x = [bin.floor for bin in histogram if lo_cut <= bin.floor <= up_cut]
-    y = [bin.boltz() for bin in histogram if lo_cut <= bin.floor <= up_cut]
-    plt.scatter(x, y, s=0.5)  # plots points within view_range of biggest bin
 
 
     # === Fitting curve === #
