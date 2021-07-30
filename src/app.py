@@ -184,16 +184,21 @@ def startup_manual_refining(measurement_dict, u):
         output = ''
         name_to_id = {}
         for i, atom in enumerate(u.atoms):
-            output += f'atom {i} MC {atom.name} {atom.name} {atom.mass} 0 U\n'
+            output += f'atom {i} MC {atom.name} {atom.name} {atom.mass:.1f} 0 U\n'
             name_to_id[atom.name] = i
             # units should be charge with +/- 1 -> 1/sqrt(80)
 
         for mes_blueprint, potential_vals in potentials.items():
+            measurement_type = MesType(len(mes_blueprint))
             for mes_name in measurement_dict[mes_blueprint]:
                 atom_names = mes_name.split('-')
-                atom_ids = [name_to_id[name] for name in atom_names]
+                atom_ids = [str(name_to_id[name]) for name in atom_names]
                 atom_ids_str = ' '.join(atom_ids)
-                potentials_str = f'{measurement_type.name.lower()}param {atom_ids_str} {potential_vals[0]} {potential_vals[1]}'
+
+                float_fitted_val = [f'{potential_vals[0]:.1f}']
+                int_fitted_vals = [f'{val:.0f}' for val in potential_vals[1:]]
+                fitted_vals_str = ' '.join(float_fitted_val + int_fitted_vals)
+                potentials_str = f'{measurement_type.name.lower()}param {atom_ids_str} {fitted_vals_str}'
                 output += potentials_str + '\n'
 
         return dict(content=output, filename="export.txt")
