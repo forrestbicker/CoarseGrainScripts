@@ -42,7 +42,10 @@ def generate_universe(topology, trajectory=None):
     else:
         u = Universe(topology, trajectory)
 
-    print('Universe Generated!')
+    x, y, z = u.dimensions[:3]
+    print(f'Universe with dimensions x: {x}, y: {y}, z: {z} loaded!')
+    n_waters = u.select_atoms('resname WAT').n_residues
+    print(f'{n_waters} water molecules detected!')
 
     return u
 
