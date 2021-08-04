@@ -59,14 +59,11 @@ def dfs(atom, visited):
 
 
 def func_to_xy(x, y, func, *argv):
-    res = 2**8  # resolution of curve
-    xrange = max(x) - min(x)
+    x_points = np.linspace(min(x), max(x), 10000)
+    f_vectorized = np.vectorize(func)
+    y_poinits = f_vectorized(x_points, *argv)
 
-    x_out = np.array(
-        [min(x) + xrange * (i / res) for i in range(res) if func(min(x) + xrange * (i / res), *argv) <= max(y)]
-    )
-    y_out = [func(x, *argv) for x in x_out]
-    return([x_out, y_out])
+    return([x_points, y_poinits])
 
 
 # construct plotly scatter plot from histogram
