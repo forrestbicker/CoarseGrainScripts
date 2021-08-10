@@ -1,6 +1,6 @@
 # Coarse Grain Scripts
 [![Latest Version](https://img.shields.io/github/v/release/forrestbicker/CoarseGrainScripts.svg)](https://github.com/forrestbicker/CoarseGrainScripts/releases)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
+<!-- [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) -->
 
 ###### Programmed by Forrest Bicker
 ###### College Of Staten Island - Loverde Labratory
