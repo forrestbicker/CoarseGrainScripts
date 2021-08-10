@@ -17,7 +17,7 @@ residue_list = ['ALA', 'DGLU', 'DLYS']  # list of ammino acids to be CoarseGrain
 # ================= Execution ================= #
 u = generate_universe(topology, trajectory)
 sim_name = get_file_name(topology)
-u_cg = coarse_grain(u, residue_list, simulation_name=sim_name, export=False)
+u_cg = coarse_grain(u, residue_list, simulation_name=sim_name, export=True)
 measurement_dict = parametize(u_cg, export=True)
 startup_manual_refining(measurement_dict, u_cg)
 
