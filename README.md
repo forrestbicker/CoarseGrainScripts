@@ -9,6 +9,16 @@
 </p>
 <h6 align="center">Coiled DNA before and after Coarse-Graining</h6>
 
+##### Table of Contents  
+[Dependencies](#dependencies)  
+[Acknowledgements](#acknowledgements)  
+
+<a name="dependencies"/>
+## Dependencies
++ `MDAnalysis`
++ `SciPy`
++ `Dash & Plotly`
+
 ## Script A - Coarse Grainer
 
 ###### **A1. Description**
@@ -97,11 +107,7 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 ###### **C4. Output**
 + **Scatterplot**: A scatterplot containg all the bins within the `view_range` of the global minima, where the x-axis is the average measurement value of the contents of a bin, and the y-axis is its Boltzmann inversion.
 
-## Dependencies
-+ `MDAnalysis`
-+ `SciPy`
-+ `Dash & Plotly`
-
+<a name="acknowledgements"/>
 ## Acknowledgements
 + Dr. Sharon Loverde, Principal Investigator
 + Phu Tang, project mentor
