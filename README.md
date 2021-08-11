@@ -13,6 +13,7 @@
 * [Installation](#installation)
   * [Dependencies](#dependencies)  
   * [Setup](#setup)  
+* [Usage](#usage)  
 * [Acknowledgements](#acknowledgements)  
 
 ## Installation
