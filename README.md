@@ -10,10 +10,13 @@
 <h6 align="center">Coiled DNA before and after Coarse-Graining</h6>
 
 ##### Table of Contents  
-[Dependencies](#dependencies)  
-[Acknowledgements](#acknowledgements)  
+* [Installation](#installation)
+  * [Dependencies](#dependencies)  
+* [Acknowledgements](#acknowledgements)  
 
-## Dependencies
+## Installation
+
+#### Dependencies
 + `MDAnalysis`
 + `SciPy`
 + `Dash & Plotly`
