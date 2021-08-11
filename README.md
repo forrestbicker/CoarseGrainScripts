@@ -12,11 +12,13 @@
 ## Table of Contents  
 * [Installation](#installation)
   * [Dependencies](#dependencies)  
+  * [Setup](#setup)  
 * [Acknowledgements](#acknowledgements)  
 
 ## Installation
 
 #### Dependencies
++ `Python 3`
 + `MDAnalysis`
 + `SciPy`
 + `Dash & Plotly`
