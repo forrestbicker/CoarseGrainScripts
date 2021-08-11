@@ -2,14 +2,14 @@
 [![Latest Version](https://img.shields.io/github/v/release/forrestbicker/CoarseGrainScripts.svg)](https://github.com/forrestbicker/CoarseGrainScripts/releases)
 <!-- [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE) -->
 
-###### Programmed by Forrest Bicker
+###### Forrest Bicker
 ###### College Of Staten Island - Loverde Labratory
 <p align="center">
   <img src="https://github.com/forrestbicker/CoarseGrainScripts/blob/d30803f818a1d56d78ea24317423301c154cce7d/assets/beforeAndAfter.png" alt="CoarseGrainedComparison">
 </p>
 <h6 align="center">Coiled DNA before and after Coarse-Graining</h6>
 
-##### Table of Contents  
+## Table of Contents  
 * [Installation](#installation)
   * [Dependencies](#dependencies)  
 * [Acknowledgements](#acknowledgements)  
@@ -21,7 +21,11 @@
 + `SciPy`
 + `Dash & Plotly`
 
-## Script A - Coarse Grainer
+#### Setup
+This section is currently a WIP. To use the code, you must first install the dependencies listed above to your local environment. Then, clone this repository to your local machine and you can execute the code found in `src/main.py`
+
+## Usage
+### Script A - Coarse Grainer
 
 ###### **A1. Description**
 Converts an atomistic simulation to a coarse grained one. Pre-existing SDK mappings are provided for the fundamental amino acids and DNA nucleic acids + backbone. However, the mapping blueprint is designed to be highly customizable for indivudal expansion meaning any simulation can be corase grained in accordance to user-specified input.
@@ -75,7 +79,7 @@ e.g.
      - e.g. KB4 denotes the backbone of the fourth L-chiral Lysine residue
 
 
-## Script B - Parameterizer
+### Script B - Parameterizer
 
 ###### **B1. Description**
 Measures all bonds, angles, and dihedrals between coarse grain beads. Can be configured to run computations in parallel on multiple CPUs.
@@ -90,7 +94,7 @@ Measures all bonds, angles, and dihedrals between coarse grain beads. Can be con
 + **measurement data** files: Outputs a dat file containing the measured length/angle for all bonds/angles/dihedrals in `amino_acid_molds` across every observed frame. Each file is named by joining the names of its component beads.
     + **NOTE**: Units for length are Armstrongs; units for angles are degrees
 
-## Script C - Curve Fitter
+### Script C - Curve Fitter
 ###### **C1. Description**
 Plots a series of measurement values in relation to their Boltzmann inversion on an xy-plane, and fits a curve to said points.
 
