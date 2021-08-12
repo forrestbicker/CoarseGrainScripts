@@ -31,23 +31,26 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
 This section is currently a WIP. To use the code, you must first install the dependencies listed above to your local environment. Then, clone this repository to your local machine and you can execute the code found in `src/main.py`
 
 ## Usage
-### Script A - Coarse Grainer
+### Coarse-Grained Universe
 
 ###### **A1. Description**
-Converts an atomistic simulation to a coarse grained one. Pre-existing SDK mappings are provided for the fundamental amino acids and DNA nucleic acids + backbone. However, the mapping blueprint is designed to be highly customizable for indivudal expansion meaning any simulation can be corase grained in accordance to user-specified input.
+Converts an atomistic molecular dynamics simulation consisting of a pre-calculated topology and a trajectory to a coarse grained universe. Pre-existing SDK coarse-grain mappings are provided for the fundamental amino acids and DNA nucleic acids + backbone. However, the mapping blueprint is designed to be highly customizable for indivudal expansion meaning any simulation can be corase grained in accordance to user-specified input.
 
 ###### **A2. Input Files**
 + `topology`: Atomistic topology file
 + `trajectory`: Atomistic trajectory file (if you wish to coarse-grain a static frame, use an empty string for trajectory)
++ `mapping_dict`: Dictionary containing Coarse Grain mappings which dictate the atoms that each coarse grained bead contains. This version includes mappings for all 20 natural amino acids, DNA nucleic acids, and DNA backbone components, however if you wish to coarse grain a molecule whose mapping is not contained in `mapping_dict`, you will have to add its mapping to the dictionary. If you so desire to use a mapping not included in the `mapping_dict`, you will need to add it yourself by following the format bellow. This can be done by appending a new dictionary to `mapping_dict.json` in the following format:
 
 ###### **A3. Input Parameters**
 + `residue_list`: List of three-letter amino acid abbreviations. The coarse grained file will only contain beads from amino acids included in this list.
-+ `mapping_dict`: Dictionary containing Coarse Grain mappings which dictate the atoms that each coarse grained bead contains. This version includes mappings for all 20 natural amino acids, DNA nucleic acids, and DNA backbone components, however if you wish to coarse grain a molecule whose mapping is not contained in `mapping_dict`, you will have to add its mapping to the dictionary. If you so desire to use a mapping not included in the `mapping_dict`, you will need to add it yourself by following the format bellow. This can be done by appending a new dictionary to `mapping_dict.json` in the following format:
 
 ```
 'NAME': {
-     'segment ID': [component_atoms],
-     'segment ID': [component_atoms],
+     'segment ID': [
+         'type': type,
+         'charge': charge
+         'atoms': component_atoms,
+     ],
 }
 ```
 
@@ -65,9 +68,21 @@ e.g.
 
 ```
 'LYS': {
-     'B': ['C', 'CA', 'O', 'N', 'HN', 'HA', 'HT1', 'HT2', 'HT3', 'HN1', 'HN2', 'OT1', 'OT2'],
-     '1': ['CB', 'HB1', 'HB2', 'CD', 'HD1', 'HD2', 'CG', 'HG1', 'HG2'],
-     '2': ['CE', 'HE1', 'HE2', 'NZ', 'HZ1', 'HZ2', 'HZ3'],
+     'B': [
+         'type': 'GBB',
+         'charge': 0,
+         'atoms': ['C', 'CA', 'O', 'N', 'HN', 'HA', 'HT1', 'HT2', 'HT3', 'HN1', 'HN2', 'OT1', 'OT2']
+     ],
+     '1': [
+         'type': 'LY1',
+         'charge': 0,
+         'atoms': ['CB', 'HB1', 'HB2', 'CD', 'HD1', 'HD2', 'CG', 'HG1', 'HG2']
+     ],
+     '2': [
+         'type': 'LY2',
+         'charge': 0.118,
+         'CE', 'HE1', 'HE2', 'NZ', 'HZ1', 'HZ2', 'HZ3'
+     ],
 }
 ```
 
