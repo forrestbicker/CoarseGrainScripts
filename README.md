@@ -20,15 +20,16 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
 * [Acknowledgements](#acknowledgements)  
 
 ## Installation
-
 #### Dependencies
-+ `Python 3`
-+ `MDAnalysis`
-+ `SciPy`
-+ `Dash & Plotly`
++ [`Python 3.8.10`](https://www.python.org/downloads/)
++ [`MDAnalysis 1.1.1`](https://www.mdanalysis.org/pages/installation_quick_start/)
++ [`SciPy 1.6.2`](https://scipy.org/install.html)
++ [`Dash 1.19.0`](https://dash.plotly.com/installation)
++ [`Plotly 4.14.3`](https://plotly.com/python/getting-started/)
+Other versions may work, but these are the exact versions for which the code was tested. Click the name of the dependency to navigate to it's installation page.
 
 #### Setup
-This section is currently a WIP. To use the code, you must first install the dependencies listed above to your local environment. Then, clone this repository to your local machine and you can execute the code found in `src/main.py`
+This section is currently a WIP. To use the code, you must first install the dependencies listed above to your local environment. It's reccomended to use a virtual environment such as conda to install and manage the versioning of these packages. Then, clone this repository to your local machine and you can execute the code found in `src/main.py`
 
 ## Usage
 ### Coarse-Grained Universe
@@ -81,7 +82,7 @@ e.g.
      '2': [
          'type': 'LY2',
          'charge': 0.118,
-         'CE', 'HE1', 'HE2', 'NZ', 'HZ1', 'HZ2', 'HZ3'
+         'atoms': ['CE', 'HE1', 'HE2', 'NZ', 'HZ1', 'HZ2', 'HZ3']
      ],
 }
 ```
