@@ -26,6 +26,7 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
 + [`SciPy 1.6.2`](https://scipy.org/install.html)
 + [`Dash 1.19.0`](https://dash.plotly.com/installation)
 + [`Plotly 4.14.3`](https://plotly.com/python/getting-started/)
+
 Other versions may work, but these are the exact versions for which the code was tested. Click the name of the dependency to navigate to it's installation page.
 
 #### Setup
