@@ -27,12 +27,14 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
 + [`Dash 1.19.0`](https://dash.plotly.com/installation)
 + [`Plotly 4.14.3`](https://plotly.com/python/getting-started/)
 
-Other versions may work, but these are the exact versions for which the code was tested. Click the name of the dependency to navigate to it's installation page.
+Although other versions may work, the code was designed for and tested with these ones so it's reccomended you use them.
 
 #### Setup
-This section is currently a WIP. To use the code, you must first install the dependencies listed above to your local environment. It's reccomended to use a virtual environment such as conda to install and manage the versioning of these packages. Then, clone this repository to your local machine and you can execute the code found in `src/main.py`
+To use this program, you must first install the dependencies listed above to your local environment. It's reccomended to use a virtual environment such as conda to install and manage the versioning of these packages. Installation guides for each package can be found in the above section by clicking the hyperlink on the package name. Then, once you clone this repository to your local machine you should be able to execute the code found in `src/main.py`
 
 ## Usage
+This program preforms three main tasks: converting an atomistic universe to a coarse-grained universe, measuring the bonds angles and dihedrals in a coarse-grained universe, and fitting curves to said measurements to help parameterize the coarse-grained simulation. Each of these tasks is abstracted into a single, modular function call that can be called from the default `main.py` file or imported into other projects if you want to apply pre- or post-processing to the inputs and outputs.
+
 ### Coarse-Grained Universe
 
 ###### **A1. Description**
@@ -102,7 +104,7 @@ e.g.
      - e.g. KB4 denotes the backbone of the fourth L-chiral Lysine residue
 
 
-### Script B - Parameterizer
+### Measurer
 
 ###### **B1. Description**
 Measures all bonds, angles, and dihedrals between coarse grain beads. Can be configured to run computations in parallel on multiple CPUs.
@@ -117,7 +119,7 @@ Measures all bonds, angles, and dihedrals between coarse grain beads. Can be con
 + **measurement data** files: Outputs a dat file containing the measured length/angle for all bonds/angles/dihedrals in `amino_acid_molds` across every observed frame. Each file is named by joining the names of its component beads.
     + **NOTE**: Units for length are Armstrongs; units for angles are degrees
 
-### Script C - Curve Fitter
+###Curve Fitter
 ###### **C1. Description**
 Plots a series of measurement values in relation to their Boltzmann inversion on an xy-plane, and fits a curve to said points.
 
