@@ -17,9 +17,9 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
   * [Dependencies](#dependencies)  
   * [Setup](#setup)  
 * [Usage](#usage)
-  * [Coarse-Grainer] (#coarse-grainer)
-  * [Measurer] (#measurer)
-  * [Curve-Fitter] (#curve-fitter)
+  * [Coarse-Grainer](#coarse-grainer)
+  * [Measurer](#measurer)
+  * [Curve-Fitter](#curve-fitter)
 * [Acknowledgements](#acknowledgements)  
 
 ## Installation
