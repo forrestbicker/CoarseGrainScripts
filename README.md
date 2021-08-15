@@ -144,7 +144,8 @@ Plots a series of measurement values in relation to their Boltzmann inversion on
 + **Scatterplot**: A scatterplot containg all the bins within the `view_range` of the global minima, where the x-axis is the average measurement value of the contents of a bin, and the y-axis is its Boltzmann inversion.
 
 ## Acknowledgements
-+ Dr. Sharon Loverde, Principal Investigator
++ Dr. Sharon Loverde, principal investigator
 + Phu Tang, project mentor
-+ Tania Rajpersaud, provided debugging help and testing data
 + William Hu, project tester and contributor
++ Tania Rajpersaud, provided debugging assitance and testing data
++ Prabir Khatua, provided LAMMPS assitance
