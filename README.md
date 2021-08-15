@@ -16,7 +16,10 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
 * [Installation](#installation)
   * [Dependencies](#dependencies)  
   * [Setup](#setup)  
-* [Usage](#usage)  
+* [Usage](#usage)
+  * [Coarse-Grainer] (#coarse-grainer)
+  * [Measurer] (#measurer)
+  * [Curve-Fitter] (#curve-fitter)
 * [Acknowledgements](#acknowledgements)  
 
 ## Installation
@@ -35,7 +38,7 @@ To use this program, you must first install the dependencies listed above to you
 ## Usage
 This program preforms three main tasks: converting an atomistic universe to a coarse-grained universe, measuring the bonds angles and dihedrals in a coarse-grained universe, and fitting curves to said measurements to help parameterize the coarse-grained simulation. Each of these tasks is abstracted into a single, modular function call that can be called from the default `main.py` file or imported into other projects if you want to apply pre- or post-processing to the inputs and outputs.
 
-### Coarse-Grained Universe
+### Coarse-Grainer
 
 ###### **A1. Description**
 Converts an atomistic molecular dynamics simulation consisting of a pre-calculated topology and a trajectory to a coarse grained universe. Pre-existing SDK coarse-grain mappings are provided for the fundamental amino acids and DNA nucleic acids + backbone. However, the mapping blueprint is designed to be highly customizable for indivudal expansion meaning any simulation can be corase grained in accordance to user-specified input.
@@ -119,7 +122,9 @@ Measures all bonds, angles, and dihedrals between coarse grain beads. Can be con
 + **measurement data** files: Outputs a dat file containing the measured length/angle for all bonds/angles/dihedrals in `amino_acid_molds` across every observed frame. Each file is named by joining the names of its component beads.
     + **NOTE**: Units for length are Armstrongs; units for angles are degrees
 
-###Curve Fitter
+
+### Curve-Fitter
+
 ###### **C1. Description**
 Plots a series of measurement values in relation to their Boltzmann inversion on an xy-plane, and fits a curve to said points.
 
