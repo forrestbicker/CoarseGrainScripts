@@ -27,13 +27,20 @@ A Generalized Algorithm for Coarse-Graining Molecular Dynamics Simulations with 
 + [`Python 3.8.10`](https://www.python.org/downloads/)
 + [`MDAnalysis 1.1.1`](https://www.mdanalysis.org/pages/installation_quick_start/)
 + [`SciPy 1.6.2`](https://scipy.org/install.html)
-+ [`Dash 1.19.0`](https://dash.plotly.com/installation)
 + [`Plotly 4.14.3`](https://plotly.com/python/getting-started/)
++ [`Dash 1.19.0`](https://dash.plotly.com/installation)
 
 Although other versions may work, the code was designed for and tested with these ones so it's reccomended you use them.
 
+An example conda installation 
+`conda config --add channels conda-forge
+conda install -c conda-forge mdanalysis
+conda install -c anaconda scipy
+conda install -c plotly plotly
+conda install -c conda-forge dash`
+
 #### Setup
-To use this program, you must first install the dependencies listed above to your local environment. It's reccomended to use a virtual environment such as conda to install and manage the versioning of these packages. Installation guides for each package can be found in the above section by clicking the hyperlink on the package name. Then, once you clone this repository to your local machine you should be able to execute the code found in `src/main.py`
+To use this program, you must first install the dependencies listed above to your local environment. It's reccomended to use a virtual environment such as conda to install and manage the versioning of these packages. Installation guides for each package can be found in the above section by clicking the hyperlink on the package name. Then, once you clone this repository to your local machine you should be able to execute the code found in `src/main.py` as you would any other python file.
 
 ## Usage
 This program preforms three main tasks: converting an atomistic universe to a coarse-grained universe, measuring the bonds angles and dihedrals in a coarse-grained universe, and fitting curves to said measurements to help parameterize the coarse-grained simulation. Each of these tasks is abstracted into a single, modular function call that can be called from the default `main.py` file or imported into other projects if you want to apply pre- or post-processing to the inputs and outputs.
