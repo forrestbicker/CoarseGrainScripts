@@ -1,759 +1,851 @@
 {
-    "ALA": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2",
-            "CB",
-            "HB1",
-            "HB2",
-            "HB3"
-        ]
-    },
-    "ARG": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG1",
-            "HG2"
-        ],
-        "2": [
-            "CD",
-            "HD1",
-            "HD2",
-            "NE",
-            "HE",
-            "CZ",
-            "NH1",
-            "HH11",
-            "HH12",
-            "NH2",
-            "HH22",
-            "HH21"
-        ]
-    },
-    "ASN": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "OD1",
-            "ND2",
-            "HD21",
-            "HD22"
-        ]
-    },
-    "ASP": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "OD1",
-            "OD2",
-            "HD22"
-        ]
-    },
-    "ASX": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "OD1",
-            "OD2",
-            "ND2",
-            "HD21",
-            "HD22"
-        ]
-    },
-    "CYS": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "SG",
-            "HG1"
-        ]
-    },
-    "GLU": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG1",
-            "HG2",
-            "CD",
-            "OE1",
-            "OE2"
-        ]
-    },
-    "GLN": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG1",
-            "HG2",
-            "CD",
-            "OE1",
-            "NE2",
-            "HE21",
-            "HE22"
-        ]
-    },
-    "GLX": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2",
-            "HA1",
-            "HA2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG1",
-            "HG2",
-            "CD",
-            "OE1",
-            "NE2",
-            "HE21",
-            "HE22",
-            "OE2"
-        ]
-    },
-    "GLY": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2",
-            "H",
-            "HA1",
-            "HA2"
-        ]
-    },
-    "HIS": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "ND1",
-            "HD1",
-            "CE1",
-            "HE1",
-            "CD2",
-            "HD2",
-            "NE2",
-            "HE2"
-        ]
-    },
-    "ILE": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB",
-            "CG1",
-            "HG11",
-            "HG12",
-            "CG2",
-            "HG21",
-            "HG22",
-            "HG23",
-            "CD",
-            "HD1",
-            "HD2",
-            "HD3"
-        ]
-    },
-    "LEU": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG",
-            "CD1",
-            "HD11",
-            "HD12",
-            "HD13",
-            "CD2",
-            "HD21",
-            "HD22",
-            "HD23"
-        ]
-    },
-    "LYS": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CD",
-            "HD1",
-            "HD2",
-            "CG",
-            "HG1",
-            "HG2"
-        ],
-        "2": [
-            "CE",
-            "HE1",
-            "HE2",
-            "NZ",
-            "HZ1",
-            "HZ2",
-            "HZ3"
-        ]
-    },
-    "MET": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG1",
-            "HG2",
-            "SD",
-            "CE",
-            "HE1",
-            "HE2",
-            "HE3"
-        ]
-    },
-    "PHE": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "CD1",
-            "CD2",
-            "HD1",
-            "HD2"
-        ],
-        "2": [
-            "CE1",
-            "HE1",
-            "CE2",
-            "HE2",
-            "CZ",
-            "HZ"
-        ]
-    },
-    "PRO": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2",
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "HG1",
-            "HG2",
-            "CD",
-            "HD1",
-            "HD2"
-        ]
-    },
-    "SER": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "OG",
-            "HG1"
-        ]
-    },
-    "THR": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB",
-            "OG1",
-            "HG1",
-            "CG2",
-            "HG21",
-            "HG22",
-            "HG23"
-        ]
-    },
-    "TRP": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "CD2"
-        ],
-        "2": [
-            "CE3",
-            "HE3",
-            "CZ3",
-            "HZ3",
-            "CH2",
-            "HH2"
-        ],
-        "3": [
-            "CZ2",
-            "HZ2",
-            "CE2",
-            "NE1",
-            "HE1",
-            "CD1",
-            "HD1"
-        ]
-    },
-    "TYR": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB1",
-            "HB2",
-            "CG",
-            "CD1",
-            "HD1",
-            "CD2",
-            "HD2"
-        ],
-        "2": [
-            "CE1",
-            "HE1",
-            "CZ",
-            "OH",
-            "HH",
-            "CE2",
-            "HE2"
-        ]
-    },
-    "VAL": {
-        "BB": [
-            "C",
-            "CA",
-            "O",
-            "N",
-            "HN",
-            "HA",
-            "HT1",
-            "HT2",
-            "HT3",
-            "HN1",
-            "HN2",
-            "OT1",
-            "OT2"
-        ],
-        "1": [
-            "CB",
-            "HB",
-            "CG1",
-            "HG11",
-            "HG12",
-            "CG2",
-            "HG21",
-            "HG22",
-            "HG23"
-        ]
-    },
-    "DA": {
-        "1": [
-            "C8",
-            "N9"
-        ],
-        "2": [
-            "N7",
-            "C5"
-        ],
-        "3": [
-            "C6",
-            "N6"
-        ],
-        "4": [
-            "N3",
-            "C4"
-        ],
-        "5": [
-            "N1",
-            "C2"
-        ]
-    },
-    "DG": {
-        "1": [
-            "N9",
-            "C8"
-        ],
-        "2": [
-            "N7",
-            "C5"
-        ],
-        "3": [
-            "N1",
-            "O6"
-        ],
-        "4": [
-            "C2",
-            "N2"
-        ],
-        "5": [
-            "C4",
-            "N3"
-        ]
-    },
-    "DC": {
-        "1": [
-            "C5",
-            "C6"
-        ],
-        "2": [
-            "C4",
-            "N4",
-            "N3"
-        ],
-        "3": [
-            "N1",
-            "C2",
-            "O2"
-        ]
-    },
-    "URACIL": {},
-    "DT": {
-        "1": [
-            "N3",
-            "C4",
-            "O4"
-        ],
-        "2": [
-            "C5",
-            "C7",
-            "C6"
-        ],
-        "3": [
-            "N1",
-            "C2",
-            "O2"
-        ]
-    },
-    "PHOSPHATE": {
-        "BB": [
-            "O5'",
-            "C3'",
-            "C5'",
-            "C4'"
-        ],
-        "1": [
-            "C1'",
-            "O4'"
-        ],
-        "2": [
-            "C2'"
-        ]
-    },
-    "RIBOSE": {
-        "B": [
-            "P",
-            "O3'",
-            "OP1",
-            "OP1",
-            "O5'"
-        ]
-    }
+	"ALA": {
+		"BB": {
+			"name": "ABB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2",
+				"CB",
+				"HB1",
+				"HB2",
+				"HB3"
+			]
+		}
+	},
+	"ARG": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "CG", "HG1", "HG2"]
+		},
+		"2": {
+			"name": "AR2",
+			"charge": "0.1118",
+			"atoms": [
+				"CD",
+				"HD1",
+				"HD2",
+				"NE",
+				"HE",
+				"CZ",
+				"NH1",
+				"HH11",
+				"HH12",
+				"NH2",
+				"HH22",
+				"HH21"
+			]
+		}
+	},
+	"ASN": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "CG", "OD1", "ND2", "HD21", "HD22"]
+		}
+	},
+	"ASP": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "ASP",
+			"charge": "-0.1118",
+			"atoms": ["CB", "HB1", "HB2", "CG", "OD1", "OD2", "HD22"]
+		}
+	},
+	"ASX": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"OD1",
+				"OD2",
+				"ND2",
+				"HD21",
+				"HD22"
+			]
+		}
+	},
+	"CYS": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "SG", "HG1"]
+		}
+	},
+	"GLU": {
+		"BB": {
+			"name": "GLU",
+			"charge": "-0.1118",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"HG1",
+				"HG2",
+				"CD",
+				"OE1",
+				"OE2"
+			]
+		}
+	},
+	"GLN": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"HG1",
+				"HG2",
+				"CD",
+				"OE1",
+				"NE2",
+				"HE21",
+				"HE22"
+			]
+		}
+	},
+	"GLX": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2",
+				"HA1",
+				"HA2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"HG1",
+				"HG2",
+				"CD",
+				"OE1",
+				"NE2",
+				"HE21",
+				"HE22",
+				"OE2"
+			]
+		}
+	},
+	"GLY": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2",
+				"H",
+				"HA1",
+				"HA2"
+			]
+		}
+	},
+	"HIS": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"ND1",
+				"HD1",
+				"CE1",
+				"HE1",
+				"CD2",
+				"HD2",
+				"NE2",
+				"HE2"
+			]
+		}
+	},
+	"ILE": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB",
+				"CG1",
+				"HG11",
+				"HG12",
+				"CG2",
+				"HG21",
+				"HG22",
+				"HG23",
+				"CD",
+				"HD1",
+				"HD2",
+				"HD3"
+			]
+		}
+	},
+	"LEU": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"HG",
+				"CD1",
+				"HD11",
+				"HD12",
+				"HD13",
+				"CD2",
+				"HD21",
+				"HD22",
+				"HD23"
+			]
+		}
+	},
+	"LYS": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "LY1",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CD",
+				"HD1",
+				"HD2",
+				"CG",
+				"HG1",
+				"HG2"
+			]
+		},
+		"2": {
+			"name": "LY2",
+			"charge": "0.1118",
+			"atoms": ["CE", "HE1", "HE2", "NZ", "HZ1", "HZ2", "HZ3"]
+		}
+	},
+	"MET": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"HG1",
+				"HG2",
+				"SD",
+				"CE",
+				"HE1",
+				"HE2",
+				"HE3"
+			]
+		}
+	},
+	"PHE": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "CG", "CD1", "CD2", "HD1", "HD2"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CE1", "HE1", "CE2", "HE2", "CZ", "HZ"]
+		}
+	},
+	"PRO": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2",
+				"CB",
+				"HB1",
+				"HB2",
+				"CG",
+				"HG1",
+				"HG2",
+				"CD",
+				"HD1",
+				"HD2"
+			]
+		}
+	},
+	"SER": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "OG", "HG1"]
+		}
+	},
+	"THR": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB", "OG1", "HG1", "CG2", "HG21", "HG22", "HG23"]
+		}
+	},
+	"TRP": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "CG", "CD2"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CE3", "HE3", "CZ3", "HZ3", "CH2", "HH2"]
+		},
+		"3": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CZ2", "HZ2", "CE2", "NE1", "HE1", "CD1", "HD1"]
+		}
+	},
+	"TYR": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CB", "HB1", "HB2", "CG", "CD1", "HD1", "CD2", "HD2"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["CE1", "HE1", "CZ", "OH", "HH", "CE2", "HE2"]
+		}
+	},
+	"VAL": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"C",
+				"CA",
+				"O",
+				"N",
+				"HN",
+				"HA",
+				"HT1",
+				"HT2",
+				"HT3",
+				"HN1",
+				"HN2",
+				"OT1",
+				"OT2"
+			]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": [
+				"CB",
+				"HB",
+				"CG1",
+				"HG11",
+				"HG12",
+				"CG2",
+				"HG21",
+				"HG22",
+				"HG23"
+			]
+		}
+	},
+	"DA": {
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C8", "N9"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N7", "C5"]
+		},
+		"3": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C6", "N6"]
+		},
+		"4": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N3", "C4"]
+		},
+		"5": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N1", "C2"]
+		}
+	},
+	"DG": {
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N9", "C8"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N7", "C5"]
+		},
+		"3": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N1", "O6"]
+		},
+		"4": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C2", "N2"]
+		},
+		"5": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C4", "N3"]
+		}
+	},
+	"DC": {
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C5", "C6"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C4", "N4", "N3"]
+		},
+		"3": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N1", "C2", "O2"]
+		}
+	},
+	"URACIL": {},
+	"DT": {
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N3", "C4", "O4"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C5", "C7", "C6"]
+		},
+		"3": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["N1", "C2", "O2"]
+		}
+	},
+	"PHOSPHATE": {
+		"BB": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["O5'", "C3'", "C5'", "C4'"]
+		},
+		"1": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C1'", "O4'"]
+		},
+		"2": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["C2'"]
+		}
+	},
+	"RIBOSE": {
+		"B": {
+			"name": "GBB",
+			"charge": "0",
+			"atoms": ["P", "O3'", "OP1", "OP1", "O5'"]
+		}
+	}
 }
