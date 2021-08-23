@@ -54,30 +54,32 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name', expo
     bead_data = []
     cg_beads = []
     dummy_parents = {}
-    for resname in residue_list:  # loops tru each residue to be coarse grained
-        if resname == "PHOSPHATE" or resname == "RIBOSE":
-            resname_atoms = u.atoms.select_atoms('resname DA DT DG DC DU')
-        else:
-            resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
 
-        if len(resname) == 4 and resname[0] == 'D': # for D-varants
-            resname_key = resname[1:]
-        else:
-            resname_key = resname
+    non_water_atoms = u.select_atoms('not resname WAT')
+    for residue in non_water_atoms.residues:  # loops thu each matching residue id
+        resid = residue.resid  # store int id
+        resname = residue.resname
+        if resname in residue_list:            # if resname == "PHOSPHATE" or resname == "RIBOSE":
+            #     resname_atoms = u.atoms.select_atoms('resname DA DT DG DC DU')
+            # else:
+            #     resname_atoms = u.atoms.select_atoms(f'resname {resname}')  # selects all resname-specific atoms
 
-        residues = resname_atoms.residues  # identifys all resname-specific residues
-        for residue in residues:  # loops thu each matching residue id
-            resid = residue.resid  # store int id
+            if len(resname) == 4 and resname[0] == 'D':  # for D-varants
+                resname_key = resname[1:]
+            else:
+                resname_key = resname
+
             try:
                 segments = mapping_dict[resname_key].keys()
                 for segment in segments:  # loops thru each segment of each residue
-                    params = 'name ' + ' '.join(mapping_dict[resname_key][segment])  # generates param
+                    params = 'name ' + ' '.join(mapping_dict[resname_key][segment]['atoms'])  # generates param
                     # selects all atoms in a given residue segment
                     atms = residue.atoms.select_atoms(params)
                     dummy = atms[0]
                     # names dummy atom in propper format
                     dummy.name = str(abrev_dict[resname_key]) + str(segment[0]) + str(resid)
-                    dummy.type = str(segment[0])
+                    dummy.type = mapping_dict[resname_key][segment]['name']
+                    dummy.charge = mapping_dict[resname_key][segment]['charge']
 
                     bead_data.append((dummy, atms)) 
                     cg_beads.append(dummy)
@@ -174,6 +176,10 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name', expo
 
     if export:
         print('Writing Output Files...')
+        out_file = f'outputs/CoarseGrain/{simulation_name}_CG.pdb'
+        with open(out_file, 'w+') as _:
+            new_u.atoms.write(out_file, bonds='all')
+        print(f'Topology written to {simulation_name}_CG.pdb!')
 
         is_multiframe = number_of_frames > 1
         with mda.Writer(f'outputs/CoarseGrain/{simulation_name}_CG.dcd', new_u.atoms.n_atoms, multiframe=is_multiframe, bonds='all') as w:
@@ -187,11 +193,6 @@ def coarse_grain(universe, residue_list, simulation_name='simulation_name', expo
 
         # for dummy, atms in bead_data:
         #         dummy.type = ''
-
-        out_file = f'outputs/CoarseGrain/{simulation_name}_CG.pdb'
-        with open(out_file, 'w+') as _:
-            new_u.atoms.write(out_file, bonds='all')
-        print(f'Topology written to {simulation_name}_CG.pdb!')
 
     print(f'Reduced {len(u.atoms)} atoms to {len(new_u.atoms)} beads!')
 
