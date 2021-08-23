@@ -59,11 +59,12 @@ def dfs(atom, visited):
 
 
 def func_to_xy(x, y, func, *argv):
-    x_points = np.linspace(min(x), max(x), 10000)
-    f_vectorized = np.vectorize(func)
-    y_poinits = f_vectorized(x_points, *argv)
+    x_points = np.linspace(min(x), max(x), 2048)
+    y_points = [None] * 2048
+    for i in range(len(x_points)):
+        y_points[i] = func(x_points[i], *argv)
 
-    return([x_points, y_poinits])
+    return([x_points, y_points])
 
 
 # construct plotly scatter plot from histogram
