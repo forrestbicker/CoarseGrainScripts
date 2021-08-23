@@ -19,7 +19,7 @@ import pandas as pd
 from BINAnalysis import Histogram
 from util import MesType, generate_figure, generate_figure_dihedral
 
-app = dash.Dash(__name__)
+app = dash.Dash('app')
 
 def wrap(component):
     return html.Div(
@@ -67,7 +67,7 @@ def startup_manual_refining(measurement_dict, u):
                     step=0.001,
                     value=0.01,
                 ),
-                html.H2(id='page-number'),
+                html.H2(id='page-number', children=f'Currently viewing {measurement_type.name} {measurement_name}. Measurement 0 / {len(measurement_dict)}'),
                 html.Button(id='back-button', n_clicks=0, children='Back'),
                 html.Button(id='next-button', n_clicks=0, children='Next'),
                 html.Button(id='export-button-1', n_clicks=0, children='Export Params'),
@@ -146,11 +146,11 @@ def startup_manual_refining(measurement_dict, u):
             progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
             potentials[measurement_blueprint] = (k, x0, c)
         else:
-            fig, k, n, d, w = generate_figure_dihedral(x_data, y_data, measurement_name, vertex=vertex)
+            fig, k, n, d, w = generate_figure_dihedral(x_data, y_data, measurement_name)
             equation = f'Current line of fit: y = {k: .3f}(1 + cos({(n):.3f}*x-{(d):.3f})'
             progress_str = f'Currently viewing {measurement_type.name} {measurement_name}. Measurement {measurement_number + 1} / {len(measurement_dict)}'
             potentials[measurement_blueprint] = (k, round(n), round(d), w)
-            
+
 
         return fig, equation, progress_str
 
@@ -161,7 +161,8 @@ def startup_manual_refining(measurement_dict, u):
     )
     def download_1(_):
         global potentials
-        
+        print('download1')
+
         # convert potentials dictionary to space-separated string
         output = ''
         for mes_blueprint, potential_vals in potentials.items():
@@ -170,7 +171,7 @@ def startup_manual_refining(measurement_dict, u):
                 potentials_str = f'{measurement_type.name.lower()} {atoms} {potential_vals[0]} {potential_vals[1]}'
                 output += potentials_str + '\n'
 
-        return dict(content=output, filename="export.txt")
+        return dict(content=output, filename="params.txt")
 
     @app.callback(
         Output('export-download-2', 'data'),
@@ -178,14 +179,15 @@ def startup_manual_refining(measurement_dict, u):
         prevent_initial_call=True,
     )
     def download_2(_):
+        print('download2')
         global potentials
 
         # convert potentials dictionary to space-separated string
         output = ''
         name_to_id = {}
         for i, atom in enumerate(u.atoms):
-            output += f'atom {i} MC {atom.name} {atom.name} {atom.mass:.1f} 0 U\n'
-            name_to_id[atom.name] = i
+            output += f'atom {i + 1} MC {atom.name} {atom.type} {atom.mass:.1f} {atom.charge:.4f} U\n'
+            name_to_id[atom.name] = i + 1
             # units should be charge with +/- 1 -> 1/sqrt(80)
 
         for mes_blueprint, potential_vals in potentials.items():
@@ -201,11 +203,7 @@ def startup_manual_refining(measurement_dict, u):
                 potentials_str = f'{measurement_type.name.lower()}param {atom_ids_str} {fitted_vals_str}'
                 output += potentials_str + '\n'
 
-        return dict(content=output, filename="export.txt")
+        return dict(content=output, filename="params.top")
 
 
     app.run_server(debug=False)
-
-
-# if __name__ == '__main__':
-
