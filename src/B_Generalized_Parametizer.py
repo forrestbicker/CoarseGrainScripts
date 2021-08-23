@@ -23,7 +23,7 @@ import math
 
 from util import progress
 
-max_frame = 1000
+max_frame = 10000
 stride = 1
 block_count = 3
 
