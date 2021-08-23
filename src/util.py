@@ -88,7 +88,7 @@ def generate_figure(x_data, y_data, name, vertex=(1, 1)):
 
     return fig, k, x0, c
 
-def generate_figure_dihedral(x_data, y_data, name, vertex=(1, 1)):
+def generate_figure_dihedral(x_data, y_data, name):
     def f(x, k, n, d):
         x = np.rad2deg(x)
         return k * (1 + np.cos(n * x - d))
@@ -103,7 +103,7 @@ def generate_figure_dihedral(x_data, y_data, name, vertex=(1, 1)):
         )
     )
 
-    k, n, d = curve_fit(f, x_data, y_data, maxfev=100000)[0]
+    k, n, d = curve_fit(f, x_data, y_data, maxfev=100000, p0=[0.5, 1.5/180, 0])[0]
     x_curve, y_curve = func_to_xy(x_data, y_data, f, k, n, d)
     fig.add_trace(go.Scatter(x=x_curve, y=y_curve, mode='lines', line_shape='spline'))
 
