@@ -6,10 +6,10 @@ from util import MesType, generate_universe, get_file_name
 
 
 # ================= User Input ================= #
-topology = 'inputs/pkA_run3.psf'
-trajectory = 'inputs/pkA_run3.dcd'
+topology = 'inputs/new/step3_input.psf'
+trajectory = 'inputs/new/pkka_run6_skip2.dcd'
 
-residue_list = ['ALA', 'DGLU', 'DLYS']  # list of ammino acids to be CoarseGrained
+residue_list = ['ALA', 'DALA', 'LYS', 'DGLU', 'GLU', 'DLYS']  # list of ammino acids to be CoarseGrained
 # residue_list = ['ALA']
 # residue_list = ['DA', 'DT', 'DG', 'DC', 'PHOSPHATE', 'RIBOSE']
 
@@ -17,6 +17,7 @@ residue_list = ['ALA', 'DGLU', 'DLYS']  # list of ammino acids to be CoarseGrain
 # ================= Execution ================= #
 u = generate_universe(topology, trajectory)
 sim_name = get_file_name(topology)
+
 u_cg = coarse_grain(u, residue_list, simulation_name=sim_name, export=True)
 measurement_dict = parametize(u_cg, export=True)
 startup_manual_refining(measurement_dict, u_cg)
